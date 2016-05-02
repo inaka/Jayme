@@ -44,7 +44,7 @@ class ServerPagedRepositoryTests: XCTestCase {
 extension ServerPagedRepositoryTests {
     
     func testFindAllCall() {
-        self.repository.findAll(pageNumber: 1)
+        self.repository.findByPage(pageNumber: 1)
         XCTAssertEqual(self.backend.path, "documents?page=1&per_page=2")
     }
     
@@ -68,7 +68,7 @@ extension ServerPagedRepositoryTests {
         
         let expectation = self.expectationWithDescription("Expected 2 documents to be parsed with proper PageInfo")
         
-        let future = self.repository.findAll(pageNumber: 1)
+        let future = self.repository.findByPage(pageNumber: 1)
         future.start() { result in
             guard case .Success(let documents, let pageInfo) = result else {
                 XCTFail()
@@ -103,7 +103,7 @@ extension ServerPagedRepositoryTests {
         
         let expectation = self.expectationWithDescription("Expected ServerBackendError.NotFound")
         
-        let future = self.repository.findAll(pageNumber: 1)
+        let future = self.repository.findByPage(pageNumber: 1)
         future.start() { result in
             guard case .Failure = result else {
                 XCTFail()

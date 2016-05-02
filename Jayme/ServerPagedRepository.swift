@@ -32,7 +32,7 @@ protocol ServerPagedRepository: ServerRepository {
 extension ServerPagedRepository {
     
     /// Returns a `Future` containing a tuple with an array of all the `Entity` objects in the repository and a PageInfo object with pagination-related data
-    func findAll(pageNumber pageNumber: Int) -> Future<([EntityType], PageInfo), ServerBackendError> {
+    func findByPage(pageNumber pageNumber: Int) -> Future<([EntityType], PageInfo), ServerBackendError> {
         let path = self.path + "?page=\(pageNumber)&per_page=\(self.pageSize)"
         var pageInfo: PageInfo?
         let future = self.backend.futureForPath(path, method: .GET, parameters: nil)
