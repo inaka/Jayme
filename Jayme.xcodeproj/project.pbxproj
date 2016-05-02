@@ -11,7 +11,6 @@
 		5163A0371CD7879900B0EEEF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5163A02F1CD7879900B0EEEF /* Assets.xcassets */; };
 		5163A0381CD7879900B0EEEF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5163A0301CD7879900B0EEEF /* LaunchScreen.storyboard */; };
 		5163A0391CD7879900B0EEEF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5163A0321CD7879900B0EEEF /* Main.storyboard */; };
-		5163A03B1CD7879900B0EEEF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5163A0351CD7879900B0EEEF /* ViewController.swift */; };
 		5163A0731CD78B5E00B0EEEF /* Backend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5163A0721CD78B5E00B0EEEF /* Backend.swift */; };
 		5163A0751CD7946000B0EEEF /* ServerBackend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5163A0741CD7946000B0EEEF /* ServerBackend.swift */; };
 		5163A0771CD7960800B0EEEF /* ServerBackendConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5163A0761CD7960800B0EEEF /* ServerBackendConfiguration.swift */; };
@@ -60,7 +59,6 @@
 		5163A0311CD7879900B0EEEF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5163A0331CD7879900B0EEEF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5163A0341CD7879900B0EEEF /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		5163A0351CD7879900B0EEEF /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		5163A0721CD78B5E00B0EEEF /* Backend.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Backend.swift; sourceTree = "<group>"; };
 		5163A0741CD7946000B0EEEF /* ServerBackend.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerBackend.swift; sourceTree = "<group>"; };
 		5163A0761CD7960800B0EEEF /* ServerBackendConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerBackendConfiguration.swift; sourceTree = "<group>"; };
@@ -154,7 +152,6 @@
 				5163A0301CD7879900B0EEEF /* LaunchScreen.storyboard */,
 				5163A0321CD7879900B0EEEF /* Main.storyboard */,
 				5163A0341CD7879900B0EEEF /* Info.plist */,
-				5163A0351CD7879900B0EEEF /* ViewController.swift */,
 			);
 			path = Example;
 			sourceTree = "<group>";
@@ -383,7 +380,6 @@
 				5163A0791CD7967900B0EEEF /* ServerBackendError.swift in Sources */,
 				5163A0951CD7A51800B0EEEF /* Result.swift in Sources */,
 				5163A08F1CD7A1E800B0EEEF /* PageInfo.swift in Sources */,
-				5163A03B1CD7879900B0EEEF /* ViewController.swift in Sources */,
 				5163A08D1CD7A1B300B0EEEF /* HTTPMethodName.swift in Sources */,
 				5163A0751CD7946000B0EEEF /* ServerBackend.swift in Sources */,
 				5163A0931CD7A35F00B0EEEF /* Future.swift in Sources */,
