@@ -1,5 +1,5 @@
 // JaymeExample
-// AppDelegate.swift
+// UserTableViewCell.swift
 //
 // Copyright (c) 2016 Inaka - http://inaka.net/
 //
@@ -23,14 +23,18 @@
 
 import UIKit
 
-@UIApplicationMain
-
-class AppDelegate: UIResponder, UIApplicationDelegate {
-
-    var window: UIWindow?
-
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        return true
+class UserTableViewCell: UITableViewCell {
+    
+    static let Identifier = "UserTableViewCell"
+    
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var emailLabel: UILabel!
+    
+    var user: User? {
+        didSet {
+            self.nameLabel.text = user?.name
+            self.emailLabel.text = user?.email
+        }
     }
-
+    
 }

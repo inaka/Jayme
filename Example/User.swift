@@ -1,5 +1,5 @@
 // JaymeExample
-// AppDelegate.swift
+// User.swift
 //
 // Copyright (c) 2016 Inaka - http://inaka.net/
 //
@@ -21,16 +21,33 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import UIKit
+import Foundation
 
-@UIApplicationMain
+struct User: Identifiable {
+    let id: Identifier
+    let name: String
+    let email: String
+}
 
-class AppDelegate: UIResponder, UIApplicationDelegate {
-
-    var window: UIWindow?
-
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        return true
+extension User: DictionaryInitializable, DictionaryRepresentable {
+    
+    init?(dictionary: StringDictionary) {
+        guard let
+            id = dictionary["id"] as? String,
+            name = dictionary["name"] as? String,
+            email = dictionary["email"] as? String
+            else { return nil }
+        self.id = id
+        self.name = name
+        self.email = email
     }
-
+    
+    var dictionaryValue: StringDictionary {
+        return [
+            "id": self.id,
+            "name": self.name,
+            "email": self.email
+        ]
+    }
+    
 }
