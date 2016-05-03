@@ -38,6 +38,7 @@
 		516ECB111CD7AB6A0090A176 /* TestDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 516ECB071CD7AB6A0090A176 /* TestDocument.swift */; };
 		516ECB121CD7AB6A0090A176 /* TestDocumentPagedRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 516ECB081CD7AB6A0090A176 /* TestDocumentPagedRepository.swift */; };
 		516ECB131CD7AB6A0090A176 /* TestDocumentRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 516ECB091CD7AB6A0090A176 /* TestDocumentRepository.swift */; };
+		518CEA3F1CD8DD5900A4CA06 /* PageInfoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 518CEA3E1CD8DD5900A4CA06 /* PageInfoTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -86,6 +87,7 @@
 		516ECB071CD7AB6A0090A176 /* TestDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestDocument.swift; sourceTree = "<group>"; };
 		516ECB081CD7AB6A0090A176 /* TestDocumentPagedRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestDocumentPagedRepository.swift; sourceTree = "<group>"; };
 		516ECB091CD7AB6A0090A176 /* TestDocumentRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestDocumentRepository.swift; sourceTree = "<group>"; };
+		518CEA3E1CD8DD5900A4CA06 /* PageInfoTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageInfoTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -268,6 +270,7 @@
 			isa = PBXGroup;
 			children = (
 				516ECB041CD7AB6A0090A176 /* ServerBackendTests.swift */,
+				518CEA3E1CD8DD5900A4CA06 /* PageInfoTests.swift */,
 				516ECB061CD7AB6A0090A176 /* ServerRepositoryTests.swift */,
 				516ECB051CD7AB6A0090A176 /* ServerPagedRepositoryTests.swift */,
 				516ECB031CD7AB6A0090A176 /* HTTPResponseParserTests.swift */,
@@ -401,6 +404,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				518CEA3F1CD8DD5900A4CA06 /* PageInfoTests.swift in Sources */,
 				516ECB101CD7AB6A0090A176 /* ServerRepositoryTests.swift in Sources */,
 				516ECB0A1CD7AB6A0090A176 /* FakeHTTPResponseParser.swift in Sources */,
 				516ECB0E1CD7AB6A0090A176 /* ServerBackendTests.swift in Sources */,

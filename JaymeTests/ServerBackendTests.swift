@@ -125,5 +125,5 @@ extension PageInfo: Equatable {}
 public func ==(lhs: PageInfo, rhs: PageInfo) -> Bool {
     return lhs.number == rhs.number
     && lhs.size == rhs.size
-    && lhs.more == rhs.more
+    && lhs.total == rhs.total
 }

@@ -1,5 +1,5 @@
 // Jayme
-// PageInfo.swift
+// PageInfoTests.swift
 //
 // Copyright (c) 2016 Inaka - http://inaka.net/
 //
@@ -21,27 +21,29 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import Foundation
+import XCTest
+@testable import Jayme
 
-/// Structure for holding information related to pagination
-public struct PageInfo {
-    
-    /// The current page number
-    let number: Int
-    
-    /// The number of items per page
-    let size: Int
-    
-    /// The total amount of items
-    let total: Int
-    
-}
+class PageInfoTests: XCTestCase {
 
-extension PageInfo {
-    
-    /// Helper computed property to know whether or not there are more items to be fetched
-    var more: Bool {
-        return self.size * self.number < self.total
+    func testMoreTrueCase() {
+        let pageInfo = PageInfo(number: 1, size: 5, total: 12)
+        XCTAssertTrue(pageInfo.more)
     }
     
+    func testMoreFalseCase() {
+        let pageInfo = PageInfo(number: 2, size: 5, total: 8)
+        XCTAssertFalse(pageInfo.more)
+    }
+    
+    func testMoreExtremeFalseCase() {
+        let pageInfo = PageInfo(number: 2, size: 5, total: 10)
+        XCTAssertFalse(pageInfo.more)
+    }
+    
+    func testMoreExtremeTrueCase() {
+        let pageInfo = PageInfo(number: 2, size: 5, total: 11)
+        XCTAssertTrue(pageInfo.more)
+    }
+
 }
