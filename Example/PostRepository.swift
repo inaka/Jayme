@@ -1,5 +1,5 @@
 // JaymeExample
-// AppDelegate.swift
+// PostRepository.swift
 //
 // Copyright (c) 2016 Inaka - http://inaka.net/
 //
@@ -21,16 +21,18 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import UIKit
+import Foundation
 
-@UIApplicationMain
-
-class AppDelegate: UIResponder, UIApplicationDelegate {
-
-    var window: UIWindow?
-
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        return true
+class PostRepository: ServerRepository {
+    
+    typealias EntityType = Post
+    let backend = ServerBackend()
+    let path = "posts"
+    
+    func findPostsForUser(user: User) -> Future<[Post], ServerBackendError> {
+        return self.findAll().map {
+            $0.filter { $0.authorID == user.id }
+        }
     }
-
+    
 }

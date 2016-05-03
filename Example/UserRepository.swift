@@ -1,5 +1,5 @@
 // JaymeExample
-// AppDelegate.swift
+// UserRepository.swift
 //
 // Copyright (c) 2016 Inaka - http://inaka.net/
 //
@@ -21,16 +21,12 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import UIKit
+import Foundation
 
-@UIApplicationMain
-
-class AppDelegate: UIResponder, UIApplicationDelegate {
-
-    var window: UIWindow?
-
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        return true
-    }
-
+class UserRepository: ServerRepository {
+    
+    typealias EntityType = User
+    let backend = ServerBackend()
+    let path = "users"
+    
 }

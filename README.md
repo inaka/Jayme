@@ -248,8 +248,8 @@ extension Post: DictionaryInitializable, DictionaryRepresentable {
             content = json["content"].string
             else { return nil }
         self.id = id
-        self.authorID = name
-        self.content = email
+        self.authorID = authorID
+        self.content = content
     }
     
     var dictionaryValue: StringDictionary {
@@ -298,6 +298,21 @@ Notice here:
 #### That's pretty much it! 
 
 We are sure you will have to develop more complex scenarios and have bigger challenges by yourself. So, have fun! We encourage you to share anything interesting that can aport more robustness to the library. Pull requests are very welcome!
+
+
+
+## Sample Project
+
+If you still have some hesitations about the usage of this library, there is an `Example` folder inside the repo containing a basic implementation of some repositories integrated with view controllers.
+
+The example needs a local server to work, which you can configure really quick by doing:
+
+```shell
+cd Jayme/Example/Server
+python -m SimpleHTTPServer 8080
+```
+
+Once you have the server running, all you need to do is run Jayme.
 
 
 

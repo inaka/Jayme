@@ -1,5 +1,5 @@
 // JaymeExample
-// AppDelegate.swift
+// PostTableViewCell.swift
 //
 // Copyright (c) 2016 Inaka - http://inaka.net/
 //
@@ -23,14 +23,30 @@
 
 import UIKit
 
-@UIApplicationMain
+class PostTableViewCell: UITableViewCell {
+    
+    static let Identifier = "PostTableViewCell"
 
-class AppDelegate: UIResponder, UIApplicationDelegate {
-
-    var window: UIWindow?
-
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        return true
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var abstractLabel: UILabel!
+    @IBOutlet weak var dateLabel: UILabel!
+    
+    var post: Post? {
+        didSet {
+            self.titleLabel.text = post?.title
+            self.abstractLabel.text = post?.abstract
+            self.dateLabel.text = post?.date.formatted()
+        }
     }
+    
+}
 
+private extension NSDate {
+    
+    func formatted() -> String {
+        let formatter = NSDateFormatter()
+        formatter.dateStyle = .MediumStyle
+        return formatter.stringFromDate(self)
+    }
+    
 }

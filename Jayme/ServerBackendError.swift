@@ -55,4 +55,5 @@ public enum ServerBackendError: ErrorType {
      Contains the `NSError` with the information about it
      */
     case Other(NSError)
+    
 }
