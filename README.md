@@ -301,6 +301,21 @@ We are sure you will have to develop more complex scenarios and have bigger chal
 
 
 
+## Sample Project
+
+If you still have some hesitations about the usage of this library, there is an `Example` folder inside the repo containing a basic implementation of some repositories integrated with view controllers.
+
+The example needs a local server to work, which you can configure really quick by doing:
+
+```shell
+cd Jayme/Example/Server
+python -m SimpleHTTPServer 8080
+```
+
+Once you have the server running, all you need to do is run Jayme.
+
+
+
 ## Setup
 
 You can just clone the repo and copy the `Jayme` folder to your project, or install it through [cocoapods](http://cocoapods.org/) to keep it up to date.
