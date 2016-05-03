@@ -4,7 +4,7 @@
 
 ------
 
-![Build Status](https://api.travis-ci.org/inaka/Jayme.svg) ![codecov](https://codecov.io/gh/inaka/Jayme/branch/master/graph/badge.svg)
+[![Build Status](https://api.travis-ci.org/inaka/Jayme.svg)](https://travis-ci.org/inaka/Jayme) [![codecov](https://codecov.io/gh/inaka/jayme/branch/master/graph/badge.svg)](https://codecov.io/gh/inaka/jayme)
 
 ## Overview
 
