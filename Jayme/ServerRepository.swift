@@ -23,7 +23,7 @@
 
 import Foundation
 
-/// Provides a Repository with convenient implementations to be used in most of basic repositories that follow Inaka's conventions.
+/// Provides a Repository with convenient implementations ready to be used in any repository that needs basic CRUD functionality.
 protocol ServerRepository: Repository {
     var backend: ServerBackend { get }
 }
