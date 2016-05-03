@@ -1,6 +1,5 @@
 coverage:
-  status:
-    project:
-      default:
-        paths:
-        - "Jayme"
+  ignore:
+  - Example/*
+  - Jayme.xcodeproj/*
+  - JaymeTests/*
