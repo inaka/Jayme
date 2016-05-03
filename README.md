@@ -248,8 +248,8 @@ extension Post: DictionaryInitializable, DictionaryRepresentable {
             content = json["content"].string
             else { return nil }
         self.id = id
-        self.authorID = name
-        self.content = email
+        self.authorID = authorID
+        self.content = content
     }
     
     var dictionaryValue: StringDictionary {

@@ -1,0 +1,67 @@
+[
+
+{
+"id": "1",
+"author_id": "1",
+"title": "Dealing with Optionals in ViewControllers",
+"abstract": "The right way of declaring your variables",
+"date": "2015-12-18"
+},
+
+{
+"id": "2",
+"author_id": "2",
+"title": "Server Sent Events (SSE): EventSource implementation on Swift.",
+"abstract": "An extremely simple Swift library that implements EventSource API (Server Sent Events SSE).",
+"date": "2015-05-28"
+},
+
+{
+"id": "3",
+"author_id": "2",
+"title": "Galgo iOS Library",
+"abstract": "An iOS library to display logs as on screen overlays.",
+"date": "2015-02-10"
+},
+
+{
+"id": "4",
+"author_id": "1",
+"title": "The Fork Workflow in iOS",
+"abstract": "A clear way to apply modifications to your project dependencies",
+"date": "2014-09-19"
+},
+
+{
+"id": "5",
+"author_id": "1",
+"title": "Getting the right colors in your iOS app",
+"abstract": "How to keep consistence when picking and applying colors",
+"date": "2014-09-05"
+},
+
+{
+"id": "6",
+"author_id": "3",
+"title": "IKJayma",
+"abstract": "A simple iOS Networking Library",
+"date": "2014-07-21"
+},
+
+{
+"id": "7",
+"author_id": "1",
+"title": "Cleaning Up Your GitHub Tree",
+"abstract": "How to clear all those stray branches",
+"date": "2014-02-21"
+},
+
+{
+"id": "8",
+"author_id": "3",
+"title": "Core Data One-Way Relationships",
+"abstract": "Common design patterns in iOS applications",
+"date": "2013-03-06"
+}
+
+]

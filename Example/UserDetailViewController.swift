@@ -1,5 +1,5 @@
 // JaymeExample
-// UsersViewController.swift
+// UserDetailViewController.swift
 //
 // Copyright (c) 2016 Inaka - http://inaka.net/
 //
@@ -23,29 +23,27 @@
 
 import UIKit
 
-class UsersViewController: UIViewController {
+class UserDetailViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.loadUsers()
+    var user: User! {
+        didSet {
+            self.title = "\(user.name)'s Posts"
+            self.loadPosts()
+        }
     }
-    
-    @IBAction func refresh(sender: UIBarButtonItem) {
-        self.loadUsers()
-    }
-    
+
     // MARK: - Private
     
-    private var users = [User]()
-    private var selectedUser: User?
+    private var posts = [Post]()
     
-    private func loadUsers() {
-        UserRepository().findAll().start { result in
+    private func loadPosts() {
+        let future = PostRepository().findPostsForUser(self.user)
+        future.start { result in
             switch result {
-            case .Success(let users):
-                self.users = users
+            case .Success(let posts):
+                self.posts = posts
                 dispatch_async(dispatch_get_main_queue()) {
                     self.tableView.reloadData()
                 }
@@ -75,36 +73,18 @@ class UsersViewController: UIViewController {
     
 }
 
-extension UsersViewController: UITableViewDataSource, UITableViewDelegate {
+extension UserDetailViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.users.count
+        return self.posts.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(UserTableViewCell.Identifier) as! UserTableViewCell
-        cell.user = self.userAtIndexPath(indexPath)
+        let cell = tableView.dequeueReusableCellWithIdentifier(PostTableViewCell.Identifier) as! PostTableViewCell
+        cell.post = self.posts[indexPath.row]
         return cell
-    }
-    
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        self.selectedUser = self.userAtIndexPath(indexPath)
-        self.performSegueWithIdentifier("ShowUserDetail", sender: self)
-    }
-    
-    private func userAtIndexPath(indexPath: NSIndexPath) -> User {
-        return self.users[indexPath.row]
     }
     
 }
 
-extension UsersViewController {
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        guard let controller = segue.destinationViewController as? UserDetailViewController else {
-            return
-        }
-        controller.user = self.selectedUser!
-    }
-    
-}
+
