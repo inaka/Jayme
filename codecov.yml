@@ -1,2 +1,6 @@
-paths:
-- "Jayme"
+coverage:
+  status:
+    project:
+      default:
+        paths:
+        - "Jayme"
