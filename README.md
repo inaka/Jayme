@@ -295,7 +295,7 @@ Notice here:
 
 #### That's pretty much it! 
 
-We are sure you will have to develop more complex scenarios and have bigger challenges by yourself. So, have fun! We encourage you to share anything interesting that can aport more robustness to the library.
+We are sure you will have to develop more complex scenarios and have bigger challenges by yourself. So, have fun! We encourage you to share anything interesting that can aport more robustness to the library. Pull requests are very welcome!
 
 
 
@@ -309,6 +309,6 @@ You can just clone the repo and copy the `Jayme` folder to your project, or inst
 
 For **questions** or **general comments** regarding the use of this library, please use our public [hipchat room](http://inaka.net/hipchat).
 
-If you find any **bugs** or have a **problem** while using this library, please [open an issue](https://github.com/inaka/IKFadeButton/issues/new) in this repo (or a pull request).
+If you find any **bugs** or have a **problem** while using this library, please [open an issue](https://github.com/inaka/Jayme/issues/new) in this repo (or a pull request).
 
 You can also check all of our open-source projects at [inaka.github.io](inaka.github.io).
