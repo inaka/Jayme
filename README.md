@@ -4,6 +4,8 @@
 
 ------
 
+![Build Status](https://api.travis-ci.org/inaka/Jayme.svg)![codecov](https://codecov.io/gh/inaka/Jayme/branch/master/graph/badge.svg)
+
 ## Overview
 
 What's the best place to put your *entities business logic* code? What's the best place to put your *networking* code?
