@@ -23,7 +23,7 @@
 
 import Foundation
 
-/// Provides a Backend conforming to REST conventions followed at Inaka.
+/// Provides a Backend that connects to a server using HTTP REST requests via `NSURLSession`
 class ServerBackend: Backend {
     
     typealias BackendReturnType = (NSData?, PageInfo?)
