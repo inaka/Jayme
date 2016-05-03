@@ -86,5 +86,3 @@ extension UserDetailViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
 }
-
-
