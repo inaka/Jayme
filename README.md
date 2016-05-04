@@ -14,7 +14,7 @@ Jayme answers those two existencial questions by defining a straightforward and 
 
 It provides a neat API for dealing with REST communication, leaving your `ViewControllers` out of that business by abstracting all that logic, thereby allowing them to focus on what they should do rather on how they should connect to services.
 
-![Jayme's Architecture In A Nutshell](Assets/architecture-diagram-1.png)
+![Jayme's Architecture In A Nutshell](https://raw.githubusercontent.com/inaka/Jayme/master/Assets/architecture-diagram-1.png)
 
 ##Features
 
