@@ -1,4 +1,4 @@
-![Logo](logo.png)
+![Logo](https://raw.githubusercontent.com/inaka/Jayme/master/Assets/logo.png)
 
 ***The abstraction layer that eases RESTful interconnections in Swift***
 
@@ -14,7 +14,7 @@ Jayme answers those two existencial questions by defining a straightforward and 
 
 It provides a neat API for dealing with REST communication, leaving your `ViewControllers` out of that business by abstracting all that logic, thereby allowing them to focus on what they should do rather on how they should connect to services.
 
-![Jayme's Architecture In A Nutshell](architecture-diagram-1.png)
+![Jayme's Architecture In A Nutshell](Assets/architecture-diagram-1.png)
 
 ##Features
 
@@ -46,7 +46,7 @@ It provides a neat API for dealing with REST communication, leaving your `ViewCo
 
 Jayme leverages the **Repository Pattern** as its main cornerstone. Its foundation provides 2 protocols to conform to: `Repository` and `Backend`, from which you will base your entities business logic.
 
-![Jayme's Architecture Customization](architecture-diagram-2.png)
+![Jayme's Architecture Extended](https://raw.githubusercontent.com/inaka/Jayme/master/Assets/architecture-diagram-2.png)
 
 ###Entities
 
@@ -102,7 +102,7 @@ You can create your own repositories and backends without going through Inaka st
 
 See how your own repositories and backends can be plugged in directly to the base `Repository` and `Backend` protocols.
 
-![Jayme's Architecture Customization](architecture-diagram-3.png)
+![Jayme's Architecture Customization](https://raw.githubusercontent.com/inaka/Jayme/master/Assets/architecture-diagram-3.png)
 
 
 
