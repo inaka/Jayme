@@ -8,7 +8,7 @@ Pod::Spec.new do |s|
                    DESC
 
   s.homepage     = "https://github.com/inaka/Jayme/tree/master"
-  s.screenshots  = "https://github.com/inaka/Jayme/raw/master/logo.png"
+  s.screenshots  = "https://raw.githubusercontent.com/inaka/Jayme/master/Assets/logo.png"
 
   s.license = 'MIT'
   s.author    = "Inaka"
