@@ -23,9 +23,9 @@
 
 import Foundation
 
-typealias StringDictionary = [String: AnyObject]
+public typealias StringDictionary = [String: AnyObject]
 
 /// Protocol for allowing entities to be initialized (parsed in) from a dictionary
-protocol DictionaryInitializable {
+public protocol DictionaryInitializable {
     init?(dictionary: StringDictionary)
 }

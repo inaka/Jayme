@@ -24,12 +24,12 @@
 import Foundation
 
 /// Structure used for holding a base path and HTTP headers to be used in ServerBackend's URL requests.
-struct ServerBackendConfiguration {
+public struct ServerBackendConfiguration {
     
     let basePath: Path
     let httpHeaders: [HTTPHeader]
     
-    static var defaultConfiguration = ServerBackendConfiguration(basePath: "http://localhost:8080",
+    public static var defaultConfiguration = ServerBackendConfiguration(basePath: "http://localhost:8080",
                                                                  httpHeaders: ServerBackendConfiguration.defaultHTTPHeaders)
     
     // MARK: - Private

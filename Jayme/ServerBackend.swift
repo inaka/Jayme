@@ -24,12 +24,12 @@
 import Foundation
 
 /// Provides a Backend that connects to a server using HTTP REST requests via `NSURLSession`
-class ServerBackend: Backend {
+public class ServerBackend: Backend {
     
-    typealias BackendReturnType = (NSData?, PageInfo?)
-    typealias BackendErrorType = ServerBackendError
+    public typealias BackendReturnType = (NSData?, PageInfo?)
+    public typealias BackendErrorType = ServerBackendError
     
-    init(configuration: ServerBackendConfiguration = ServerBackendConfiguration.defaultConfiguration,
+    public init(configuration: ServerBackendConfiguration = ServerBackendConfiguration.defaultConfiguration,
          session: NSURLSession = NSURLSession.sharedSession(),
          responseParser: HTTPResponseParser = HTTPResponseParser()) {
         self.configuration = configuration
@@ -40,7 +40,7 @@ class ServerBackend: Backend {
     /// Returns a `Future` containing either:
     /// - A tuple with possible `NSData` relevant to the HTTP response and a possible `PageInfo` object if there is pagination-related info associated to the HTTP response
     /// - A `ServerBackendError` indicating which error is produced
-    func futureForPath(path: String, method: HTTPMethodName, parameters: [String: AnyObject]? = nil) -> Future<(NSData?, PageInfo?), ServerBackendError> {
+    public func futureForPath(path: String, method: HTTPMethodName, parameters: [String: AnyObject]? = nil) -> Future<(NSData?, PageInfo?), ServerBackendError> {
         return Future() { completion in
             guard let url = self.urlForPath(path) else {
                 completion(.Failure(.BadURL))

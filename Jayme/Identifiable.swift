@@ -23,9 +23,9 @@
 
 import Foundation
 
-typealias Identifier = String
+public typealias Identifier = String
 
 /// Protocol for identifying entities via an `id` property.
-protocol Identifiable {
+public protocol Identifiable {
     var id: Identifier { get }
 }

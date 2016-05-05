@@ -23,10 +23,10 @@
 
 import Foundation
 
-typealias Path = String
+public typealias Path = String
 
 /// Abstraction for representing a Repository of a certain kind of Entities
-protocol Repository {
+public protocol Repository {
     
     /// The Entity type going to be used in the Repository
     /// Classes conforming to `Repository` must tie this associated type to a concrete type

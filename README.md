@@ -318,7 +318,12 @@ Once you have the server running, all you need to do is run Jayme.
 
 ## Setup
 
-You can just clone the repo and copy the `Jayme` folder to your project, or install it through [cocoapods](http://cocoapods.org/) to keep it up to date.
+- Jayme is available via [cocoapods](http://cocoapods.org/).
+  - To install it, add this line to your `Podfile`:
+    - `pod 'Jayme'`
+
+
+- Remember to add an `import Jayme` statement in any source file of your project that needs to make use of the library.
 
 
 

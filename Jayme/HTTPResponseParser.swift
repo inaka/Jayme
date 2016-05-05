@@ -26,7 +26,7 @@ import Foundation
 typealias FullHTTPResponse = (data: NSData?, urlResponse: NSURLResponse?, error: NSError?)
 typealias HTTPResponseParserResult = Result<(data: NSData?, pageInfo: PageInfo?), ServerBackendError>
 
-class HTTPResponseParser {
+public class HTTPResponseParser {
     
     func parseResponse(response: FullHTTPResponse) -> HTTPResponseParserResult {
         if let error = response.error {
