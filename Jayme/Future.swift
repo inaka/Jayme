@@ -24,20 +24,20 @@
 import Foundation
 
 /// Structure representing the future value of an asynchronous computation
-struct Future<T, E: ErrorType> {
+public struct Future<T, E: ErrorType> {
     
-    typealias ResultType = Result<T, E>
-    typealias Completion = ResultType -> ()
-    typealias AsyncOperation = Completion -> ()
+    public typealias FutureResultType = Result<T, E>
+    public typealias FutureCompletion = FutureResultType -> ()
+    public typealias FutureAsyncOperation = FutureCompletion -> ()
     
     /// Parameters:
     /// - `operation`: The asynchronous operation going to be performed
-    init(operation: AsyncOperation) {
+    public init(operation: FutureAsyncOperation) {
         self.operation = operation
     }
     
     /// Begins the asynchronous operation and executes the `completion` closure once it has been completed.
-    func start(completion: Completion) {
+    public func start(completion: FutureCompletion) {
         self.operation() { result in
             completion(result)
         }
@@ -45,14 +45,14 @@ struct Future<T, E: ErrorType> {
     
     // MARK: - Private
     
-    private let operation: AsyncOperation
+    private let operation: FutureAsyncOperation
     
 }
 
-extension Future {
+public extension Future {
     
     /// Maps the result of a future by performing `f` onto the result
-    func map<U>(f: T -> U) -> Future<U, E> {
+    public func map<U>(f: T -> U) -> Future<U, E> {
         return Future<U, E>(operation: { completion in
             self.start { result in
                 switch result {
@@ -65,7 +65,7 @@ extension Future {
     
     /// Maps the result of a future by performing `f` onto the result, returning a new `Future` object.
     /// Useful for chaining different asynchronous operations that are dependent on each other's results
-    func andThen<U>(f: T -> Future<U, E>) -> Future<U, E> {
+    public func andThen<U>(f: T -> Future<U, E>) -> Future<U, E> {
         return Future<U, E>(operation: { completion in
             self.start { firstFutureResult in
                 switch firstFutureResult {

@@ -27,20 +27,20 @@ import Foundation
 public struct PageInfo {
     
     /// The current page number
-    let number: Int
+    public let number: Int
     
     /// The number of items per page
-    let size: Int
+    public let size: Int
     
     /// The total amount of items
-    let total: Int
+    public let total: Int
     
 }
 
-extension PageInfo {
+public extension PageInfo {
     
     /// Helper computed property to know whether or not there are more items to be fetched
-    var more: Bool {
+    public var more: Bool {
         return self.size * self.number < self.total
     }
     

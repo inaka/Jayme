@@ -24,7 +24,7 @@
 import Foundation
 
 /// Structure for holding HTTP header data
-struct HTTPHeader {
-    let field: String
-    let value: String
+public struct HTTPHeader {
+    public let field: String
+    public let value: String
 }

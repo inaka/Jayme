@@ -24,15 +24,15 @@
 import Foundation
 
 /// Adds supplies onto ServerRepository for pagination management, based on Grape conventions (https://github.com/davidcelis/api-pagination)
-protocol ServerPagedRepository: ServerRepository {
+public protocol ServerPagedRepository: ServerRepository {
     /// Indicates the number of entities to be fetched per page
     var pageSize: Int { get }
 }
 
-extension ServerPagedRepository {
+public extension ServerPagedRepository {
     
     /// Returns a `Future` containing a tuple with an array of all the `Entity` objects in the repository and a PageInfo object with pagination-related data
-    func findByPage(pageNumber pageNumber: Int) -> Future<([EntityType], PageInfo), ServerBackendError> {
+    public func findByPage(pageNumber pageNumber: Int) -> Future<([EntityType], PageInfo), ServerBackendError> {
         let path = self.path + "?page=\(pageNumber)&per_page=\(self.pageSize)"
         var pageInfo: PageInfo?
         let future = self.backend.futureForPath(path, method: .GET, parameters: nil)

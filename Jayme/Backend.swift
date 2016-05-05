@@ -24,7 +24,7 @@
 import Foundation
 
 /// Abstraction for performing asynchronous operations and returning a `Future` given a path, an HTTP method and, optionally, a parameters dictionary.
-protocol Backend {
+public protocol Backend {
     
     /// The associated type for returning within the `Future` object in `futureForPath`
     /// Classes conforming to `Backend` must tie this associated type to a concrete type

@@ -24,7 +24,7 @@
 import Foundation
 
 /// Represents the result of an asynchronous operation
-enum Result<T, E: ErrorType> {
+public enum Result<T, E: ErrorType> {
     
     /// Indicates that the operation has been completed successfully
     /// Wraps the relevant data associated to the operation response

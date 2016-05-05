@@ -24,13 +24,13 @@
 import Foundation
 
 /// Class for managing internal logging
-class Logger {
+public class Logger {
     
     /// Singleton shared instance
     static let sharedLogger = Logger()
     
     /// Switch for enabling or disabling Jayme's logs
-    var enableLogs = true
+    public var enableLogs = true
     
     // TODO: Pluck out native `print` from `log` function and give the user the ability to inject his own logging function
     
