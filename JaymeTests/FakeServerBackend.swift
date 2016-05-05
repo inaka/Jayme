@@ -30,7 +30,7 @@ class FakeServerBackend: ServerBackend {
     var method: HTTPMethodName?
     var parameters: [String: AnyObject]?
     
-    var completion: Future<(NSData?, PageInfo?), ServerBackendError>.AsyncOperation = { completion in }
+    var completion: Future<(NSData?, PageInfo?), ServerBackendError>.FutureAsyncOperation = { completion in }
     
     override func futureForPath(path: String, method: HTTPMethodName, parameters: [String: AnyObject]? = nil) -> Future <(NSData?, PageInfo?), ServerBackendError> {
         self.path = path
