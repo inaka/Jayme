@@ -6,6 +6,8 @@
 
 [![Build Status](https://api.travis-ci.org/inaka/Jayme.svg)](https://travis-ci.org/inaka/Jayme) [![codecov](https://codecov.io/gh/inaka/jayme/branch/master/graph/badge.svg)](https://codecov.io/gh/inaka/jayme) [![Platform](https://img.shields.io/cocoapods/p/Jayme.svg?style=flat)](http://cocoadocs.org/docsets/Jayme) [![Twitter](https://img.shields.io/badge/twitter-@inaka-blue.svg?style=flat)](http://twitter.com/inaka)
 
+
+
 ## Overview
 
 What's the best place to put your *entities business logic* code? What's the best place to put your *networking* code?
@@ -15,6 +17,8 @@ Jayme answers those two existencial questions by defining a straightforward and 
 It provides a neat API for dealing with REST communication, leaving your `ViewControllers` out of that business by abstracting all that logic, thereby allowing them to focus on what they should do rather on how they should connect to services.
 
 ![Jayme's Architecture In A Nutshell](https://raw.githubusercontent.com/inaka/Jayme/master/Assets/architecture-diagram-1.png)
+
+
 
 ##Features
 
@@ -295,9 +299,27 @@ Notice here:
 
 
 
+
+#### Setting up a custom logging function
+
+If you're relying on third party libraries to manage your logs, or if you have your own custom logging implementations, you can inject whatever you have so that Jayme uses it for its internal logging.
+
+Doing so is quite straightforward, all you have to do is to set a different `loggingFunction` in the `Logger.sharedLogger` instance, which by default, uses the native `print`.
+
+Here you have a code sample demonstrating quickly how you can achieve that:
+
+```swift
+Jayme.Logger.sharedLogger.loggingFunction = { (items: Any..., separator: String, terminator: String) -> () in
+	CustomDebugLog("\(items)")
+}
+```
+
+
+
+
 #### That's pretty much it! 
 
-We are sure you will have to develop more complex scenarios and have bigger challenges by yourself. So, have fun! We encourage you to share anything interesting that can aport more robustness to the library. Pull requests are very welcome!
+We are sure you will have to develop more complex scenarios and have bigger challenges by yourself. So, have fun! We encourage you to share anything interesting that can aport more robustness to the library. Issues and pull requests are very welcome!
 
 
 
@@ -324,6 +346,7 @@ Once you have the server running, all you need to do is run Jayme.
 
 
 - Remember to add an `import Jayme` statement in any source file of your project that needs to make use of the library.
+
 
 
 

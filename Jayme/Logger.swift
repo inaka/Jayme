@@ -27,19 +27,20 @@ import Foundation
 public class Logger {
     
     /// Singleton shared instance
-    static let sharedLogger = Logger()
+    public static let sharedLogger = Logger()
     
     /// Switch for enabling or disabling Jayme's logs
     public var enableLogs = true
     
-    // TODO: Pluck out native `print` from `log` function and give the user the ability to inject his own logging function
+    /// Function to be used for logging; defaulted to `print`
+    public var loggingFunction: (items: Any..., separator: String, terminator: String) -> () = print
     
     // MARK: - Private
     
     internal var requestCounter = 0
-    internal func log(message: String) {
+    internal func log(items: Any..., separator: String = " ", terminator: String = "\n") {
         if self.enableLogs {
-            print(message)
+            self.loggingFunction(items: items, separator: separator, terminator: terminator)
         }
     }
     
