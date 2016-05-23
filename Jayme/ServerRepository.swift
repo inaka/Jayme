@@ -72,7 +72,7 @@ public extension ServerRepository {
     
     // MARK: - Private
     
-    func pathForID(id: Identifier) -> Path {
+    private func pathForID(id: Identifier) -> Path {
         return self.path + "/" + id
     }
     
