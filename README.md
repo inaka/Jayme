@@ -170,7 +170,7 @@ class UserRepository: ServerRepository {
 
     typealias EntityType = User
     let backend = ServerBackend()
-    let path = "users"
+    let name = "users"
     
 }
 ```
@@ -179,7 +179,7 @@ Notice three things here:
 
 - A `typealias` is used for tying the generic `EntityType` to a concrete type (our `User`), hence letting the repository know which kind of entity it works with.
 - Even though the `BackendType` is tied to `ServerBackend` at the `ServerRepository` level; since the latter is a protocol, you still have to instantiate a `ServerBackend` in your concrete repository, which needs to be a class to hold this property value.
-- You have to provide the relative path where the backend is going to look for in order to work with `UserRepository`. If you do not alter the default `ServerBackendConfiguration`, the complete path with which the `ServerBackend` will work internally will be `"localhost:8080/users"`, given the relative path that was defined.
+- You have to provide a `name` where the backend is going to look for in order to work with `UserRepository`. If you do not alter the default `ServerBackendConfiguration`, the complete path with which the `ServerBackend` will work internally will be `"localhost:8080/users"`, given the `name` that was defined.
 
 **That's it!**
 
@@ -274,11 +274,11 @@ class PostRepository: ServerRepository {
     
     typealias EntityType = Post
     let backend = ServerBackend()
-    let path = "posts"
+    let name = "posts"
     
     func findPostsHavingAuthorID(authorID: Identifier) -> Future<[Post], ServerBackendError> {
         // Server-side documentation states that Posts by AuthorID are found in the "/posts/:authorID" path
-        let path = self.path + "/" + authorID
+        let path = self.name + "/" + authorID
         return self.backend.futureForPath(path, method: .GET, parameters: nil)
             .andThen { self.parseDataAsArray($0.0) }
             .andThen { self.parseEntitiesFromArray($0) }
