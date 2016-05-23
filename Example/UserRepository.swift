@@ -27,6 +27,6 @@ class UserRepository: ServerRepository {
     
     typealias EntityType = User
     let backend = ServerBackend()
-    let path = "users"
+    let name = "users"
     
 }

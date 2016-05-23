@@ -26,7 +26,7 @@ import Foundation
 
 class TestDocumentPagedRepository: ServerPagedRepository {
     typealias EntityType = TestDocument
-    let path = "documents"
+    let name = "documents"
     let backend: ServerBackend
     let pageSize: Int
     
