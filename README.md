@@ -60,27 +60,27 @@ There's no concrete definition of any Entity in Jayme. You define them. The only
   - To allow the entity to be unequivocally identified via an `id` field.
 - `DictionaryInitializable`
   - To allow the entity to be initialized from a dictionary (parsed in).
-  - Used in `ServerBackend` by `find` methods.
+  - Used in `ServerRepository` by `find` methods.
 - `DictionaryRepresentable`
   - The other way around, to allow the entity to be represented with a dictionary (parsed out).
-  - Used in `ServerBackend` by `create`, `update` and `delete` methods.
+  - Used in `ServerRepository` by `create`, `update` and `delete` methods.
 
 ### The Inaka Standard
 
-Jayme comes with a default standard implementation, which is based on the conventions that we normally follow at [Inaka](http://inaka.net/). It involves `ServerBackend`, `ServerRepository` and `ServerPagedRepository`.
+Jayme comes with a default standard implementation, which is based on the conventions that we normally follow at [Inaka](http://inaka.net/). It involves `NSURLSessionBackend`, `ServerRepository` and `ServerPagedRepository`.
 
 You can either leverage these defaults or implement your own repositories and backends by conforming directly to the base `Repository` and `Backend` protocols provided by Jayme's foundation, skipping any of the aforementioned classes.
 
 These default interfaces are briefly described below:
 
-#### ServerBackend
+#### NSURLSessionBackend
 
 - This class provides a backend that connects to a server using HTTP REST requests via `NSURLSession`.
 
 
-- By default, it connects to `localhost:8080`, but you can change the base URL path by passing in a custom `ServerBackendConfiguration` object to its initializer. 
-- You can also set custom HTTP headers to be used in the requests when initilizing your own `ServerBackendConfiguration` instance.
-- You can also customize the `NSURLSession` and `HTTPResponseParser` objects that are asked upon `ServerBackend` initialization. However, doing so is discouraged; these last two parameters have been purely added there for unit-testing purposes.
+- By default, it connects to `localhost:8080`, but you can change the base URL path by passing in a custom `NSURLSessionBackendConfiguration` object to its initializer. 
+- You can also set custom HTTP headers to be used in the requests when initilizing your own `NSURLSessionBackendConfiguration` instance.
+- You can also customize the `NSURLSession` and `HTTPResponseParser` objects that are asked upon `NSURLSessionBackend` initialization. However, doing so is discouraged; these last two parameters have been purely added there for unit-testing purposes.
 - This layer returns a `Future` containing a result with either:
   - A tuple with an `NSData?` object, containing relevant data relative to the response, and a `PageInfo?` object containing pagination-related data (if there is any); or...
   - A `ServerBackendError` indicating which error was produced when performing the request.
@@ -169,7 +169,7 @@ import Foundation
 class UserRepository: ServerRepository {
 
     typealias EntityType = User
-    let backend = ServerBackend()
+    let backend = NSURLSessionBackend()
     let name = "users"
     
 }
@@ -178,8 +178,8 @@ class UserRepository: ServerRepository {
 Notice three things here:
 
 - A `typealias` is used for tying the generic `EntityType` to a concrete type (our `User`), hence letting the repository know which kind of entity it works with.
-- Even though the `BackendType` is tied to `ServerBackend` at the `ServerRepository` level; since the latter is a protocol, you still have to instantiate a `ServerBackend` in your concrete repository, which needs to be a class to hold this property value.
-- You have to provide a `name` where the backend is going to look for in order to work with `UserRepository`. If you do not alter the default `ServerBackendConfiguration`, the complete path with which the `ServerBackend` will work internally will be `"localhost:8080/users"`, given the `name` that was defined.
+- Even though the `BackendType` is tied to `NSURLSessionBackend` at the `ServerRepository` level; since the latter is a protocol, you still have to instantiate a `NSURLSessionBackend` in your concrete repository, which needs to be a class to hold this property value.
+- You have to provide a `name` where the backend is going to look for in order to work with `UserRepository`. If you do not alter the default `NSURLSessionBackendConfiguration`, the complete path with which the `NSURLSessionBackend` will work internally will be `"localhost:8080/users"`, given the `name` that was defined.
 
 **That's it!**
 
@@ -273,7 +273,7 @@ And then, define your `PostRepository`, which is similar to your basic existent 
 class PostRepository: ServerRepository {
     
     typealias EntityType = Post
-    let backend = ServerBackend()
+    let backend = NSURLSessionBackend()
     let name = "posts"
     
     func findPostsHavingAuthorID(authorID: Identifier) -> Future<[Post], ServerBackendError> {
