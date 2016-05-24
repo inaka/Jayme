@@ -27,9 +27,9 @@ import Foundation
 class TestDocumentRepository: ServerRepository {
     typealias EntityType = TestDocument
     let name = "documents"
-    let backend: ServerBackend
+    let backend: NSURLSessionBackend
     
-    init(backend: ServerBackend) {
+    init(backend: NSURLSessionBackend) {
         self.backend = backend
     }
 }

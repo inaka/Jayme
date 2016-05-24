@@ -1,5 +1,5 @@
 // Jayme
-// FakeServerBackend.swift
+// NSURLSessionBackendConfiguration.swift
 //
 // Copyright (c) 2016 Inaka - http://inaka.net/
 //
@@ -22,21 +22,18 @@
 // THE SOFTWARE.
 
 import Foundation
-@testable import Jayme
 
-class FakeServerBackend: ServerBackend {
+/// Structure used for holding relevant information that NSURLSessionBackend needs in order to work.
+public struct NSURLSessionBackendConfiguration {
     
-    var path: Path?
-    var method: HTTPMethodName?
-    var parameters: [String: AnyObject]?
+    let basePath: Path
+    let httpHeaders: [HTTPHeader]
     
-    var completion: Future<(NSData?, PageInfo?), ServerBackendError>.FutureAsyncOperation = { completion in }
+    public static var defaultConfiguration = NSURLSessionBackendConfiguration(basePath: "http://localhost:8080",
+                                                                 httpHeaders: NSURLSessionBackendConfiguration.defaultHTTPHeaders)
     
-    override func futureForPath(path: String, method: HTTPMethodName, parameters: [String: AnyObject]? = nil) -> Future <(NSData?, PageInfo?), ServerBackendError> {
-        self.path = path
-        self.method = method
-        self.parameters = parameters
-        return Future(operation: self.completion)
-    }
+    // MARK: - Private
     
+    private static var defaultHTTPHeaders = [HTTPHeader(field: "Accept", value: "application/json"),
+                                             HTTPHeader(field: "Content-Type", value: "application/json")]
 }

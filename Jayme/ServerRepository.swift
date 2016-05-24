@@ -25,7 +25,7 @@ import Foundation
 
 /// Provides a Repository with convenient implementations ready to be used in any repository that needs basic CRUD functionality.
 public protocol ServerRepository: Repository {
-    var backend: ServerBackend { get }
+    var backend: NSURLSessionBackend { get }
 }
 
 // MARK: - Basic Methods API

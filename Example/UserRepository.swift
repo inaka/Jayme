@@ -26,7 +26,7 @@ import Foundation
 class UserRepository: ServerRepository {
     
     typealias EntityType = User
-    let backend = ServerBackend()
+    let backend = NSURLSessionBackend()
     let name = "users"
     
 }

@@ -23,7 +23,7 @@
 
 import Foundation
 
-/// Discrete enumeration representing the possible errors that can be produced within the ServerBackend and ServerRepository layers.
+/// Discrete enumeration representing the possible errors that can be produced within the NSURLSessionBackend and ServerRepository layers.
 public enum ServerBackendError: ErrorType {
     
     /* URL string is bad formed such that NSURL can't be built
