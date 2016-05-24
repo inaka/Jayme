@@ -99,7 +99,7 @@ extension NSURLSessionBackendTests {
     
     func testHTTPResponseParserFailureCallback() {
         let session = FakeURLSession()
-        let exampleError = ServerBackendError.ServerError(statusCode: 500)
+        let exampleError = JaymeError.ServerError(statusCode: 500)
         let result = HTTPResponseParserResult.Failure(exampleError)
         let parser = FakeHTTPResponseParser(result: result)
         

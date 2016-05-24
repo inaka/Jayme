@@ -15,7 +15,7 @@
 		5163A0731CD78B5E00B0EEEF /* Backend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5163A0721CD78B5E00B0EEEF /* Backend.swift */; };
 		5163A0751CD7946000B0EEEF /* NSURLSessionBackend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5163A0741CD7946000B0EEEF /* NSURLSessionBackend.swift */; };
 		5163A0771CD7960800B0EEEF /* NSURLSessionBackendConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5163A0761CD7960800B0EEEF /* NSURLSessionBackendConfiguration.swift */; };
-		5163A0791CD7967900B0EEEF /* ServerBackendError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5163A0781CD7967900B0EEEF /* ServerBackendError.swift */; };
+		5163A0791CD7967900B0EEEF /* JaymeError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5163A0781CD7967900B0EEEF /* JaymeError.swift */; };
 		5163A07B1CD7970200B0EEEF /* HTTPResponseParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5163A07A1CD7970200B0EEEF /* HTTPResponseParser.swift */; };
 		5163A07D1CD797E800B0EEEF /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5163A07C1CD797E800B0EEEF /* Repository.swift */; };
 		5163A07F1CD79A3B00B0EEEF /* ServerRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5163A07E1CD79A3B00B0EEEF /* ServerRepository.swift */; };
@@ -75,7 +75,7 @@
 		5163A0721CD78B5E00B0EEEF /* Backend.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Backend.swift; sourceTree = "<group>"; };
 		5163A0741CD7946000B0EEEF /* NSURLSessionBackend.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSURLSessionBackend.swift; sourceTree = "<group>"; };
 		5163A0761CD7960800B0EEEF /* NSURLSessionBackendConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSURLSessionBackendConfiguration.swift; sourceTree = "<group>"; };
-		5163A0781CD7967900B0EEEF /* ServerBackendError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerBackendError.swift; sourceTree = "<group>"; };
+		5163A0781CD7967900B0EEEF /* JaymeError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JaymeError.swift; sourceTree = "<group>"; };
 		5163A07A1CD7970200B0EEEF /* HTTPResponseParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPResponseParser.swift; sourceTree = "<group>"; };
 		5163A07C1CD797E800B0EEEF /* Repository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
 		5163A07E1CD79A3B00B0EEEF /* ServerRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerRepository.swift; sourceTree = "<group>"; };
@@ -202,7 +202,7 @@
 			children = (
 				5163A0741CD7946000B0EEEF /* NSURLSessionBackend.swift */,
 				5163A0761CD7960800B0EEEF /* NSURLSessionBackendConfiguration.swift */,
-				5163A0781CD7967900B0EEEF /* ServerBackendError.swift */,
+				5163A0781CD7967900B0EEEF /* JaymeError.swift */,
 				5163A07A1CD7970200B0EEEF /* HTTPResponseParser.swift */,
 			);
 			name = NSURLSessionBackend;
@@ -472,7 +472,7 @@
 			files = (
 				5189519E1CD91DEE00089906 /* UserRepository.swift in Sources */,
 				5163A0811CD79C6300B0EEEF /* ServerPagedRepository.swift in Sources */,
-				5163A0791CD7967900B0EEEF /* ServerBackendError.swift in Sources */,
+				5163A0791CD7967900B0EEEF /* JaymeError.swift in Sources */,
 				518951A71CD924A100089906 /* Post.swift in Sources */,
 				5163A0951CD7A51800B0EEEF /* Result.swift in Sources */,
 				5163A08F1CD7A1E800B0EEEF /* PageInfo.swift in Sources */,

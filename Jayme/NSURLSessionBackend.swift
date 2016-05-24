@@ -27,7 +27,7 @@ import Foundation
 public class NSURLSessionBackend: Backend {
     
     public typealias BackendReturnType = (NSData?, PageInfo?)
-    public typealias BackendErrorType = ServerBackendError
+    public typealias BackendErrorType = JaymeError
     
     public init(configuration: NSURLSessionBackendConfiguration = NSURLSessionBackendConfiguration.defaultConfiguration,
          session: NSURLSession = NSURLSession.sharedSession(),
@@ -39,8 +39,8 @@ public class NSURLSessionBackend: Backend {
     
     /// Returns a `Future` containing either:
     /// - A tuple with possible `NSData` relevant to the HTTP response and a possible `PageInfo` object if there is pagination-related info associated to the HTTP response
-    /// - A `ServerBackendError` indicating which error is produced
-    public func futureForPath(path: String, method: HTTPMethodName, parameters: [String: AnyObject]? = nil) -> Future<(NSData?, PageInfo?), ServerBackendError> {
+    /// - A `JaymeError` indicating which error is produced
+    public func futureForPath(path: String, method: HTTPMethodName, parameters: [String: AnyObject]? = nil) -> Future<(NSData?, PageInfo?), JaymeError> {
         return Future() { completion in
             guard let url = self.urlForPath(path) else {
                 completion(.Failure(.BadURL))

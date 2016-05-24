@@ -1,5 +1,5 @@
 // Jayme
-// ServerBackendError.swift
+// JaymeError.swift
 //
 // Copyright (c) 2016 Inaka - http://inaka.net/
 //
@@ -23,8 +23,8 @@
 
 import Foundation
 
-/// Discrete enumeration representing the possible errors that can be produced within the NSURLSessionBackend and ServerRepository layers.
-public enum ServerBackendError: ErrorType {
+/// Discrete enumeration representing the possible errors that can be produced within the backend and repository layers.
+public enum JaymeError: ErrorType {
     
     /* URL string is bad formed such that NSURL can't be built
      */

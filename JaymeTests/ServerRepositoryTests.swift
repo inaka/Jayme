@@ -137,11 +137,11 @@ extension ServerRepositoryTests {
         
         // Simulated completion
         self.backend.completion = { completion in
-            let error = ServerBackendError.NotFound
+            let error = JaymeError.NotFound
             completion(.Failure(error))
         }
         
-        let expectation = self.expectationWithDescription("Expected ServerBackendError.NotFound")
+        let expectation = self.expectationWithDescription("Expected JaymeError.NotFound")
         
         let future = self.repository.findAll()
         future.start() { result in
@@ -207,7 +207,7 @@ extension ServerRepositoryTests {
         
         // Simulated completion
         self.backend.completion = { completion in
-            let error = ServerBackendError.NotFound
+            let error = JaymeError.NotFound
             completion(.Failure(error))
         }
         
@@ -302,7 +302,7 @@ extension ServerRepositoryTests {
         
         // Simulated completion
         self.backend.completion = { completion in
-            let error = ServerBackendError.NotFound
+            let error = JaymeError.NotFound
             completion(.Failure(error))
         }
         
@@ -348,7 +348,7 @@ extension ServerRepositoryTests {
         
         // Simulated completion
         self.backend.completion = { completion in
-            let error = ServerBackendError.NotFound
+            let error = JaymeError.NotFound
             completion(.Failure(error))
         }
         
@@ -393,7 +393,7 @@ extension ServerRepositoryTests {
         
         // Simulated completion
         self.backend.completion = { completion in
-            let error = ServerBackendError.NotFound
+            let error = JaymeError.NotFound
             completion(.Failure(error))
         }
         
