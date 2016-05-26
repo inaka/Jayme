@@ -44,3 +44,7 @@ typealias ServerRepository = CRUDRepository
 /// StringDictionary -> [String: AnyObject]
 @available(*, unavailable, renamed = "[String: AnyObject]")
 typealias StringDictionary = [String: AnyObject]
+
+/// ServerPagedRepository -> PagedRepository
+@available(*, unavailable, renamed = "PagedRepository")
+typealias ServerPagedRepository = PagedRepository

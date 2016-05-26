@@ -36,8 +36,8 @@ public extension CRUDRepository {
     public func findAll() -> Future<[EntityType], JaymeError> {
         let path = self.name
         return self.backend.futureForPath(path, method: .GET, parameters: nil)
-            .andThen { self.parseDataAsArray($0.0) }
-            .andThen { self.parseEntitiesFromArray($0) }
+            .andThen { DataParser().dictionariesFromData($0.0) }
+            .andThen { EntityParser().entitiesFromDictionaries($0) }
     }
     
     /// Returns a `Future` containing the `Entity` matching the `id`.
@@ -45,8 +45,8 @@ public extension CRUDRepository {
     public func findByID(id: Identifier) -> Future<EntityType, JaymeError> {
         let path = self.pathForID(id)
         return self.backend.futureForPath(path, method: .GET, parameters: nil)
-            .andThen { self.parseDataAsDictionary($0.0) }
-            .andThen { self.parseEntityFromDictionary($0) }
+            .andThen { DataParser().dictionaryFromData($0.0) }
+            .andThen { EntityParser().entityFromDictionary($0) }
     }
     
     /// Creates the entity in the repository. Returns a `Future` with the `Void` result or a `JaymeError`
@@ -77,60 +77,3 @@ public extension CRUDRepository {
     }
     
 }
-
-// MARK: - Parsing
-
-/// Provides convenient parsing implementations
-public extension CRUDRepository {
-    
-    /// Parses data structured as array of dictionaries, and returns a corresponding `Future`
-    public func parseDataAsArray(maybeData: NSData?) -> Future<[[String: AnyObject]], JaymeError> {
-        return Future() { completion in
-            guard let
-                data = maybeData,
-                result = try? NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments),
-                array = result as? [[String: AnyObject]]
-                else {
-                    completion(.Failure(.BadResponse))
-                    return
-            }
-            completion(.Success(array))
-        }
-    }
-    
-    /// Parses data structured as a single dictionary, and returns a corresponding `Future`
-    public func parseDataAsDictionary(maybeData: NSData?) -> Future<[String: AnyObject], JaymeError> {
-        return Future() { completion in
-            guard let
-                data = maybeData,
-                result = try? NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments),
-                dictionary = result as? [String: AnyObject]
-                else {
-                    completion(.Failure(.BadResponse))
-                    return
-            }
-            completion(.Success(dictionary))
-        }
-    }
-    
-    /// Converts an array of dictionaries to an array of Entities, and returns a corresponding `Future`
-    public func parseEntitiesFromArray(array: [[String: AnyObject]]) -> Future<[EntityType], JaymeError> {
-        return Future() { completion in
-            let entities = array.flatMap({ try? EntityType(dictionary: $0) })
-            completion(.Success(entities))
-        }
-    }
-    
-    /// Converts a single dictionary to an Entity, and returns a corresponding `Future`
-    public func parseEntityFromDictionary(dictionary: [String: AnyObject]) -> Future<EntityType, JaymeError> {
-        return Future() { completion in
-            guard let entity = try? EntityType(dictionary: dictionary) else {
-                completion(.Failure(.ParsingError))
-                return
-            }
-            completion(.Success(entity))
-        }
-    }
-    
-}
-
