@@ -31,7 +31,7 @@ struct TestDocument: Identifiable {
 
 extension TestDocument: DictionaryInitializable, DictionaryRepresentable {
     
-    init?(dictionary: StringDictionary) {
+    init?(dictionary: [String: AnyObject]) {
         guard let
             id = dictionary["id"] as? String,
             name = dictionary["name"] as? String
