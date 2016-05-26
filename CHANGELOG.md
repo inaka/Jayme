@@ -23,6 +23,8 @@ All notable changes to this project will be documented in this file. `Jayme` a
 - `ServerRepository` has been renamed to `CRUDRepository`. (Issue [#19](https://github.com/inaka/Jayme/issues/19))
 - `StringDictionary` typealias has been removed. (Issue [#28](https://github.com/inaka/Jayme/issues/28))
 - `init?(dictionary)` has been replaced by `init(dictionary) throws` in `DictionaryInitializable` protocol. (Issue [#25](https://github.com/inaka/Jayme/issues/25))
+- `PagedRepository` no longer conforms to `CRUDRepository` (ex `ServerRepository`); now it conforms directly to `Repository`. (Issue [#20](https://github.com/inaka/Jayme/issues/20))
+- Convenient parsing functions have been plucked out from `CRUDRepository` (ex `ServerRepository`) and put into new classes named `DataParser` and `EntityParser`.  (Issue [#20](https://github.com/inaka/Jayme/issues/20))
 
 ---
 
