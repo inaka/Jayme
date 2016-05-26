@@ -23,8 +23,6 @@
 
 import Foundation
 
-public typealias Path = String
-
 /// Abstraction for representing a Repository of a certain kind of Entities
 public protocol Repository {
     
@@ -39,8 +37,8 @@ public protocol Repository {
     /// Classes conforming to `Repository` must provide it
     var backend: BackendType { get }
     
-    /// The relative path used to refer to the Repository (e.g. "users")
-    /// Classes conforming to `Repository` must provide this path
-    var path: Path { get }
-    
+    /// A name that refers to the group of entities associated with the repository (e.g. "users")
+    /// Classes conforming to `Repository` must provide this name
+    var name: String { get }
+
 }

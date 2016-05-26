@@ -27,7 +27,7 @@ class PostRepository: ServerRepository {
     
     typealias EntityType = Post
     let backend = ServerBackend()
-    let path = "posts"
+    let name = "posts"
     
     func findPostsForUser(user: User) -> Future<[Post], ServerBackendError> {
         return self.findAll().map {

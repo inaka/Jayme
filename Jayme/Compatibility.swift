@@ -1,5 +1,5 @@
-// JaymeExample
-// UserRepository.swift
+// Jayme
+// Compatibility.swift
 //
 // Copyright (c) 2016 Inaka - http://inaka.net/
 //
@@ -23,10 +23,4 @@
 
 import Foundation
 
-class UserRepository: ServerRepository {
-    
-    typealias EntityType = User
-    let backend = ServerBackend()
-    let name = "users"
-    
-}
+/// This file is provided with the aim of providing compatibility between library versions.

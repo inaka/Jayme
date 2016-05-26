@@ -26,7 +26,7 @@ import Foundation
 
 class TestDocumentRepository: ServerRepository {
     typealias EntityType = TestDocument
-    let path = "documents"
+    let name = "documents"
     let backend: ServerBackend
     
     init(backend: ServerBackend) {
