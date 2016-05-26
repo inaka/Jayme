@@ -23,6 +23,8 @@
 
 import Foundation
 
+public typealias Path = String
+
 /// Abstraction for performing asynchronous operations and returning a `Future` given a path, an HTTP method and, optionally, a parameters dictionary.
 public protocol Backend {
     

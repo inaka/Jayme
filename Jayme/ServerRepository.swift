@@ -34,7 +34,7 @@ public extension ServerRepository {
     
     /// Returns a `Future` containing an array of all the `Entity` objects in the repository.
     public func findAll() -> Future<[EntityType], ServerBackendError> {
-        let path = self.path
+        let path = self.name
         return self.backend.futureForPath(path, method: .GET, parameters: nil)
             .andThen { self.parseDataAsArray($0.0) }
             .andThen { self.parseEntitiesFromArray($0) }
@@ -72,8 +72,8 @@ public extension ServerRepository {
     
     // MARK: - Private
     
-    func pathForID(id: Identifier) -> Path {
-        return self.path + "/" + id
+    private func pathForID(id: Identifier) -> Path {
+        return self.name + "/" + id
     }
     
 }
