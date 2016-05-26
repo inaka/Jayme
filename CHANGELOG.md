@@ -22,6 +22,7 @@ All notable changes to this project will be documented in this file. `Jayme` a
 - `ServerBackendError` has been renamed to `JaymeError`.
 - `ServerRepository` has been renamed to `CRUDRepository`.
 - `StringDictionary` typealias has been removed.
+- `init?(dictionary)` has been replaced by `init(dictionary) throws` in `DictionaryInitializable` protocol.
 
 ---
 
