@@ -24,7 +24,7 @@
 import Foundation
 @testable import Jayme
 
-class TestDocumentPagedRepository: ServerPagedRepository {
+class TestDocumentPagedRepository: PagedRepository {
     typealias EntityType = TestDocument
     let name = "documents"
     let backend: NSURLSessionBackend

@@ -1,5 +1,5 @@
 // Jayme
-// ServerPagedRepository.swift
+// PagedRepository.swift
 //
 // Copyright (c) 2016 Inaka - http://inaka.net/
 //
@@ -24,12 +24,12 @@
 import Foundation
 
 /// Adds supplies onto CRUDRepository for pagination management, based on Grape conventions (https://github.com/davidcelis/api-pagination)
-public protocol ServerPagedRepository: CRUDRepository {
+public protocol PagedRepository: CRUDRepository {
     /// Indicates the number of entities to be fetched per page
     var pageSize: Int { get }
 }
 
-public extension ServerPagedRepository {
+public extension PagedRepository {
     
     /// Returns a `Future` containing a tuple with an array of all the `Entity` objects in the repository and a PageInfo object with pagination-related data
     public func findByPage(pageNumber pageNumber: Int) -> Future<([EntityType], PageInfo), JaymeError> {

@@ -1,5 +1,5 @@
 // Jayme
-// ServerPagedRepositoryTests.swift
+// PagedRepositoryTests.swift
 //
 // Copyright (c) 2016 Inaka - http://inaka.net/
 //
@@ -24,7 +24,7 @@
 import XCTest
 @testable import Jayme
 
-class ServerPagedRepositoryTests: XCTestCase {
+class PagedRepositoryTests: XCTestCase {
 
     var backend: TestingBackend!
     var repository: TestDocumentPagedRepository!
@@ -41,7 +41,7 @@ class ServerPagedRepositoryTests: XCTestCase {
 
 // MARK: - Calls To Backend Tests
 
-extension ServerPagedRepositoryTests {
+extension PagedRepositoryTests {
     
     func testFindAllCall() {
         self.repository.findByPage(pageNumber: 1)
@@ -52,7 +52,7 @@ extension ServerPagedRepositoryTests {
 
 // MARK: - Response Parsing Tests
 
-extension ServerPagedRepositoryTests {
+extension PagedRepositoryTests {
 
     // Check the PageInfo object that is returned
     func testFindAllSuccessCallback() {
