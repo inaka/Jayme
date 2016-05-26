@@ -28,7 +28,7 @@ It provides a neat API for dealing with REST communication, leaving your `ViewCo
   - You will see generics almost everywhere in the library. That gives you high flexibility by leaving up to you the decision of choosing which types best fit your needs.
 - **Error Handling**
   - With the aid of generics, you can implement and use your own error types.
-  - Jayme Standard comes with a default list of discrete errors (defined in `ServerBackendError`) which are useful in the `ViewController` layer. 
+  - Jayme Standard comes with a default list of discrete errors (defined in `JaymeError`) which are useful in the `ViewController` layer. 
   - The idea is that thrown error types should be discrete and grouped by different and meaningful UI scenarios. For instance, you might want to present a *"User not found. Want to invite him?"* dialog box for a specific 404 from a certain `.GET` call, or you might want to present an alert view indicating that the server is not responding properly for any 5xx error.
 - **Futures / Results**
   - From experience, we've found out that the [Future Pattern](https://realm.io/news/swift-summit-javier-soto-futures/) is a very convenient way for layouting asynchronous code. Therefore, we decided that it would be *the way to go* for Jayme.
@@ -83,7 +83,7 @@ These default interfaces are briefly described below:
 - You can also customize the `NSURLSession` and `HTTPResponseParser` objects that are asked upon `NSURLSessionBackend` initialization. However, doing so is discouraged; these last two parameters have been purely added there for unit-testing purposes.
 - This layer returns a `Future` containing a result with either:
   - A tuple with an `NSData?` object, containing relevant data relative to the response, and a `PageInfo?` object containing pagination-related data (if there is any); or...
-  - A `ServerBackendError` indicating which error was produced when performing the request.
+  - A `JaymeError` indicating which error was produced when performing the request.
 
 #### *ServerRepository*
 
@@ -201,7 +201,7 @@ class UsersViewController: UIViewController {
                 self.users = users
                 self.tableView.reloadData()
             case .Failure(let error):
-                // You've got a discrete ServerBackendError indicating what happened
+                // You've got a discrete JaymeError indicating what happened
                 self.showAlertControllerForError(error)
             }
         }
@@ -276,7 +276,7 @@ class PostRepository: ServerRepository {
     let backend = NSURLSessionBackend()
     let name = "posts"
     
-    func findPostsHavingAuthorID(authorID: Identifier) -> Future<[Post], ServerBackendError> {
+    func findPostsHavingAuthorID(authorID: Identifier) -> Future<[Post], JaymeError> {
         // Server-side documentation states that Posts by AuthorID are found in the "/posts/:authorID" path
         let path = self.name + "/" + authorID
         return self.backend.futureForPath(path, method: .GET, parameters: nil)

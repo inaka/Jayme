@@ -24,7 +24,7 @@
 import Foundation
 
 typealias FullHTTPResponse = (data: NSData?, urlResponse: NSURLResponse?, error: NSError?)
-typealias HTTPResponseParserResult = Result<(data: NSData?, pageInfo: PageInfo?), ServerBackendError>
+typealias HTTPResponseParserResult = Result<(data: NSData?, pageInfo: PageInfo?), JaymeError>
 
 public class HTTPResponseParser {
     
@@ -44,7 +44,7 @@ public class HTTPResponseParser {
     
     // MARK: - Private
     
-    private func errorForStatusCode(code: Int) -> ServerBackendError? {
+    private func errorForStatusCode(code: Int) -> JaymeError? {
         switch code {
         case 200...299:
             return nil

@@ -55,14 +55,14 @@ class UsersViewController: UIViewController {
         }
     }
     
-    private func showAlertControllerForError(error: ServerBackendError) {
+    private func showAlertControllerForError(error: JaymeError) {
         let message = self.descriptionForError(error)
         let alert = UIAlertController(title: "Error", message: message, preferredStyle: .Alert)
         alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
         self.presentViewController(alert, animated: true, completion: nil)
     }
     
-    private func descriptionForError(error: ServerBackendError) -> String {
+    private func descriptionForError(error: JaymeError) -> String {
         switch error {
         case .ServerError(let code):
             return "Server Error (code: \(code))"

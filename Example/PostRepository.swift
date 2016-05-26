@@ -29,7 +29,7 @@ class PostRepository: ServerRepository {
     let backend = NSURLSessionBackend()
     let name = "posts"
     
-    func findPostsForUser(user: User) -> Future<[Post], ServerBackendError> {
+    func findPostsForUser(user: User) -> Future<[Post], JaymeError> {
         return self.findAll().map {
             $0.filter { $0.authorID == user.id }
         }

@@ -97,11 +97,11 @@ extension ServerPagedRepositoryTests {
         
         // Simulated completion
         self.backend.completion = { completion in
-            let error = ServerBackendError.NotFound
+            let error = JaymeError.NotFound
             completion(.Failure(error))
         }
         
-        let expectation = self.expectationWithDescription("Expected ServerBackendError.NotFound")
+        let expectation = self.expectationWithDescription("Expected JaymeError.NotFound")
         
         let future = self.repository.findByPage(pageNumber: 1)
         future.start() { result in

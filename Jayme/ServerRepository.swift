@@ -33,7 +33,7 @@ public protocol ServerRepository: Repository {
 public extension ServerRepository {
     
     /// Returns a `Future` containing an array of all the `Entity` objects in the repository.
-    public func findAll() -> Future<[EntityType], ServerBackendError> {
+    public func findAll() -> Future<[EntityType], JaymeError> {
         let path = self.name
         return self.backend.futureForPath(path, method: .GET, parameters: nil)
             .andThen { self.parseDataAsArray($0.0) }
@@ -42,29 +42,29 @@ public extension ServerRepository {
     
     /// Returns a `Future` containing the `Entity` matching the `id`.
     /// Watch out for a `.Failure` case with `EntityNotFound` error.
-    public func findByID(id: Identifier) -> Future<EntityType, ServerBackendError> {
+    public func findByID(id: Identifier) -> Future<EntityType, JaymeError> {
         let path = self.pathForID(id)
         return self.backend.futureForPath(path, method: .GET, parameters: nil)
             .andThen { self.parseDataAsDictionary($0.0) }
             .andThen { self.parseEntityFromDictionary($0) }
     }
     
-    /// Creates the entity in the repository. Returns a `Future` with the `Void` result or a `ServerBackendError`
-    public func create(entity: EntityType) -> Future<Void, ServerBackendError> {
+    /// Creates the entity in the repository. Returns a `Future` with the `Void` result or a `JaymeError`
+    public func create(entity: EntityType) -> Future<Void, JaymeError> {
         let path = self.pathForID(entity.id)
         return self.backend.futureForPath(path, method: .POST, parameters: entity.dictionaryValue)
             .map { _ in return }
     }
     
-    /// Updates the entity in the repository. Returns a `Future` with the `Void` result or a `ServerBackendError`
-    public func update(entity: EntityType) -> Future<Void, ServerBackendError> {
+    /// Updates the entity in the repository. Returns a `Future` with the `Void` result or a `JaymeError`
+    public func update(entity: EntityType) -> Future<Void, JaymeError> {
         let path = self.pathForID(entity.id)
         return self.backend.futureForPath(path, method: .PUT, parameters: entity.dictionaryValue)
             .map { _ in return }
     }
     
-    /// Deletes the entity from the repository. Returns a `Future` with the `Void` result or a `ServerBackendError`
-    public func delete(entity: EntityType) -> Future<Void, ServerBackendError> {
+    /// Deletes the entity from the repository. Returns a `Future` with the `Void` result or a `JaymeError`
+    public func delete(entity: EntityType) -> Future<Void, JaymeError> {
         let path = self.pathForID(entity.id)
         return self.backend.futureForPath(path, method: .DELETE, parameters: entity.dictionaryValue)
             .map { _ in return }
@@ -84,7 +84,7 @@ public extension ServerRepository {
 public extension ServerRepository {
     
     /// Parses data structured as array of dictionaries, and returns a corresponding `Future`
-    public func parseDataAsArray(maybeData: NSData?) -> Future<[StringDictionary], ServerBackendError> {
+    public func parseDataAsArray(maybeData: NSData?) -> Future<[StringDictionary], JaymeError> {
         return Future() { completion in
             guard let
                 data = maybeData,
@@ -99,7 +99,7 @@ public extension ServerRepository {
     }
     
     /// Parses data structured as a single dictionary, and returns a corresponding `Future`
-    public func parseDataAsDictionary(maybeData: NSData?) -> Future<StringDictionary, ServerBackendError> {
+    public func parseDataAsDictionary(maybeData: NSData?) -> Future<StringDictionary, JaymeError> {
         return Future() { completion in
             guard let
                 data = maybeData,
@@ -114,7 +114,7 @@ public extension ServerRepository {
     }
     
     /// Converts an array of dictionaries to an array of Entities, and returns a corresponding `Future`
-    public func parseEntitiesFromArray(array: [StringDictionary]) -> Future<[EntityType], ServerBackendError> {
+    public func parseEntitiesFromArray(array: [StringDictionary]) -> Future<[EntityType], JaymeError> {
         return Future() { completion in
             let entities = array.flatMap({ EntityType(dictionary: $0) })
             completion(.Success(entities))
@@ -122,7 +122,7 @@ public extension ServerRepository {
     }
     
     /// Converts a single dictionary to an Entity, and returns a corresponding `Future`
-    public func parseEntityFromDictionary(dictionary: StringDictionary) -> Future<EntityType, ServerBackendError> {
+    public func parseEntityFromDictionary(dictionary: StringDictionary) -> Future<EntityType, JaymeError> {
         return Future() { completion in
             guard let entity = EntityType(dictionary: dictionary) else {
                 completion(.Failure(.ParsingError))

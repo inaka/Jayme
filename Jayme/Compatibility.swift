@@ -32,3 +32,7 @@ typealias ServerBackend = NSURLSessionBackend
 /// ServerBackendConfiguration -> NSURLSessionBackendConfiguration
 @available(*, unavailable, renamed = "NSURLSessionBackendConfiguration")
 typealias ServerBackendConfiguration = NSURLSessionBackendConfiguration
+
+/// ServerBackendError -> JaymeError
+@available(*, unavailable, renamed = "JaymeError")
+typealias ServerBackendError = JaymeError

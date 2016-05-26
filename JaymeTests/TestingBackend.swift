@@ -30,9 +30,9 @@ class TestingBackend: NSURLSessionBackend {
     var method: HTTPMethodName?
     var parameters: [String: AnyObject]?
     
-    var completion: Future<(NSData?, PageInfo?), ServerBackendError>.FutureAsyncOperation = { completion in }
+    var completion: Future<(NSData?, PageInfo?), JaymeError>.FutureAsyncOperation = { completion in }
     
-    override func futureForPath(path: String, method: HTTPMethodName, parameters: [String: AnyObject]? = nil) -> Future <(NSData?, PageInfo?), ServerBackendError> {
+    override func futureForPath(path: String, method: HTTPMethodName, parameters: [String: AnyObject]? = nil) -> Future <(NSData?, PageInfo?), JaymeError> {
         self.path = path
         self.method = method
         self.parameters = parameters
