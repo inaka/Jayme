@@ -20,7 +20,7 @@ All notable changes to this project will be documented in this file. `Jayme` a
 
 
 
-- `path` has been renamed to `name` in `Repository` protocol declaration.
+- `path` variable has been renamed to `name` in `Repository` protocol declaration.
 
 ---
 
