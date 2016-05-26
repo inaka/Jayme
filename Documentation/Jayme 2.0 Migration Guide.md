@@ -27,12 +27,19 @@ However, there are some other changes that would have required overwhelming (if 
 
 They are listed below:
 
-- `path` variable has been renamed to `name` in `Repository` protocol declaration (related issue: [#17](https://github.com/inaka/Jayme/issues/17)).
+- `path` variable has been renamed to `name` in `Repository` protocol declaration. (related issue: [#17](https://github.com/inaka/Jayme/issues/17))
   - You have to change every `path` appearance in your Repositories by using `name` instead.
-- `init?(dictionary: StringDictionary)` has been replaced by `init(dictionary: [String: AnyObject]) throws` (related issues: [#25](https://github.com/inaka/Jayme/issues/25), [#28](https://github.com/inaka/Jayme/issues/28)).
+- `init?(dictionary: StringDictionary)` has been replaced by `init(dictionary: [String: AnyObject]) throws`. (related issues: [#25](https://github.com/inaka/Jayme/issues/25), [#28](https://github.com/inaka/Jayme/issues/28))
   - `StringDictionary` → `[String: AnyObject]` replacements should be suggested by the compiler.
   - You have to manually replace your `init?` initializers for every class or struct that conforms to `DictionaryInitializable` by its throwable equivalent.
   - You have to perform `{ throw JaymeError.ParsingError }` whenever you can't initialize a `DictionaryInitializable` object instead of performing `{ return nil }`.
+
+- Convenient parsing functions under one of the extensions in `ServerRepository` (now `CRUDRepository`) have been moved into separated new classes called `DataParser` and `EntityParser`. If you were calling those functions somewhere in your code, you have to change their calls to use those parsers classes instead of your repository itself. (related issue: [#20](https://github.com/inaka/Jayme/issues/20))
+  - Possible replacements are:
+    - `self.parseDataAsArray(…)` → `DataParser().dictionariesFromData(…)`
+    - `self.parseDataAsDictionary(…)` → `DataParser().dictionaryFromData(…)`
+    - `self.parseEntitiesFromArray(…)` → `EntityParser().entitiesFromDictionaries(…)`
+    - `self.parseEntityFromDictionary(…)` → `EntityParser().entityFromDictionary(…)`
 
 ---
 
