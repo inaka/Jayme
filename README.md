@@ -40,7 +40,7 @@ It provides a neat API for dealing with REST communication, leaving your `ViewCo
   - Unit-tests are easy to implement (and, of course, encouraged) in your own repositories, backends and entities. Check out how Jayme unit tests work to see examples. You're going to encounter several fakes that are easy to reuse and adapt to your tests.
 - **No Dependencies**
   - Jayme does not leverage any external dependency. We consider simplicity to be a very important concept to keep always in mind.
-  - Nonetheless, we highly suggest that you integrate [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON) hand in hand with Jayme, to make your life easier when it comes to fill out `init?(dictionary: StringDictionary)` methods for your Entities. You can turn a `dictionary` into a `JSON` object very quickly and parse out the relevant data easily from that point.
+  - Nonetheless, we highly suggest that you integrate [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON) hand in hand with Jayme, to make your life easier when it comes to fill out `init?(dictionary)` methods for your Entities. You can turn a `dictionary` into a `JSON` object very quickly and parse out the relevant data easily from that point.
 
 
 
@@ -134,7 +134,7 @@ struct User: Identifiable {
 
 extension User: DictionaryInitializable, DictionaryRepresentable {
     
-    init?(dictionary: StringDictionary) {
+    init?(dictionary: [String: AnyObject]) {
         let json = JSON(dictionary)
         guard let
             id = json["id"].string,
@@ -146,7 +146,7 @@ extension User: DictionaryInitializable, DictionaryRepresentable {
         self.email = email
     }
     
-    var dictionaryValue: StringDictionary {
+    var dictionaryValue: [String: AnyObject] {
         return [
             "id": self.id,
             "name": self.name,
@@ -244,7 +244,7 @@ struct Post: Identifiable {
 
 extension Post: DictionaryInitializable, DictionaryRepresentable {
     
-    init?(dictionary: StringDictionary) {
+    init?(dictionary: [String: AnyObject]) {
         let json = JSON(dictionary)
         guard let
             id = json["id"].string,
@@ -256,7 +256,7 @@ extension Post: DictionaryInitializable, DictionaryRepresentable {
         self.content = content
     }
     
-    var dictionaryValue: StringDictionary {
+    var dictionaryValue: [String: AnyObject] {
         return [
             "id": self.id,
             "author_id": self.authorID,
