@@ -20,6 +20,7 @@ All notable changes to this project will be documented in this file. `Jayme` a
 - `ServerBackend` protocol has been renamed to `NSURLSessionBackend`.
 - `ServerBackendConfiguration` has been renamed to `NSURLSessionBackendConfiguration`.
 - `ServerBackendError` has been renamed to `JaymeError`.
+- `ServerRepository` has been renamed to `CRUDRepository`.
 
 ---
 
