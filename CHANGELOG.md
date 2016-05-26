@@ -16,12 +16,13 @@ All notable changes to this project will be documented in this file. `Jayme` a
 
 ## 2.0.0
 
-- `path` variable has been renamed to `name` in `Repository` protocol declaration.
-- `ServerBackend` protocol has been renamed to `NSURLSessionBackend`.
-- `ServerBackendConfiguration` has been renamed to `NSURLSessionBackendConfiguration`.
-- `ServerBackendError` has been renamed to `JaymeError`.
-- `ServerRepository` has been renamed to `CRUDRepository`.
-- `StringDictionary` typealias has been removed.
+- `path` variable has been renamed to `name` in `Repository` protocol declaration. (Issue [#17](https://github.com/inaka/Jayme/issues/17))
+- `ServerBackend` protocol has been renamed to `NSURLSessionBackend`. (Issue [#18](https://github.com/inaka/Jayme/issues/18))
+- `ServerBackendConfiguration` has been renamed to `NSURLSessionBackendConfiguration`. (Issue [#18](https://github.com/inaka/Jayme/issues/18))
+- `ServerBackendError` has been renamed to `JaymeError`. (Issue [#21](https://github.com/inaka/Jayme/issues/21))
+- `ServerRepository` has been renamed to `CRUDRepository`. (Issue [#19](https://github.com/inaka/Jayme/issues/19))
+- `StringDictionary` typealias has been removed. (Issue [#28](https://github.com/inaka/Jayme/issues/28))
+- `init?(dictionary)` has been replaced by `init(dictionary) throws` in `DictionaryInitializable` protocol. (Issue [#25](https://github.com/inaka/Jayme/issues/25))
 
 ---
 

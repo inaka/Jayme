@@ -25,5 +25,5 @@ import Foundation
 
 /// Protocol for allowing entities to be initialized (parsed in) from a dictionary
 public protocol DictionaryInitializable {
-    init?(dictionary: [String: AnyObject])
+    init(dictionary: [String: AnyObject]) throws
 }

@@ -116,7 +116,7 @@ public extension CRUDRepository {
     /// Converts an array of dictionaries to an array of Entities, and returns a corresponding `Future`
     public func parseEntitiesFromArray(array: [[String: AnyObject]]) -> Future<[EntityType], JaymeError> {
         return Future() { completion in
-            let entities = array.flatMap({ EntityType(dictionary: $0) })
+            let entities = array.flatMap({ try? EntityType(dictionary: $0) })
             completion(.Success(entities))
         }
     }
@@ -124,7 +124,7 @@ public extension CRUDRepository {
     /// Converts a single dictionary to an Entity, and returns a corresponding `Future`
     public func parseEntityFromDictionary(dictionary: [String: AnyObject]) -> Future<EntityType, JaymeError> {
         return Future() { completion in
-            guard let entity = EntityType(dictionary: dictionary) else {
+            guard let entity = try? EntityType(dictionary: dictionary) else {
                 completion(.Failure(.ParsingError))
                 return
             }

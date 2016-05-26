@@ -31,13 +31,11 @@ struct TestDocument: Identifiable {
 
 extension TestDocument: DictionaryInitializable, DictionaryRepresentable {
     
-    init?(dictionary: [String: AnyObject]) {
+    init(dictionary: [String: AnyObject]) throws {
         guard let
             id = dictionary["id"] as? String,
             name = dictionary["name"] as? String
-            else {
-                return nil
-        }
+            else { throw JaymeError.ParsingError }
         self.id = id
         self.name = name
     }

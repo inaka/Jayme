@@ -18,7 +18,9 @@ It provides a neat API for dealing with REST communication, leaving your `ViewCo
 
 ![Jayme's Architecture In A Nutshell](https://raw.githubusercontent.com/inaka/Jayme/master/Assets/architecture-diagram-1.png)
 
+## Migration Guides
 
+- [Jayme 2.0 Migration Guide](https://github.com/inaka/Jayme/blob/master/Documentation/Jayme%202.0%20Migration%20Guide.md)
 
 ##Features
 
@@ -40,7 +42,7 @@ It provides a neat API for dealing with REST communication, leaving your `ViewCo
   - Unit-tests are easy to implement (and, of course, encouraged) in your own repositories, backends and entities. Check out how Jayme unit tests work to see examples. You're going to encounter several fakes that are easy to reuse and adapt to your tests.
 - **No Dependencies**
   - Jayme does not leverage any external dependency. We consider simplicity to be a very important concept to keep always in mind.
-  - Nonetheless, we highly suggest that you integrate [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON) hand in hand with Jayme, to make your life easier when it comes to fill out `init?(dictionary)` methods for your Entities. You can turn a `dictionary` into a `JSON` object very quickly and parse out the relevant data easily from that point.
+  - Nonetheless, we highly suggest that you integrate [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON) hand in hand with Jayme, to make your life easier when it comes to fill out `init(dictionary)` methods for your Entities. You can turn a `dictionary` into a `JSON` object very quickly and parse out the relevant data easily from that point.
 
 
 
@@ -134,13 +136,13 @@ struct User: Identifiable {
 
 extension User: DictionaryInitializable, DictionaryRepresentable {
     
-    init?(dictionary: [String: AnyObject]) {
+    init(dictionary: [String: AnyObject]) throws {
         let json = JSON(dictionary)
         guard let
             id = json["id"].string,
             name = json["name"].string,
             email = json["email"].string
-            else { return nil }
+            else { throw JaymeError.ParsingError }
         self.id = id
         self.name = name
         self.email = email
@@ -244,13 +246,13 @@ struct Post: Identifiable {
 
 extension Post: DictionaryInitializable, DictionaryRepresentable {
     
-    init?(dictionary: [String: AnyObject]) {
+    init(dictionary: [String: AnyObject]) throws {
         let json = JSON(dictionary)
         guard let
             id = json["id"].string,
             authorID = json["author_id"].string,
             content = json["content"].string
-            else { return nil }
+            else { throw JaymeError.ParsingError }
         self.id = id
         self.authorID = authorID
         self.content = content
