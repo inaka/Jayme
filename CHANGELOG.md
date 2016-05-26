@@ -16,28 +16,16 @@ All notable changes to this project will be documented in this file. `Jayme` a
 
 ## 2.0.0
 
-
-
-
-
 - `path` variable has been renamed to `name` in `Repository` protocol declaration.
 
 ---
 
 ## 1.0.4
 
-
-
-
-
 - Added support for custom logging function injection.
 - Fixed access level related issues.
 
 ## 1.0.3
-
-
-
-
 
 - Lowered deployment target to `8.0` since `9.3` was unnecessary.
 
