@@ -40,3 +40,7 @@ typealias ServerBackendError = JaymeError
 /// ServerRepository -> CRUDRepository
 @available(*, unavailable, renamed = "CRUDRepository")
 typealias ServerRepository = CRUDRepository
+
+/// StringDictionary -> [String: AnyObject]
+@available(*, unavailable, renamed = "[String: AnyObject]")
+typealias StringDictionary = [String: AnyObject]
