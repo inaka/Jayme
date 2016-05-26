@@ -69,7 +69,7 @@ There's no concrete definition of any Entity in Jayme. You define them. The only
 
 ### The Inaka Standard
 
-Jayme comes with a default standard implementation, which is based on the conventions that we normally follow at [Inaka](http://inaka.net/). It involves `NSURLSessionBackend`, `CRUDRepository` and `ServerPagedRepository`.
+Jayme comes with a default standard implementation, which is based on the conventions that we normally follow at [Inaka](http://inaka.net/). It involves the `NSURLSessionBackend` class, and the `CRUDRepository` and `PagedRepository` protocols.
 
 You can either leverage these defaults or implement your own repositories and backends by conforming directly to the base `Repository` and `Backend` protocols provided by Jayme's foundation, skipping any of the aforementioned classes.
 
@@ -89,17 +89,17 @@ These default interfaces are briefly described below:
 
 #### *CRUDRepository*
 
-- This protocol provides a Repository with convenient CRUD-like functions that are already implemented and ready to be used in any Repository that conforms to it, such as:
+- This protocol provides convenient CRUD-like functions that are already implemented and ready to be used in any Repository that conforms to it, such as:
   - `findAll()` for fetching all the Entities from the Repository.
   - `findByID(id)` for fetching a specific Entity matching a given `id`.
   - `create(entity)` for creating a new Entity in the Repository.
   - `update(entity)` for updating an existing Entity with its new values.
   - `delete(entity)` for deleting an existing Entity from the Repository.
 
-#### *ServerPagedRepository*
+#### *PagedRepository*
 
-- This protocol adds pagination-related functionality to the already known `CRUDRepository`. The extra function to make use of is:
-  - `findByPage(pageNumber)` for fetching a fixed amount of Entities from the Repository, corresponding to a certain page number. The amount of Entities fetched per page is configured in your concrete repository by providing a `pageSize` property.
+- This protocol provides convenient functionality for reading entities in a paginated manner. Any of your Repositories can conform to it and get this function by free:
+  - `findByPage(pageNumber)` for fetching a fixed amount of Entities from the Repository, corresponding to a certain page number. The amount of Entities fetched per page is configured in your concrete repository by providing a `pageSize` property. Besides the array containing entities, you get a `PageInfo` related object as well in return.
 - The followed pagination conventions have been based on [these standards](https://github.com/davidcelis/api-pagination).
 
 ### Your Own Standard
