@@ -1,5 +1,5 @@
 // Jayme
-// ServerBackend.swift
+// NSURLSessionBackend.swift
 //
 // Copyright (c) 2016 Inaka - http://inaka.net/
 //
@@ -24,12 +24,12 @@
 import Foundation
 
 /// Provides a Backend that connects to a server using HTTP REST requests via `NSURLSession`
-public class ServerBackend: Backend {
+public class NSURLSessionBackend: Backend {
     
     public typealias BackendReturnType = (NSData?, PageInfo?)
     public typealias BackendErrorType = ServerBackendError
     
-    public init(configuration: ServerBackendConfiguration = ServerBackendConfiguration.defaultConfiguration,
+    public init(configuration: NSURLSessionBackendConfiguration = NSURLSessionBackendConfiguration.defaultConfiguration,
          session: NSURLSession = NSURLSession.sharedSession(),
          responseParser: HTTPResponseParser = HTTPResponseParser()) {
         self.configuration = configuration
@@ -68,7 +68,7 @@ public class ServerBackend: Backend {
     
     // MARK: - Private
     
-    private let configuration: ServerBackendConfiguration
+    private let configuration: NSURLSessionBackendConfiguration
     private let session: NSURLSession
     private let responseParser: HTTPResponseParser
     

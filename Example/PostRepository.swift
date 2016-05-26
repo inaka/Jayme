@@ -26,7 +26,7 @@ import Foundation
 class PostRepository: ServerRepository {
     
     typealias EntityType = Post
-    let backend = ServerBackend()
+    let backend = NSURLSessionBackend()
     let name = "posts"
     
     func findPostsForUser(user: User) -> Future<[Post], ServerBackendError> {

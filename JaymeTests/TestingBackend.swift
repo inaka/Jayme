@@ -1,5 +1,5 @@
 // Jayme
-// ServerBackendConfiguration.swift
+// TestingBackend.swift
 //
 // Copyright (c) 2016 Inaka - http://inaka.net/
 //
@@ -22,18 +22,21 @@
 // THE SOFTWARE.
 
 import Foundation
+@testable import Jayme
 
-/// Structure used for holding a base path and HTTP headers to be used in ServerBackend's URL requests.
-public struct ServerBackendConfiguration {
+class TestingBackend: NSURLSessionBackend {
     
-    let basePath: Path
-    let httpHeaders: [HTTPHeader]
+    var path: Path?
+    var method: HTTPMethodName?
+    var parameters: [String: AnyObject]?
     
-    public static var defaultConfiguration = ServerBackendConfiguration(basePath: "http://localhost:8080",
-                                                                 httpHeaders: ServerBackendConfiguration.defaultHTTPHeaders)
+    var completion: Future<(NSData?, PageInfo?), ServerBackendError>.FutureAsyncOperation = { completion in }
     
-    // MARK: - Private
+    override func futureForPath(path: String, method: HTTPMethodName, parameters: [String: AnyObject]? = nil) -> Future <(NSData?, PageInfo?), ServerBackendError> {
+        self.path = path
+        self.method = method
+        self.parameters = parameters
+        return Future(operation: self.completion)
+    }
     
-    private static var defaultHTTPHeaders = [HTTPHeader(field: "Accept", value: "application/json"),
-                                             HTTPHeader(field: "Content-Type", value: "application/json")]
 }

@@ -26,14 +26,14 @@ import XCTest
 
 class ServerRepositoryTests: XCTestCase {
     
-    var backend: FakeServerBackend!
+    var backend: TestingBackend!
     var repository: TestDocumentRepository!
     
     override func setUp() {
         super.setUp()
         self.continueAfterFailure = false
         
-        let backend = FakeServerBackend()
+        let backend = TestingBackend()
         self.backend = backend
         self.repository = TestDocumentRepository(backend: backend)
     }

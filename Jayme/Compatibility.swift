@@ -24,3 +24,11 @@
 import Foundation
 
 /// This file is provided with the aim of providing compatibility between library versions.
+
+/// ServerBackend -> NSURLSessionBackend
+@available(*, unavailable, renamed = "NSURLSessionBackend")
+typealias ServerBackend = NSURLSessionBackend
+
+/// ServerBackendConfiguration -> NSURLSessionBackendConfiguration
+@available(*, unavailable, renamed = "NSURLSessionBackendConfiguration")
+typealias ServerBackendConfiguration = NSURLSessionBackendConfiguration

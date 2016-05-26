@@ -1,5 +1,5 @@
 // Jayme
-// ServerBackendTests.swift
+// NSURLSessionBackendTests.swift
 //
 // Copyright (c) 2016 Inaka - http://inaka.net/
 //
@@ -24,7 +24,7 @@
 import XCTest
 @testable import Jayme
 
-class ServerBackendTests: XCTestCase {
+class NSURLSessionBackendTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
@@ -34,11 +34,11 @@ class ServerBackendTests: XCTestCase {
 
 // MARK: - Tests
 
-extension ServerBackendTests {
+extension NSURLSessionBackendTests {
     
     func testBadURL() {
-        let configuration = ServerBackendConfiguration(basePath: "http://próblematiç_url", httpHeaders: [])
-        let backend = ServerBackend(configuration: configuration)
+        let configuration = NSURLSessionBackendConfiguration(basePath: "http://próblematiç_url", httpHeaders: [])
+        let backend = NSURLSessionBackend(configuration: configuration)
         let future = backend.futureForPath("_", method: .GET)
         let expectation = self.expectationWithDescription("Expected .Failure with .BadURL error")
         future.start { result in
@@ -62,7 +62,7 @@ extension ServerBackendTests {
         session.urlResponse = exampleURLResponse
         session.error = exampleError
         let parser = FakeHTTPResponseParser()
-        let backend = ServerBackend(session: session, responseParser: parser)
+        let backend = NSURLSessionBackend(session: session, responseParser: parser)
         let future = backend.futureForPath("_", method: .GET)
         let expectation = self.expectationWithDescription("Expected .Failure with .BadURL error")
         future.start { _ in expectation.fulfill() }
@@ -82,7 +82,7 @@ extension ServerBackendTests {
         let result = HTTPResponseParserResult.Success((data: exampleData, pageInfo: examplePageInfo))
         let parser = FakeHTTPResponseParser(result: result)
    
-        let backend = ServerBackend(session: session, responseParser: parser)
+        let backend = NSURLSessionBackend(session: session, responseParser: parser)
         let future = backend.futureForPath("_", method: .GET)
         let expectation = self.expectationWithDescription("Expected .Failure with .BadURL error")
         future.start { result in
@@ -103,7 +103,7 @@ extension ServerBackendTests {
         let result = HTTPResponseParserResult.Failure(exampleError)
         let parser = FakeHTTPResponseParser(result: result)
         
-        let backend = ServerBackend(session: session, responseParser: parser)
+        let backend = NSURLSessionBackend(session: session, responseParser: parser)
         let future = backend.futureForPath("_", method: .GET)
         let expectation = self.expectationWithDescription("Expected .Failure with .ServerError")
         future.start { result in

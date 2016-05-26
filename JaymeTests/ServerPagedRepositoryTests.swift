@@ -26,14 +26,14 @@ import XCTest
 
 class ServerPagedRepositoryTests: XCTestCase {
 
-    var backend: FakeServerBackend!
+    var backend: TestingBackend!
     var repository: TestDocumentPagedRepository!
     
     override func setUp() {
         super.setUp()
         self.continueAfterFailure = false
         
-        let backend = FakeServerBackend()
+        let backend = TestingBackend()
         self.backend = backend
         self.repository = TestDocumentPagedRepository(backend: backend, pageSize: 2)
     }

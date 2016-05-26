@@ -17,6 +17,8 @@ All notable changes to this project will be documented in this file. `Jayme` a
 ## 2.0.0
 
 - `path` variable has been renamed to `name` in `Repository` protocol declaration.
+- `ServerBackend` protocol has been renamed to `NSURLSessionBackend`.
+- `ServerBackendConfiguration` has been renamed to `NSURLSessionBackendConfiguration`.
 
 ---
 
