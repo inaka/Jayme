@@ -24,7 +24,7 @@
 import Foundation
 @testable import Jayme
 
-class TestDocumentRepository: ServerRepository {
+class TestDocumentRepository: CRUDRepository {
     typealias EntityType = TestDocument
     let name = "documents"
     let backend: NSURLSessionBackend

@@ -36,3 +36,7 @@ typealias ServerBackendConfiguration = NSURLSessionBackendConfiguration
 /// ServerBackendError -> JaymeError
 @available(*, unavailable, renamed = "JaymeError")
 typealias ServerBackendError = JaymeError
+
+/// ServerRepository -> CRUDRepository
+@available(*, unavailable, renamed = "CRUDRepository")
+typealias ServerRepository = CRUDRepository
