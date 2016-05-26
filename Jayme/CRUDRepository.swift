@@ -84,12 +84,12 @@ public extension CRUDRepository {
 public extension CRUDRepository {
     
     /// Parses data structured as array of dictionaries, and returns a corresponding `Future`
-    public func parseDataAsArray(maybeData: NSData?) -> Future<[StringDictionary], JaymeError> {
+    public func parseDataAsArray(maybeData: NSData?) -> Future<[[String: AnyObject]], JaymeError> {
         return Future() { completion in
             guard let
                 data = maybeData,
                 result = try? NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments),
-                array = result as? [StringDictionary]
+                array = result as? [[String: AnyObject]]
                 else {
                     completion(.Failure(.BadResponse))
                     return
@@ -99,12 +99,12 @@ public extension CRUDRepository {
     }
     
     /// Parses data structured as a single dictionary, and returns a corresponding `Future`
-    public func parseDataAsDictionary(maybeData: NSData?) -> Future<StringDictionary, JaymeError> {
+    public func parseDataAsDictionary(maybeData: NSData?) -> Future<[String: AnyObject], JaymeError> {
         return Future() { completion in
             guard let
                 data = maybeData,
                 result = try? NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments),
-                dictionary = result as? StringDictionary
+                dictionary = result as? [String: AnyObject]
                 else {
                     completion(.Failure(.BadResponse))
                     return
@@ -114,7 +114,7 @@ public extension CRUDRepository {
     }
     
     /// Converts an array of dictionaries to an array of Entities, and returns a corresponding `Future`
-    public func parseEntitiesFromArray(array: [StringDictionary]) -> Future<[EntityType], JaymeError> {
+    public func parseEntitiesFromArray(array: [[String: AnyObject]]) -> Future<[EntityType], JaymeError> {
         return Future() { completion in
             let entities = array.flatMap({ EntityType(dictionary: $0) })
             completion(.Success(entities))
@@ -122,7 +122,7 @@ public extension CRUDRepository {
     }
     
     /// Converts a single dictionary to an Entity, and returns a corresponding `Future`
-    public func parseEntityFromDictionary(dictionary: StringDictionary) -> Future<EntityType, JaymeError> {
+    public func parseEntityFromDictionary(dictionary: [String: AnyObject]) -> Future<EntityType, JaymeError> {
         return Future() { completion in
             guard let entity = EntityType(dictionary: dictionary) else {
                 completion(.Failure(.ParsingError))

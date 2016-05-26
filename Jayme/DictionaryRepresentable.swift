@@ -25,5 +25,5 @@ import Foundation
 
 /// Protocol for allowing entities to be represented (parsed out) via a dictionary
 public protocol DictionaryRepresentable {
-    var dictionaryValue: StringDictionary { get }
+    var dictionaryValue: [String: AnyObject] { get }
 }

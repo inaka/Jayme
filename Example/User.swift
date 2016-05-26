@@ -31,7 +31,7 @@ struct User: Identifiable {
 
 extension User: DictionaryInitializable, DictionaryRepresentable {
     
-    init?(dictionary: StringDictionary) {
+    init?(dictionary: [String: AnyObject]) {
         guard let
             id = dictionary["id"] as? String,
             name = dictionary["name"] as? String,
@@ -42,7 +42,7 @@ extension User: DictionaryInitializable, DictionaryRepresentable {
         self.email = email
     }
     
-    var dictionaryValue: StringDictionary {
+    var dictionaryValue: [String: AnyObject] {
         return [
             "id": self.id,
             "name": self.name,
