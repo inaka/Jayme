@@ -60,14 +60,14 @@ There's no concrete definition of any Entity in Jayme. You define them. The only
   - To allow the entity to be unequivocally identified via an `id` field.
 - `DictionaryInitializable`
   - To allow the entity to be initialized from a dictionary (parsed in).
-  - Used in `ServerRepository` by `find` methods.
+  - Used in `CRUDRepository` by `find` methods.
 - `DictionaryRepresentable`
   - The other way around, to allow the entity to be represented with a dictionary (parsed out).
-  - Used in `ServerRepository` by `create`, `update` and `delete` methods.
+  - Used in `CRUDRepository` by `create`, `update` and `delete` methods.
 
 ### The Inaka Standard
 
-Jayme comes with a default standard implementation, which is based on the conventions that we normally follow at [Inaka](http://inaka.net/). It involves `NSURLSessionBackend`, `ServerRepository` and `ServerPagedRepository`.
+Jayme comes with a default standard implementation, which is based on the conventions that we normally follow at [Inaka](http://inaka.net/). It involves `NSURLSessionBackend`, `CRUDRepository` and `ServerPagedRepository`.
 
 You can either leverage these defaults or implement your own repositories and backends by conforming directly to the base `Repository` and `Backend` protocols provided by Jayme's foundation, skipping any of the aforementioned classes.
 
@@ -85,7 +85,7 @@ These default interfaces are briefly described below:
   - A tuple with an `NSData?` object, containing relevant data relative to the response, and a `PageInfo?` object containing pagination-related data (if there is any); or...
   - A `JaymeError` indicating which error was produced when performing the request.
 
-#### *ServerRepository*
+#### *CRUDRepository*
 
 - This protocol provides a Repository with convenient CRUD-like functions that are already implemented and ready to be used in any Repository that conforms to it, such as:
   - `findAll()` for fetching all the Entities from the Repository.
@@ -96,7 +96,7 @@ These default interfaces are briefly described below:
 
 #### *ServerPagedRepository*
 
-- This protocol adds pagination-related functionality to the already known `ServerRepository`. The extra function to make use of is:
+- This protocol adds pagination-related functionality to the already known `CRUDRepository`. The extra function to make use of is:
   - `findByPage(pageNumber)` for fetching a fixed amount of Entities from the Repository, corresponding to a certain page number. The amount of Entities fetched per page is configured in your concrete repository by providing a `pageSize` property.
 - The followed pagination conventions have been based on [these standards](https://github.com/davidcelis/api-pagination).
 
@@ -116,7 +116,7 @@ See how your own repositories and backends can be plugged in directly to the bas
 
 Let's pretend you want to create a **User** entity that has its corresponding Repository, which will, of course, store Users.
 
-All you have to do is create your Entity and make it conform to `Identifiable`, `DictionaryInitializable` and `DictionaryRepresentable` to match the generic `EntityType` that `ServerRepository` asks for.
+All you have to do is create your Entity and make it conform to `Identifiable`, `DictionaryInitializable` and `DictionaryRepresentable` to match the generic `EntityType` that `CRUDRepository` asks for.
 
 Here you can see how this Entity conforms to all these protocols:
 
@@ -166,7 +166,7 @@ Now that you've got your first entity, you just go and create your first reposit
 
 import Foundation
 
-class UserRepository: ServerRepository {
+class UserRepository: CRUDRepository {
 
     typealias EntityType = User
     let backend = NSURLSessionBackend()
@@ -178,7 +178,7 @@ class UserRepository: ServerRepository {
 Notice three things here:
 
 - A `typealias` is used for tying the generic `EntityType` to a concrete type (our `User`), hence letting the repository know which kind of entity it works with.
-- Even though the `BackendType` is tied to `NSURLSessionBackend` at the `ServerRepository` level; since the latter is a protocol, you still have to instantiate a `NSURLSessionBackend` in your concrete repository, which needs to be a class to hold this property value.
+- Even though the `BackendType` is tied to `NSURLSessionBackend` at the `CRUDRepository` level; since the latter is a protocol, you still have to instantiate a `NSURLSessionBackend` in your concrete repository, which needs to be a class to hold this property value.
 - You have to provide a `name` where the backend is going to look for in order to work with `UserRepository`. If you do not alter the default `NSURLSessionBackendConfiguration`, the complete path with which the `NSURLSessionBackend` will work internally will be `"localhost:8080/users"`, given the `name` that was defined.
 
 **That's it!**
@@ -270,7 +270,7 @@ extension Post: DictionaryInitializable, DictionaryRepresentable {
 And then, define your `PostRepository`, which is similar to your basic existent `UserRepository`, but adding an extra function which adds the *condiment* that you need:
 
 ```swift
-class PostRepository: ServerRepository {
+class PostRepository: CRUDRepository {
     
     typealias EntityType = Post
     let backend = NSURLSessionBackend()
@@ -289,13 +289,13 @@ class PostRepository: ServerRepository {
 
 Notice here:
 
-- This function implementation has been pretty much based on the `findAll()` function declared in an extension of `ServerRepository`, which you would want to take a look at.
+- This function implementation has been pretty much based on the `findAll()` function declared in an extension of `CRUDRepository`, which you would want to take a look at.
 
 
 - Depending on how your business rules are defined, and how your server-side contract is, you will perform different actions inside the `findPostsHavingAuthorID` function in order to get the proper posts. You could have wanted to perform a `findAll()` call, and then apply a filter to extract out those posts where `post.authorID` matched the `authorID` passed by parameter, and that could have been still perfectly valid. It's up to you.
 
 
-- See how useful are the parsing methods defined in one of the `ServerRepository` extensions. You would often encounter yourself calling them for chaining asynchronous operations after a future is returned from a backend with raw data; that's why we decided to let them be `public` and not `private`.
+- See how useful are the parsing methods defined in one of the `CRUDRepository` extensions. You would often encounter yourself calling them for chaining asynchronous operations after a future is returned from a backend with raw data; that's why we decided to let them be `public` and not `private`.
 
 
 

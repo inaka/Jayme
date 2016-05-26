@@ -23,8 +23,8 @@
 
 import Foundation
 
-/// Adds supplies onto ServerRepository for pagination management, based on Grape conventions (https://github.com/davidcelis/api-pagination)
-public protocol ServerPagedRepository: ServerRepository {
+/// Adds supplies onto CRUDRepository for pagination management, based on Grape conventions (https://github.com/davidcelis/api-pagination)
+public protocol ServerPagedRepository: CRUDRepository {
     /// Indicates the number of entities to be fetched per page
     var pageSize: Int { get }
 }

@@ -1,5 +1,5 @@
 // Jayme
-// ServerRepository.swift
+// CRUDRepository.swift
 //
 // Copyright (c) 2016 Inaka - http://inaka.net/
 //
@@ -24,13 +24,13 @@
 import Foundation
 
 /// Provides a Repository with convenient implementations ready to be used in any repository that needs basic CRUD functionality.
-public protocol ServerRepository: Repository {
+public protocol CRUDRepository: Repository {
     var backend: NSURLSessionBackend { get }
 }
 
 // MARK: - Basic Methods API
 
-public extension ServerRepository {
+public extension CRUDRepository {
     
     /// Returns a `Future` containing an array of all the `Entity` objects in the repository.
     public func findAll() -> Future<[EntityType], JaymeError> {
@@ -81,7 +81,7 @@ public extension ServerRepository {
 // MARK: - Parsing
 
 /// Provides convenient parsing implementations
-public extension ServerRepository {
+public extension CRUDRepository {
     
     /// Parses data structured as array of dictionaries, and returns a corresponding `Future`
     public func parseDataAsArray(maybeData: NSData?) -> Future<[StringDictionary], JaymeError> {

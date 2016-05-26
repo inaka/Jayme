@@ -23,7 +23,7 @@
 
 import Foundation
 
-class UserRepository: ServerRepository {
+class UserRepository: CRUDRepository {
     
     typealias EntityType = User
     let backend = NSURLSessionBackend()

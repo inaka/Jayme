@@ -1,5 +1,5 @@
 // Jayme
-// ServerRepositoryTests.swift
+// CRUDRepositoryTests.swift
 //
 // Copyright (c) 2016 Inaka - http://inaka.net/
 //
@@ -24,7 +24,7 @@
 import XCTest
 @testable import Jayme
 
-class ServerRepositoryTests: XCTestCase {
+class CRUDRepositoryTests: XCTestCase {
     
     var backend: TestingBackend!
     var repository: TestDocumentRepository!
@@ -42,7 +42,7 @@ class ServerRepositoryTests: XCTestCase {
 
 // MARK: - Calls To Backend Tests
 
-extension ServerRepositoryTests {
+extension CRUDRepositoryTests {
     
     func testFindAllCall() {
         self.repository.findAll()
@@ -102,7 +102,7 @@ extension ServerRepositoryTests {
 
 // MARK: - Response Callbacks Tests
 
-extension ServerRepositoryTests {
+extension CRUDRepositoryTests {
     
     func testFindAllSuccessCallback() {
         
