@@ -18,7 +18,9 @@ It provides a neat API for dealing with REST communication, leaving your `ViewCo
 
 ![Jayme's Architecture In A Nutshell](https://raw.githubusercontent.com/inaka/Jayme/master/Assets/architecture-diagram-1.png)
 
+## Migration Guides
 
+- [Jayme 2.0 Migration Guide](https://github.com/inaka/Jayme/blob/master/Documentation/Jayme%202.0%20Migration%20Guide.md)
 
 ##Features
 
