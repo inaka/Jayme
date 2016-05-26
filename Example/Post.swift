@@ -33,7 +33,7 @@ struct Post: Identifiable {
 
 extension Post: DictionaryInitializable, DictionaryRepresentable {
     
-    init?(dictionary: [String: AnyObject]) {
+    init(dictionary: [String: AnyObject]) throws {
         guard let
             id = dictionary["id"] as? String,
             authorID = dictionary["author_id"] as? String,
@@ -41,7 +41,7 @@ extension Post: DictionaryInitializable, DictionaryRepresentable {
             abstract = dictionary["abstract"] as? String,
             dateString = dictionary["date"] as? String,
             date = dateString.toDate()
-            else { return nil }
+            else { throw JaymeError.ParsingError }
         self.id = id
         self.authorID = authorID
         self.title = title
