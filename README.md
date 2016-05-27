@@ -4,8 +4,7 @@
 
 ------
 
-[![Build Status](https://api.travis-ci.org/inaka/Jayme.svg)](https://travis-ci.org/inaka/Jayme) [![codecov](https://codecov.io/gh/inaka/jayme/branch/master/graph/badge.svg)](https://codecov.io/gh/inaka/jayme) [![Platform](https://img.shields.io/cocoapods/p/Jayme.svg?style=flat)](http://cocoadocs.org/docsets/Jayme) [![Twitter](https://img.shields.io/badge/twitter-@inaka-blue.svg?style=flat)](http://twitter.com/inaka)
-
+[![Build Status](https://api.travis-ci.org/inaka/Jayme.svg)](https://travis-ci.org/inaka/Jayme) [![Codecov](https://codecov.io/gh/inaka/jayme/branch/master/graph/badge.svg)](https://codecov.io/gh/inaka/jayme) [![Cocoapods](https://img.shields.io/cocoapods/v/Jayme.svg)](http://cocoadocs.org/docsets/Jayme) [![Twitter](https://img.shields.io/badge/twitter-@inaka-blue.svg?style=flat)](http://twitter.com/inaka)
 
 
 ## Overview
@@ -52,8 +51,6 @@ It provides a neat API for dealing with REST communication, leaving your `ViewCo
 
 Jayme leverages the **Repository Pattern** as its main cornerstone. Its foundation provides 2 protocols to conform to: `Repository` and `Backend`, from which you will base your entities business logic.
 
-![Jayme's Architecture Extended](https://raw.githubusercontent.com/inaka/Jayme/master/Assets/architecture-diagram-2.png)
-
 ###Entities
 
 There's no concrete definition of any Entity in Jayme. You define them. The only restriction is that any EntityType you create should conform to these three protocols:
@@ -80,11 +77,22 @@ There are some scenarios where you might want to handle local identifiers vs. se
 
 
 
-### The Inaka Standard
+### Jayme Defaults
 
-Jayme comes with a default standard implementation, which is based on the conventions that we normally follow at [Inaka](http://inaka.net/). It involves the `NSURLSessionBackend` class, and the `CRUDRepository` and `PagedRepository` protocols.
+Jayme comes with a default standard core, which is based on the conventions that we normally follow at [Inaka](http://inaka.net/).
 
-You can either leverage these defaults or implement your own repositories and backends by conforming directly to the base `Repository` and `Backend` protocols provided by Jayme's foundation, skipping any of the aforementioned classes.
+This core involves the 3 following items:
+
+- `NSURLSessionBackend` class.
+  -  For connecting to a server using `NSURLSession` mechanisms.
+- `CRUDRepository` protocol.
+  - For providing elemental CRUD functionality.
+- `PagedRepository` protocol.
+  - For providing read functionality with pagination.
+
+You can either leverage these elements (as shown in the first diagram) or implement your own repositories and backends by conforming directly to the base `Repository` and `Backend` protocols provided by Jayme's foundation, skipping any of these, as shown below:
+
+![Jayme's Customization](https://raw.githubusercontent.com/inaka/Jayme/master/Assets/architecture-diagram-2.png)
 
 These default interfaces are briefly described below:
 
@@ -109,19 +117,17 @@ These default interfaces are briefly described below:
   - `update(entity)` for updating an existing Entity with its new values.
   - `delete(entity)` for deleting an existing Entity from the Repository.
 
+![CRUDRepository Diagram](https://raw.githubusercontent.com/inaka/Jayme/master/Assets/crud-repository-diagram.png)
+
+- Any repository conforming to `CRUDRepository` will get these default CRUD operations for free. Besides, it can add his own custom functions based on business rules, as shown in this example:
+
+![PostRepository Diagram](https://raw.githubusercontent.com/inaka/Jayme/master/Assets/post-repository-diagram.png)
+
 #### *PagedRepository*
 
-- This protocol provides convenient functionality for reading entities in a paginated manner. Any of your Repositories can conform to it and get this function by free:
+- This protocol provides convenient functionality for reading entities in a paginated manner. Any of your repositories can conform to it and get this function for free:
   - `findByPage(pageNumber)` for fetching a fixed amount of Entities from the Repository, corresponding to a certain page number. The amount of Entities fetched per page is configured in your concrete repository by providing a `pageSize` property. Besides the array containing entities, you get a `PageInfo` related object as well in return.
-- The followed pagination conventions have been based on [these standards](https://github.com/davidcelis/api-pagination).
-
-### Your Own Standard
-
-You can create your own repositories and backends without going through Inaka standards, and still preserving Jayme's core architecture.
-
-See how your own repositories and backends can be plugged in directly to the base `Repository` and `Backend` protocols.
-
-![Jayme's Architecture Customization](https://raw.githubusercontent.com/inaka/Jayme/master/Assets/architecture-diagram-3.png)
+- The followed pagination conventions have been based on [Grape standards](https://github.com/davidcelis/api-pagination).
 
 
 
@@ -292,11 +298,11 @@ class PostRepository: CRUDRepository {
     let name = "posts"
     
     func findPostsHavingAuthorID(authorID: String) -> Future<[Post], JaymeError> {
-        // Server-side documentation states that Posts by AuthorID are found in the "/posts/:authorID" path
-        let path = self.name + "/" + authorID
+        // Considering that server-side documentation states that Posts by AuthorID are found in the "/posts/:authorID" path
+        let path = "\(self.name)/\(authorID)"
         return self.backend.futureForPath(path, method: .GET, parameters: nil)
-            .andThen { self.parseDataAsArray($0.0) }
-            .andThen { self.parseEntitiesFromArray($0) }
+            .andThen { DataParser().dictionariesFromData($0.0) }
+            .andThen { EntityParser().entitiesFromDictionaries($0) }
     }
     
 }
@@ -338,7 +344,7 @@ We are sure you will have to develop more complex scenarios and have bigger chal
 
 
 
-## Sample Project
+## Example Project
 
 If you still have some hesitations about the usage of this library, there is an `Example` folder inside the repo containing a basic implementation of some repositories integrated with view controllers.
 
@@ -358,9 +364,7 @@ Once you have the server running, all you need to do is run Jayme.
 - Jayme is available via [cocoapods](http://cocoapods.org/).
   - To install it, add this line to your `Podfile`:
     - `pod 'Jayme'`
-
-
-- Remember to add an `import Jayme` statement in any source file of your project that needs to make use of the library.
+    - Remember to add an `import Jayme` statement in any source file of your project that needs to make use of the library.
 
 
 
