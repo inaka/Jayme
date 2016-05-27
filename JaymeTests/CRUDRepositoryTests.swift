@@ -273,7 +273,9 @@ extension CRUDRepositoryTests {
         
         // Simulated completion
         self.backend.completion = { completion in
-            completion(.Success((nil, nil)))
+            let json = ["id": "1", "name": "a"]
+            let data = try! NSJSONSerialization.dataWithJSONObject(json, options: .PrettyPrinted)
+            completion(.Success((data, nil)))
         }
         
         let expectation = self.expectationWithDescription("Expected to get a success")
@@ -281,8 +283,10 @@ extension CRUDRepositoryTests {
         let document = TestDocument(id: "_", name: "_")
         let future = self.repository.create(document)
         future.start() { result in
-            guard case .Success = result
+            guard case .Success(let document) = result
                 else { XCTFail(); return }
+            XCTAssertEqual(document.id, "1")
+            XCTAssertEqual(document.name, "a")
             expectation.fulfill()
         }
         
@@ -319,7 +323,9 @@ extension CRUDRepositoryTests {
         
         // Simulated completion
         self.backend.completion = { completion in
-            completion(.Success((nil, nil)))
+            let json = ["id": "1", "name": "a"]
+            let data = try! NSJSONSerialization.dataWithJSONObject(json, options: .PrettyPrinted)
+            completion(.Success((data, nil)))
         }
         
         let expectation = self.expectationWithDescription("Expected to get a success")
@@ -327,8 +333,10 @@ extension CRUDRepositoryTests {
         let document = TestDocument(id: "_", name: "_")
         let future = self.repository.update(document)
         future.start() { result in
-            guard case .Success = result
+            guard case .Success(let document) = result
                 else { XCTFail(); return }
+            XCTAssertEqual(document.id, "1")
+            XCTAssertEqual(document.name, "a")
             expectation.fulfill()
         }
         
