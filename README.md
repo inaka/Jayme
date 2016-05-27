@@ -84,11 +84,11 @@ Jayme comes with a default standard core, which is based on the conventions that
 This core involves the 3 following items:
 
 - `NSURLSessionBackend` class.
-  -  A backend that connects to a server using `NSURLSession` mechanisms.
+  -  For connecting to a server using `NSURLSession` mechanisms.
 - `CRUDRepository` protocol.
-  - A repository protocol that provides elemental CRUD functionality.
+  - For providing elemental CRUD functionality.
 - `PagedRepository` protocol.
-  - A repository protocol that provides read functionality with pagination.
+  - For providing read functionality with pagination.
 
 You can either leverage these elements (as shown in the first diagram) or implement your own repositories and backends by conforming directly to the base `Repository` and `Backend` protocols provided by Jayme's foundation, skipping any of these, as shown below:
 
