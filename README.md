@@ -76,7 +76,7 @@ Jayme takes a flexible approach regarding identifiers. As of Jayme 2.0, identifi
 There are some scenarios where you might want to handle local identifiers vs. server identifiers. For those, you might want to take a look at the example project. There are two entities defined there:
 
 - `User`, which uses `String` for its identifier.
-- `Post`, which uses a custom `Identifier` `enum` for dealing with the aforementioned scenario.
+- `Post`, which uses a custom `PostIdentifier`  enumeration for dealing with the aforementioned issue.
 
 
 
