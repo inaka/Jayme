@@ -49,21 +49,23 @@ public extension CRUDRepository {
             .andThen { EntityParser().entityFromDictionary($0) }
     }
     
-    /// Creates the entity in the repository. Returns a `Future` with the `Void` result or a `JaymeError`
-    public func create(entity: EntityType) -> Future<Void, JaymeError> {
+    /// Creates the entity in the repository. Returns a `Future` with the created entity or a `JaymeError`
+    public func create(entity: EntityType) -> Future<EntityType, JaymeError> {
         let path = self.pathForID(entity.id)
         return self.backend.futureForPath(path, method: .POST, parameters: entity.dictionaryValue)
-            .map { _ in return }
+            .andThen { DataParser().dictionaryFromData($0.0) }
+            .andThen { EntityParser().entityFromDictionary($0) }
     }
     
-    /// Updates the entity in the repository. Returns a `Future` with the `Void` result or a `JaymeError`
-    public func update(entity: EntityType) -> Future<Void, JaymeError> {
+    /// Updates the entity in the repository. Returns a `Future` with the updated entity or a `JaymeError`
+    public func update(entity: EntityType) -> Future<EntityType, JaymeError> {
         let path = self.pathForID(entity.id)
         return self.backend.futureForPath(path, method: .PUT, parameters: entity.dictionaryValue)
-            .map { _ in return }
+            .andThen { DataParser().dictionaryFromData($0.0) }
+            .andThen { EntityParser().entityFromDictionary($0) }
     }
     
-    /// Deletes the entity from the repository. Returns a `Future` with the `Void` result or a `JaymeError`
+    /// Deletes the entity from the repository. Returns a `Future` with a `Void` result or a `JaymeError`
     public func delete(entity: EntityType) -> Future<Void, JaymeError> {
         let path = self.pathForID(entity.id)
         return self.backend.futureForPath(path, method: .DELETE, parameters: nil)
