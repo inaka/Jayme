@@ -49,6 +49,6 @@ typealias StringDictionary = [String: AnyObject]
 @available(*, unavailable, renamed = "PagedRepository")
 typealias ServerPagedRepository = PagedRepository
 
-/// Identifier -> String
+/// Identifier -> IdentifierType: CustomStringConvertible
 @available(*, unavailable, message = "Replace `Identifier` with any type that conforms to `CustomStringConvertible`.")
 typealias Identifier = String
