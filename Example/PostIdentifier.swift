@@ -1,5 +1,5 @@
 // JaymeExample
-// Identifier.swift
+// PostIdentifier.swift
 //
 // Copyright (c) 2016 Inaka - http://inaka.net/
 //
@@ -24,12 +24,12 @@
 import Foundation
 
 /// Enumeration for identifying an object via either a local ID or a server-defined ID, and being able to distinguish which scenario it corresponds to.
-enum Identifier {
+enum PostIdentifier {
     case Local(String)
     case Server(String)
 }
 
-extension Identifier: CustomStringConvertible {
+extension PostIdentifier: CustomStringConvertible {
     var description: String {
         switch self {
         case .Local(let id):

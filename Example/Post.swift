@@ -24,7 +24,7 @@
 import Foundation
 
 struct Post: Identifiable {
-    let id: Identifier
+    let id: PostIdentifier
     let authorID: String
     let title: String
     let abstract: String

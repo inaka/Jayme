@@ -53,7 +53,7 @@
 		518951AD1CD92CA500089906 /* posts in Resources */ = {isa = PBXBuildFile; fileRef = 518951AC1CD92CA500089906 /* posts */; };
 		518CEA3F1CD8DD5900A4CA06 /* PageInfoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 518CEA3E1CD8DD5900A4CA06 /* PageInfoTests.swift */; };
 		51F6D1C91CF89B2900E998F0 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F6D1C81CF89B2900E998F0 /* Extensions.swift */; };
-		51F6D1CB1CF89B9B00E998F0 /* Identifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F6D1CA1CF89B9B00E998F0 /* Identifier.swift */; };
+		51F6D1CB1CF89B9B00E998F0 /* PostIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F6D1CA1CF89B9B00E998F0 /* PostIdentifier.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -117,7 +117,7 @@
 		518951AC1CD92CA500089906 /* posts */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = posts; sourceTree = "<group>"; };
 		518CEA3E1CD8DD5900A4CA06 /* PageInfoTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageInfoTests.swift; sourceTree = "<group>"; };
 		51F6D1C81CF89B2900E998F0 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
-		51F6D1CA1CF89B9B00E998F0 /* Identifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Identifier.swift; sourceTree = "<group>"; };
+		51F6D1CA1CF89B9B00E998F0 /* PostIdentifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostIdentifier.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -373,7 +373,7 @@
 		51F6D1CC1CF89D0500E998F0 /* Identifiers */ = {
 			isa = PBXGroup;
 			children = (
-				51F6D1CA1CF89B9B00E998F0 /* Identifier.swift */,
+				51F6D1CA1CF89B9B00E998F0 /* PostIdentifier.swift */,
 				51F6D1C81CF89B2900E998F0 /* Extensions.swift */,
 			);
 			name = Identifiers;
@@ -504,7 +504,7 @@
 				5163A0771CD7960800B0EEEF /* NSURLSessionBackendConfiguration.swift in Sources */,
 				5163A0831CD79FAB00B0EEEF /* Identifiable.swift in Sources */,
 				5163A0871CD7A0DB00B0EEEF /* DictionaryRepresentable.swift in Sources */,
-				51F6D1CB1CF89B9B00E998F0 /* Identifier.swift in Sources */,
+				51F6D1CB1CF89B9B00E998F0 /* PostIdentifier.swift in Sources */,
 				5189519A1CD91CA500089906 /* UserTableViewCell.swift in Sources */,
 				5163A07F1CD79A3B00B0EEEF /* CRUDRepository.swift in Sources */,
 				518951A91CD9255800089906 /* PostRepository.swift in Sources */,
