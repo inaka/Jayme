@@ -21,6 +21,7 @@ All notable changes to this project will be documented in this file. `Jayme` a
 - `path` variable has been renamed to `name` in `Repository` protocol declaration. (Issue [#17](https://github.com/inaka/Jayme/issues/17))
 - `ServerRepository` has been renamed to `CRUDRepository`. (Issue [#19](https://github.com/inaka/Jayme/issues/19))
 - `PagedRepository` no longer conforms to `CRUDRepository` (ex `ServerRepository`); now it conforms directly to `Repository`. (Issue [#20](https://github.com/inaka/Jayme/issues/20))
+- `create(…)` and `update(…)` methods in `CRUDRepository` now return `Future<EntityType, JaymeError>` instead of `Future<Void, JaymeError>`, containing the created or updated entity. (Issue [#37](https://github.com/inaka/Jayme/issues/37))
 - Convenient parsing functions have been plucked out from `CRUDRepository` (ex `ServerRepository`) and put into new classes named `DataParser` and `EntityParser`.  (Issue [#20](https://github.com/inaka/Jayme/issues/20))
 
 #### Backend related changes
