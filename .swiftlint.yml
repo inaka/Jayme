@@ -7,5 +7,3 @@ disabled_rules:
   - statement_position
   - valid_docs
   - variable_name_min_length
-
-line_length: 128
