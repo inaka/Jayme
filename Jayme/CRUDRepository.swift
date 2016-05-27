@@ -42,7 +42,7 @@ public extension CRUDRepository {
     
     /// Returns a `Future` containing the `Entity` matching the `id`.
     /// Watch out for a `.Failure` case with `EntityNotFound` error.
-    public func findByID(id: Identifier) -> Future<EntityType, JaymeError> {
+    public func findByID(id: EntityType.IdentifierType) -> Future<EntityType, JaymeError> {
         let path = self.pathForID(id)
         return self.backend.futureForPath(path, method: .GET, parameters: nil)
             .andThen { DataParser().dictionaryFromData($0.0) }
@@ -72,8 +72,8 @@ public extension CRUDRepository {
     
     // MARK: - Private
     
-    private func pathForID(id: Identifier) -> Path {
-        return self.name + "/" + id
+    private func pathForID(id: EntityType.IdentifierType) -> Path {
+        return "\(self.name)/\(id)"
     }
     
 }

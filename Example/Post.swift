@@ -25,7 +25,7 @@ import Foundation
 
 struct Post: Identifiable {
     let id: Identifier
-    let authorID: Identifier
+    let authorID: String
     let title: String
     let abstract: String
     let date: NSDate
@@ -42,7 +42,7 @@ extension Post: DictionaryInitializable, DictionaryRepresentable {
             dateString = dictionary["date"] as? String,
             date = dateString.toDate()
             else { throw JaymeError.ParsingError }
-        self.id = id
+        self.id = .Server(id)
         self.authorID = authorID
         self.title = title
         self.abstract = abstract
@@ -51,7 +51,7 @@ extension Post: DictionaryInitializable, DictionaryRepresentable {
     
     var dictionaryValue: [String: AnyObject] {
         return [
-            "id": self.id,
+            "id": "\(self.id)",
             "author_id": self.authorID,
             "title": self.title,
             "abstract": self.abstract,
