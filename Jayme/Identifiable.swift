@@ -23,9 +23,13 @@
 
 import Foundation
 
-public typealias Identifier = String
-
 /// Protocol for identifying entities via an `id` property.
 public protocol Identifiable {
-    var id: Identifier { get }
+    
+    /// An associated type which identifiers for the EntityType conforming to this protocol will work with (e.g. String).
+    associatedtype IdentifierType: CustomStringConvertible
+    
+    /// The property for identifying your entity.
+    var id: IdentifierType { get }
+    
 }

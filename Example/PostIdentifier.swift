@@ -1,5 +1,5 @@
-// Jayme
-// TestDocument.swift
+// JaymeExample
+// PostIdentifier.swift
 //
 // Copyright (c) 2016 Inaka - http://inaka.net/
 //
@@ -22,26 +22,20 @@
 // THE SOFTWARE.
 
 import Foundation
-@testable import Jayme
 
-struct TestDocument: Identifiable {
-    let id: String
-    let name: String
+/// Enumeration for identifying a Post via either a local ID or a server-defined ID, and being able to distinguish which scenario it corresponds to.
+enum PostIdentifier {
+    case Local(String)
+    case Server(String)
 }
 
-extension TestDocument: DictionaryInitializable, DictionaryRepresentable {
-    
-    init(dictionary: [String: AnyObject]) throws {
-        guard let
-            id = dictionary["id"] as? String,
-            name = dictionary["name"] as? String
-            else { throw JaymeError.ParsingError }
-        self.id = id
-        self.name = name
+extension PostIdentifier: CustomStringConvertible {
+    var description: String {
+        switch self {
+        case .Local(let id):
+            return "local_\(id)"
+        case .Server(let id):
+            return id
+        }
     }
-    
-    var dictionaryValue: [String : AnyObject] {
-        return ["id": self.id, "name": self.name]
-    }
-    
 }

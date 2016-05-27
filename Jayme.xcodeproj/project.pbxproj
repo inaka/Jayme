@@ -52,6 +52,8 @@
 		518951AB1CD928D300089906 /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 518951AA1CD928D300089906 /* PostTableViewCell.swift */; };
 		518951AD1CD92CA500089906 /* posts in Resources */ = {isa = PBXBuildFile; fileRef = 518951AC1CD92CA500089906 /* posts */; };
 		518CEA3F1CD8DD5900A4CA06 /* PageInfoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 518CEA3E1CD8DD5900A4CA06 /* PageInfoTests.swift */; };
+		51F6D1C91CF89B2900E998F0 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F6D1C81CF89B2900E998F0 /* Extensions.swift */; };
+		51F6D1CB1CF89B9B00E998F0 /* PostIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F6D1CA1CF89B9B00E998F0 /* PostIdentifier.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -114,6 +116,8 @@
 		518951AA1CD928D300089906 /* PostTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
 		518951AC1CD92CA500089906 /* posts */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = posts; sourceTree = "<group>"; };
 		518CEA3E1CD8DD5900A4CA06 /* PageInfoTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageInfoTests.swift; sourceTree = "<group>"; };
+		51F6D1C81CF89B2900E998F0 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		51F6D1CA1CF89B9B00E998F0 /* PostIdentifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostIdentifier.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -299,6 +303,7 @@
 		518951931CD91B2900089906 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				51F6D1CC1CF89D0500E998F0 /* Identifiers */,
 				5189519C1CD91DE400089906 /* Entities */,
 				5189519B1CD91DDB00089906 /* Repositories */,
 			);
@@ -363,6 +368,15 @@
 				5189519F1CD91E3600089906 /* Controller */,
 			);
 			name = Source;
+			sourceTree = "<group>";
+		};
+		51F6D1CC1CF89D0500E998F0 /* Identifiers */ = {
+			isa = PBXGroup;
+			children = (
+				51F6D1CA1CF89B9B00E998F0 /* PostIdentifier.swift */,
+				51F6D1C81CF89B2900E998F0 /* Extensions.swift */,
+			);
+			name = Identifiers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -490,9 +504,11 @@
 				5163A0771CD7960800B0EEEF /* NSURLSessionBackendConfiguration.swift in Sources */,
 				5163A0831CD79FAB00B0EEEF /* Identifiable.swift in Sources */,
 				5163A0871CD7A0DB00B0EEEF /* DictionaryRepresentable.swift in Sources */,
+				51F6D1CB1CF89B9B00E998F0 /* PostIdentifier.swift in Sources */,
 				5189519A1CD91CA500089906 /* UserTableViewCell.swift in Sources */,
 				5163A07F1CD79A3B00B0EEEF /* CRUDRepository.swift in Sources */,
 				518951A91CD9255800089906 /* PostRepository.swift in Sources */,
+				51F6D1C91CF89B2900E998F0 /* Extensions.swift in Sources */,
 				5163A0891CD7A14400B0EEEF /* HTTPHeader.swift in Sources */,
 				5163A0731CD78B5E00B0EEEF /* Backend.swift in Sources */,
 				518951921CD91A6B00089906 /* UsersViewController.swift in Sources */,

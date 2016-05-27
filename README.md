@@ -67,6 +67,19 @@ There's no concrete definition of any Entity in Jayme. You define them. The only
   - The other way around, to allow the entity to be represented with a dictionary (parsed out).
   - Used in `CRUDRepository` by `create`, `update` and `delete` methods.
 
+
+
+### Identifiers
+
+Jayme takes a flexible approach regarding identifiers. As of Jayme 2.0, identifiers are not tied to any concrete type, it's up to you to define which kind of identifier each of your entity types will use. You can have entities using `Int`, other entities using `String`, all of your entities using the same type, using your custom types, or whatever best fit your needs.
+
+There are some scenarios where you might want to handle local identifiers vs. server identifiers. For those, you might want to take a look at the example project. There are two entities defined there:
+
+- `User`, which uses `String` for its identifier.
+- `Post`, which uses a custom `PostIdentifier`  enumeration for dealing with the aforementioned issue.
+
+
+
 ### The Inaka Standard
 
 Jayme comes with a default standard implementation, which is based on the conventions that we normally follow at [Inaka](http://inaka.net/). It involves the `NSURLSessionBackend` class, and the `CRUDRepository` and `PagedRepository` protocols.
@@ -129,7 +142,7 @@ import Foundation
 import SwiftyJSON
 
 struct User: Identifiable {
-    let id: Identifier
+    let id: String
     let name: String
     let email: String
 }
@@ -239,8 +252,8 @@ import Foundation
 import SwifyJSON
 
 struct Post: Identifiable {
-    let id: Identifier
-    let authorID: Identifier
+    let id: String
+    let authorID: String
     let content: String
 }
 
@@ -278,7 +291,7 @@ class PostRepository: CRUDRepository {
     let backend = NSURLSessionBackend()
     let name = "posts"
     
-    func findPostsHavingAuthorID(authorID: Identifier) -> Future<[Post], JaymeError> {
+    func findPostsHavingAuthorID(authorID: String) -> Future<[Post], JaymeError> {
         // Server-side documentation states that Posts by AuthorID are found in the "/posts/:authorID" path
         let path = self.name + "/" + authorID
         return self.backend.futureForPath(path, method: .GET, parameters: nil)

@@ -1,5 +1,5 @@
-// Jayme
-// TestDocument.swift
+// JaymeExample
+// Extensions.swift
 //
 // Copyright (c) 2016 Inaka - http://inaka.net/
 //
@@ -22,26 +22,9 @@
 // THE SOFTWARE.
 
 import Foundation
-@testable import Jayme
 
-struct TestDocument: Identifiable {
-    let id: String
-    let name: String
-}
-
-extension TestDocument: DictionaryInitializable, DictionaryRepresentable {
-    
-    init(dictionary: [String: AnyObject]) throws {
-        guard let
-            id = dictionary["id"] as? String,
-            name = dictionary["name"] as? String
-            else { throw JaymeError.ParsingError }
-        self.id = id
-        self.name = name
+extension String: CustomStringConvertible {
+    public var description: String {
+        return self
     }
-    
-    var dictionaryValue: [String : AnyObject] {
-        return ["id": self.id, "name": self.name]
-    }
-    
 }
