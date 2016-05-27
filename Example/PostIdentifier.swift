@@ -23,7 +23,7 @@
 
 import Foundation
 
-/// Enumeration for identifying an object via either a local ID or a server-defined ID, and being able to distinguish which scenario it corresponds to.
+/// Enumeration for identifying a Post via either a local ID or a server-defined ID, and being able to distinguish which scenario it corresponds to.
 enum PostIdentifier {
     case Local(String)
     case Server(String)
