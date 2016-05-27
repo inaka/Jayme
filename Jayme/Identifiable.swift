@@ -26,7 +26,7 @@ import Foundation
 /// Protocol for identifying entities via an `id` property.
 public protocol Identifiable {
     
-    /// An associated type that your identifiers will work with (e.g. String).
+    /// An associated type which identifiers for the EntityType conforming to this protocol will work with (e.g. String).
     associatedtype IdentifierType: CustomStringConvertible
     
     /// The property for identifying your entity.
