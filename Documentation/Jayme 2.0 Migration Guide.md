@@ -35,7 +35,7 @@ They are listed below:
   - You have to manually replace your `init?` initializers for every class or struct that conforms to `DictionaryInitializable` by its throwable equivalent.
   - You have to perform `{ throw JaymeError.ParsingError }` whenever you can't initialize a `DictionaryInitializable` object instead of performing `{ return nil }`.
 
-- `Identifier` typealias no longer exists. Now your entities can define their own identifier type.  (related issue: [#22](https://github.com/inaka/Jayme/issues/22))
+- `Identifier` typealias no longer exists. Now your entities define their own identifier type.  (related issue: [#22](https://github.com/inaka/Jayme/issues/22))
 
   - You have to change every `Identifier` appearance and replace it by a concrete type you need to use (e.g. `String`, `Int`, or your own, as long as it conforms to `CustomStringConvertible`). This change should be suggested by the compiler.
 
