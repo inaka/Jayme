@@ -122,7 +122,7 @@ extension NSURLSessionBackendTests {
 }
 
 extension PageInfo: Equatable {}
-public func ==(lhs: PageInfo, rhs: PageInfo) -> Bool {
+public func == (lhs: PageInfo, rhs: PageInfo) -> Bool {
     return lhs.number == rhs.number
     && lhs.size == rhs.size
     && lhs.total == rhs.total
