@@ -66,7 +66,7 @@ public extension CRUDRepository {
     /// Deletes the entity from the repository. Returns a `Future` with the `Void` result or a `JaymeError`
     public func delete(entity: EntityType) -> Future<Void, JaymeError> {
         let path = self.pathForID(entity.id)
-        return self.backend.futureForPath(path, method: .DELETE, parameters: entity.dictionaryValue)
+        return self.backend.futureForPath(path, method: .DELETE, parameters: nil)
             .map { _ in return }
     }
     

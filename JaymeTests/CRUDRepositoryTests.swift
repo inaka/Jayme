@@ -89,13 +89,6 @@ extension CRUDRepositoryTests {
         self.repository.delete(document)
         XCTAssertEqual(self.backend.path, "documents/123")
         XCTAssertEqual(self.backend.method, .DELETE)
-        guard let
-            id = self.backend.parameters?["id"] as? String,
-            name = self.backend.parameters?["name"] as? String else {
-                XCTFail("Wrong parameters"); return
-        }
-        XCTAssertEqual(id, "123")
-        XCTAssertEqual(name, "a")
     }
     
 }
