@@ -30,12 +30,14 @@ class FakeURLSession: NSURLSession {
     var data: NSData?
     var urlResponse: NSURLResponse?
     var error: NSError?
+    var request: NSURLRequest?
     
     init(completion: DataTaskCompletion? = nil) {
         self.completion = completion
     }
     
     override func dataTaskWithRequest(request: NSURLRequest, completionHandler: DataTaskCompletion) -> NSURLSessionDataTask {
+        self.request = request
         if self.completion == nil {
             self.completion = completionHandler
         }
