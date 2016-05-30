@@ -24,24 +24,24 @@ It provides a neat API for dealing with REST communication, leaving your `ViewCo
 ##Features
 
 - **Protocol-Oriented**
-  - Jayme has been built following the concepts of [protocol-oriented programming](https://developer.apple.com/videos/play/wwdc2015/408/), encouraging composition over inheritance whenever possible. As you will see, most of classes defined in Jayme are actually protocols.
+  - Jayme has been built following the concepts of [protocol-oriented programming](https://developer.apple.com/videos/play/wwdc2015/408/), encouraging composition over inheritance whenever possible.
 - **Generics**
-  - You will see generics almost everywhere in the library. That gives you high flexibility by leaving up to you the decision of choosing which types best fit your needs.
+  - In order to provide high flexibility, generics and associated types are present almost everywhere in the library.
 - **Error Handling**
-  - With the aid of generics, you can implement and use your own error types.
-  - Jayme Standard comes with a default list of discrete errors (defined in `JaymeError`) which are useful in the `ViewController` layer. 
-  - The idea is that thrown error types should be discrete and grouped by different and meaningful UI scenarios. For instance, you might want to present a *"User not found. Want to invite him?"* dialog box for a specific 404 from a certain `.GET` call, or you might want to present an alert view indicating that the server is not responding properly for any 5xx error.
+  - Jayme comes with a default list of discrete errors, which are defined in an enumeration named `JaymeError`.
+  - Any `case` in `JaymeError` turns out to be useful from the `ViewController` layer point of view. Cases represent possible different and meaningful UI scenarios. For instance: a `5xx` server status code is represented by a `case ServerError(statusCode: Int)`.
+  - If you need different error definitions, Jayme allows you to use your own Error types, with the aid of associated types.
 - **Futures / Results**
-  - From experience, we've found out that the [Future Pattern](https://realm.io/news/swift-summit-javier-soto-futures/) is a very convenient way for layouting asynchronous code. Therefore, we decided that it would be *the way to go* for Jayme.
-  - `Future` and `Result` appear as two cornerstone structures in Jayme's ecosystem. Make sure you're familiar with them before using the library, as they will always be involved in return types for Repository methods, meaning that they will be present in your `ViewController` layer.
+  - From experience, we've found out that the [Future Pattern](https://realm.io/news/swift-summit-javier-soto-futures/) is a very convenient way for layouting asynchronous code. In consequence, we decided to develop Jayme around that pattern.
+  - `Future` and `Result` are two key structures in the library. You need to be familiar with them, since they are exposed on its public interfaces.
 - **Logs**
-  - Jayme includes a practical logging mechanism that can be quickly enabled or disabled. It also allows you to set a custom logging function to use, which results very convenient if your project uses third party logging libraries like [CocoaLumberjack](https://github.com/CocoaLumberjack/CocoaLumberjack).
+  - Jayme includes a practical logging mechanism that can be quickly enabled or disabled. It also allows you to set a custom logging function to use, which results very convenient if your project uses third party logging libraries, like [CocoaLumberjack](https://github.com/CocoaLumberjack/CocoaLumberjack).
 - **Unit Tests**
-  - Jayme is 100% unit-tested. This way, we ensure that the library does what it's meant to do.
-  - Unit-tests are easy to implement (and, of course, encouraged) in your own repositories, backends and entities. Check out how Jayme unit tests work to see examples. You're going to encounter several fakes that are easy to reuse and adapt to your tests.
+  - Jayme is 100% unit-tested.
+  - Unit tests are easy to implement, and encouraged, for testing your repositories business logic and your entities parsing.
 - **No Dependencies**
-  - Jayme does not leverage any external dependency. We consider simplicity to be a very important concept to keep always in mind.
-  - Nonetheless, we highly suggest that you integrate [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON) hand in hand with Jayme, to make your life easier when it comes to fill out `init(dictionary)` methods for your Entities. You can turn a `dictionary` into a `JSON` object very quickly and parse out the relevant data easily from that point.
+  - Jayme does not leverage any external dependency.
+  - However, you can integrate JSON parsing libraries (like [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON)) and plug them in easily within `DictionaryInitializable` and `DictionaryRepresentable` protocol functions implementations in your entities.
 
 
 
@@ -49,52 +49,56 @@ It provides a neat API for dealing with REST communication, leaving your `ViewCo
 
 ## Architecture
 
-Jayme leverages the **Repository Pattern** as its main cornerstone. Its foundation provides 2 protocols to conform to: `Repository` and `Backend`, from which you will base your entities business logic.
+Jayme works around the **Repository Pattern**. There are some key concepts that you need to become familiar with before using the library. These concepts can be outlined differently depending on how the pattern is implemented, as there are several ways of working with it.
 
-###Entities
+Below are brief descriptions of these concepts, based on how Jayme in particular implements the pattern:
 
-There's no concrete definition of any Entity in Jayme. You define them. The only restriction is that any EntityType you create should conform to these three protocols:
+- A **Repository** is a collection that holds entities of a certain kind, and which is capable of filtering and returning entities back based on the needs of your application. 
+  - Your *business logic code* will usually live in **repositories**.
+- A **Backend** is a middleman that receives concrete requests as input (e.g. a `DELETE` to `/users/123`) and is in charge of performing networking operations to satisfy those requests, giving results back.
+  - Your *networking code* will usually live in **backends**.
+- An **Entity** represents a *thing* that is meaningful in your application and you need to take care of.
+  - Examples of entities are: `User`, `Post`, `Comment`, and so on.
+
+There are other relevant concepts that deserve further explanation, which are described below:
+
+###EntityType
+
+Actually, you will find no definition of `Entity` in the library. Repositories use entities as an associated type (`EntityType`); the only restriction is that any entity you create should conform to these three protocols:
 
 - `Identifiable`
   - To allow the entity to be unequivocally identified via an `id` field.
 - `DictionaryInitializable`
   - To allow the entity to be initialized from a dictionary (parsed in).
-  - Used in `CRUDRepository` by `find` methods.
 - `DictionaryRepresentable`
-  - The other way around, to allow the entity to be represented with a dictionary (parsed out).
-  - Used in `CRUDRepository` by `create`, `update` and `delete` methods.
+  - To allow the entity to be represented through a dictionary (parsed out).
 
 
 
 ### Identifiers
 
-Jayme takes a flexible approach regarding identifiers. As of Jayme 2.0, identifiers are not tied to any concrete type, it's up to you to define which kind of identifier each of your entity types will use. You can have entities using `Int`, other entities using `String`, all of your entities using the same type, using your custom types, or whatever best fit your needs.
+Jayme takes a flexible approach regarding identifiers. As of Jayme 2.0, identifiers are not tied to any concrete type; it's up to you to define which kind of identifier each of your entity types will use. 
 
-There are some scenarios where you might want to handle local identifiers vs. server identifiers. For those, you might want to take a look at the example project. There are two entities defined there:
+You could have entities having `Int` ids, other entities having `String`, or all of your them having the same identifier type. 
 
-- `User`, which uses `String` for its identifier.
-- `Post`, which uses a custom `PostIdentifier`  enumeration for dealing with the aforementioned issue.
-
+You can also use your own identifier types. This is particularly useful when you have to face complex scenarios. For instance, you might need to deal with *local identifiers* vs. *server identifiers*, and you might encounter several approaches for doing so. It's recommendable then that you take a look at the example project to see a complex identifier implementation (check out `PostIdentifier`).
 
 
-### Jayme Defaults
+### Jayme Default Core
 
-Jayme comes with a default standard core, which is based on the conventions that we normally follow at [Inaka](http://inaka.net/).
+Whereas `Repository` and `Backend` definitions are only contracts, Jayme includes some structures based on them, which include default implementations (hence behaviors) that are based on conventions and standards that we normally follow at [Inaka](http://inaka.net/).
 
-This core involves the 3 following items:
+These structures are:
 
-- `NSURLSessionBackend` class.
-  -  For connecting to a server using `NSURLSession` mechanisms.
-- `CRUDRepository` protocol.
-  - For providing elemental CRUD functionality.
-- `PagedRepository` protocol.
-  - For providing read functionality with pagination.
+- `NSURLSessionBackend`: A *class* that connects to a server using `NSURLSession` mechanisms.
+- `CRUDRepository`: A *protocol* that provides elemental CRUD functionality.
+- `PagedRepository`: A *protocol* that provides read functionality with pagination.
 
-You can either leverage these elements (as shown in the first diagram) or implement your own repositories and backends by conforming directly to the base `Repository` and `Backend` protocols provided by Jayme's foundation, skipping any of these, as shown below:
+Normally you will use these. However, if you need, you can ignore them and implement your own common behaviors by conforming directly to the base `Repository` and `Backend` contracts, as shown below:
 
 ![Jayme's Customization](https://raw.githubusercontent.com/inaka/Jayme/master/Assets/architecture-diagram-2.png)
 
-These default interfaces are briefly described below:
+Next, there's a detailed description of each item mentioned above:
 
 #### NSURLSessionBackend
 
@@ -104,29 +108,36 @@ These default interfaces are briefly described below:
 - By default, it connects to `localhost:8080`, but you can change the base URL path by passing in a custom `NSURLSessionBackendConfiguration` object to its initializer. 
 - You can also set custom HTTP headers to be used in the requests when initilizing your own `NSURLSessionBackendConfiguration` instance.
 - You can also customize the `NSURLSession` and `HTTPResponseParser` objects that are asked upon `NSURLSessionBackend` initialization. However, doing so is discouraged; these last two parameters have been purely added there for unit-testing purposes.
-- This layer returns a `Future` containing a result with either:
-  - A tuple with an `NSData?` object, containing relevant data relative to the response, and a `PageInfo?` object containing pagination-related data (if there is any); or...
-  - A `JaymeError` indicating which error was produced when performing the request.
+- This layer returns a `Future` that will hold a result containing either:
+  - A *tuple* with:
+    - An `NSData?` object, containing relevant data relative to the response.
+    - A `PageInfo?` object containing pagination-related data (if there is any).
+  - Or, a `JaymeError` indicating which error was produced when performing the request.
 
 #### *CRUDRepository*
 
-- This protocol provides convenient CRUD-like functions that are already implemented and ready to be used in any Repository that conforms to it, such as:
-  - `findAll()` for fetching all the Entities from the Repository.
-  - `findByID(id)` for fetching a specific Entity matching a given `id`.
-  - `create(entity)` for creating a new Entity in the Repository.
-  - `update(entity)` for updating an existing Entity with its new values.
-  - `delete(entity)` for deleting an existing Entity from the Repository.
+- This protocol provides convenient CRUD-like functions that are already implemented and ready to be used in any Repository that conforms to it. They are:
+  - `findAll()` for fetching all the entities from the repository.
+    - Hits `/:name` using the `GET` verb.
+  - `findByID(id)` for fetching a specific entity matching a given `id`. 
+    - Hits `/:name/:id` using the `GET` verb.
+  - `create(entity)` for creating a new entity in the repository.
+    - Hits `/:name` with entity's `dictionaryValue` as parameters, using the `POST` verb.
+  - `update(entity)` for updating an existing entity with its new values.
+    - Hits `/:name/:id` with entity's `dictionaryValue` as parameters, using the `PUT` verb.
+  - `delete(entity)` for deleting an existing entity from the repository.
+    - Hits `/:name/:id` using the `DELETE` verb.
 
 ![CRUDRepository Diagram](https://raw.githubusercontent.com/inaka/Jayme/master/Assets/crud-repository-diagram.png)
 
-- Any repository conforming to `CRUDRepository` will get these default CRUD operations for free. Besides, it can add his own custom functions based on business rules, as shown in this example:
+- Any repository conforming to `CRUDRepository` will get these default CRUD operations for free. Besides, it can override any of these default implementations, or add his own custom functions based on business rules, as shown in this example:
 
 ![PostRepository Diagram](https://raw.githubusercontent.com/inaka/Jayme/master/Assets/post-repository-diagram.png)
 
 #### *PagedRepository*
 
 - This protocol provides convenient functionality for reading entities in a paginated manner. Any of your repositories can conform to it and get this function for free:
-  - `findByPage(pageNumber)` for fetching a fixed amount of Entities from the Repository, corresponding to a certain page number. The amount of Entities fetched per page is configured in your concrete repository by providing a `pageSize` property. Besides the array containing entities, you get a `PageInfo` related object as well in return.
+  - `findByPage(pageNumber)` for fetching a fixed amount of entities from the repository, corresponding to a certain page number. The amount of entities fetched per page is configured in your concrete repository by providing a `pageSize` property. Besides the array containing entities, you get a `PageInfo` related object as well in return.
 - The followed pagination conventions have been based on [Grape standards](https://github.com/davidcelis/api-pagination).
 
 
@@ -135,11 +146,11 @@ These default interfaces are briefly described below:
 
 #### Creating your first Repository
 
-Let's pretend you want to create a **User** entity that has its corresponding Repository, which will, of course, store Users.
+Let's pretend we want to create a repository that holds users, with basic CRUD functionality.
 
-All you have to do is create your Entity and make it conform to `Identifiable`, `DictionaryInitializable` and `DictionaryRepresentable` to match the generic `EntityType` that `CRUDRepository` asks for.
+First, let's create our `User` struct and make it conform to `Identifiable`, `DictionaryInitializable` and `DictionaryRepresentable` to match the generic `EntityType` that the `Repository` contract ask for.
 
-Here you can see how this Entity conforms to all these protocols:
+Here you can see how this entity conforms to all these protocols:
 
 ```swift
 // User.swift
@@ -178,9 +189,9 @@ extension User: DictionaryInitializable, DictionaryRepresentable {
 }
 ```
 
-As already suggested in this document, [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON) can be used in cooperation with Jayme and your app to facilitate JSON structure conversions and casts.
+In this example, we used [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON) in purpose to expose how it can be used in cooperation with Jayme and your app to facilitate JSON structure conversions and casts.
 
-Now that you've got your first entity, you just go and create your first repository, as simple as this:
+Then, let's define the `UserRepository`:
 
 ```swift
 // UserRepository.swift
@@ -199,19 +210,19 @@ class UserRepository: CRUDRepository {
 Notice three things here:
 
 - A `typealias` is used for tying the generic `EntityType` to a concrete type (our `User`), hence letting the repository know which kind of entity it works with.
-- Even though the `BackendType` is tied to `NSURLSessionBackend` at the `CRUDRepository` level; since the latter is a protocol, you still have to instantiate a `NSURLSessionBackend` in your concrete repository, which needs to be a class to hold this property value.
-- You have to provide a `name` where the backend is going to look for in order to work with `UserRepository`. If you do not alter the default `NSURLSessionBackendConfiguration`, the complete path with which the `NSURLSessionBackend` will work internally will be `"localhost:8080/users"`, given the `name` that was defined.
+- `BackendType` is tied to `NSURLSessionBackend` in the `CRUDRepository` definition. However, since the latter is a protocol, you need to *instantiate* a `NSURLSessionBackend` in your concrete repository.
+- The `name` that we provided represents, usually, the name that is given for a group of these kind of entities. That name is going to be used for composing a `path` which, at a later stage, the backend is going to hit for basic CRUD operations (e.g. `localhost:8080/users/[:id]`).
 
 **That's it!**
 
-With this basic configuration you're all set to perform CRUD asynchronous operations with your Users from anywhere in your app.
+With this basic configuration you're all set to perform CRUD asynchronous operations with your users from anywhere in your app.
 
 ```swift
 // UsersViewController.swift
 
 class UsersViewController: UIViewController {
 
-	// Fetching example
+	// Fetch users example
 	
 	func loadUsers() {
         let future = UserRepository().findAll()
@@ -232,22 +243,15 @@ class UsersViewController: UIViewController {
 }
 ```
 
-See how **simple and neat** the code ended up being in your `ViewController` layer. That's the main purpose of Jayme.
+Do you see how simple and neat the code ended up being in your `ViewController` layer? Well, **that's the main purpose of Jayme.**
 
 
 
 #### Adding a bit of condiment to your first Repository
 
-Of course not all the repositories are as trivial as the one we've just created. Jayme will make your life really easy when it comes to such basic repository configurations. But, what if we needed more complex stuff?
+Of course, not all the repositories are as trivial as the one we've just created. Jayme will make your life really easy when it comes to such basic repository configurations. But, what if we needed more complex stuff?
 
-Let's suppose that now we go a step further and we pretend to add a `Post` entity in our app. We also want to add support such that we can fetch all the Posts that were created by a certain user.
-
-This is where your architecture slightly starts to divert from Jayme basics. Basically, there are two conventional ways of achieving it. Either you:
-
-- Add a `findPostsForUserWithID(userID)` function to your existent `UserRepository`; or...
-- Create a `PostRepository` with a `findPostsHavingAuthorID(userID)` function.
-
-The latter is preferred over the former.
+Let's suppose that now we go a step further and we pretend to add a `Post` entity in our app. We also want to add support such that we can fetch all the posts that were created by a certain user.
 
 So, in order to do this, you first need to define your `Post` entity, as following:
 
@@ -298,7 +302,7 @@ class PostRepository: CRUDRepository {
     let name = "posts"
     
     func findPostsHavingAuthorID(authorID: String) -> Future<[Post], JaymeError> {
-        // Considering that server-side documentation states that Posts by AuthorID are found in the "/posts/:authorID" path
+        // Considering that server-side documentation states that Posts by AuthorID are found in the "/posts/:authorID" path, we can do this:
         let path = "\(self.name)/\(authorID)"
         return self.backend.futureForPath(path, method: .GET, parameters: nil)
             .andThen { DataParser().dictionariesFromData($0.0) }
@@ -310,22 +314,26 @@ class PostRepository: CRUDRepository {
 
 Notice here:
 
-- This function implementation has been pretty much based on the `findAll()` function declared in an extension of `CRUDRepository`, which you would want to take a look at.
+- This function implementation has been pretty much based on the `findAll()` function implemented in an extension of `CRUDRepository`, which you would want to take a look at.
 
 
-- Depending on how your business rules are defined, and how your server-side contract is, you will perform different actions inside the `findPostsHavingAuthorID` function in order to get the proper posts. You could have wanted to perform a `findAll()` call, and then apply a filter to extract out those posts where `post.authorID` matched the `authorID` passed by parameter, and that could have been still perfectly valid. It's up to you.
+- You could consider several ways of approaching this functionality. For example:
+  - Passing the whole `User` as a parameter instead of just its `id`
+  - Fetching all the posts and then performing a `filter` over the result, instead of hitting a compound path (as shown in the example).
+  - Defining, instead, a `findPostsForUser()` method in your `UserRepository`.
+  - How you perform your solutions is actually up to you.
 
 
-- See how useful are the parsing methods defined in one of the `CRUDRepository` extensions. You would often encounter yourself calling them for chaining asynchronous operations after a future is returned from a backend with raw data; that's why we decided to let them be `public` and not `private`.
+- See the usage of `DataParser` and `EntityParser` classes. They include parsing functions that will be often required in your repositories (e.g. converting `NSData` into an array of dictionaries, array of dictionaries into entities, etc.).
 
 
 
 
 #### Setting up a custom logging function
 
-If you're relying on third party libraries to manage your logs, or if you have your own custom logging implementations, you can inject whatever you have so that Jayme uses it for its internal logging.
+If you're relying on third party libraries to manage your logs, or if you have your own custom logging implementations, you can inject them so that Jayme uses it for its internal logging.
 
-Doing so is quite straightforward, all you have to do is to set a different `loggingFunction` in the `Logger.sharedLogger` instance, which by default, uses the native `print`.
+Doing so is quite simple: You only have to set a different `loggingFunction` in the `Logger.sharedLogger` instance (which by default, uses the native `print`).
 
 Here you have a code sample demonstrating quickly how you can achieve that:
 
@@ -340,7 +348,7 @@ Jayme.Logger.sharedLogger.loggingFunction = { (items: Any..., separator: String,
 
 #### That's pretty much it! 
 
-We are sure you will have to develop more complex scenarios and have bigger challenges by yourself. So, have fun! We encourage you to share anything interesting that can aport more robustness to the library. Issues and pull requests are very welcome!
+We are sure you will have to develop more complex scenarios and have bigger challenges by yourself. So, have fun! We encourage you to share anything interesting that can aport more robustness and flexibility to the library.
 
 
 
@@ -355,8 +363,6 @@ cd Jayme/Example/Server
 python -m SimpleHTTPServer 8080
 ```
 
-Once you have the server running, all you need to do is run Jayme.
-
 
 
 ## Setup
@@ -364,7 +370,7 @@ Once you have the server running, all you need to do is run Jayme.
 - Jayme is available via [cocoapods](http://cocoapods.org/).
   - To install it, add this line to your `Podfile`:
     - `pod 'Jayme'`
-    - Remember to add an `import Jayme` statement in any source file of your project that needs to make use of the library.
+  - Remember to add an `import Jayme` statement in any source file of your project that needs to make use of the library.
 
 
 
@@ -373,6 +379,6 @@ Once you have the server running, all you need to do is run Jayme.
 
 For **questions** or **general comments** regarding the use of this library, please use our public [hipchat room](http://inaka.net/hipchat).
 
-If you find any **bugs** or have a **problem** while using this library, please [open an issue](https://github.com/inaka/Jayme/issues/new) in this repo (or a pull request).
+If you find any **bug**, find a **problem** while using this library, or have suggestions that can make it better, please [open an issue](https://github.com/inaka/Jayme/issues/new) in this repo (or a pull request).
 
 You can also check all of our open-source projects at [inaka.github.io](inaka.github.io).
