@@ -28,7 +28,6 @@ All notable changes to this project will be documented in this file. `Jayme` a
 
 - `ServerBackend` protocol has been renamed to `NSURLSessionBackend`. (Issue [#18](https://github.com/inaka/Jayme/issues/18))
 - `ServerBackendConfiguration` has been renamed to `NSURLSessionBackendConfiguration`. (Issue [#18](https://github.com/inaka/Jayme/issues/18))
-- `ServerBackendError` has been renamed to `JaymeError`. (Issue [#21](https://github.com/inaka/Jayme/issues/21))
 
 #### Entity related changes
 
@@ -36,6 +35,16 @@ All notable changes to this project will be documented in this file. `Jayme` a
 - `StringDictionary` typealias has been removed. (Issue [#28](https://github.com/inaka/Jayme/issues/28))
 - `Identifier` typealias has been removed. (Issue [#22](https://github.com/inaka/Jayme/issues/22))
 - `id` variable in `Identifiable` protocol no longer works with `Identifier`. Now it uses an associated type (`IdentifierType`) for that. (Issue [#22](https://github.com/inaka/Jayme/issues/22))
+
+#### Error handling related changes
+
+- `ServerBackendError` has been renamed to `JaymeError`. (Issue [#21](https://github.com/inaka/Jayme/issues/21))
+- `case BadURL` in `JaymeError` (ex `ServerBackendError`) has been renamed to `case BadRequest` and now it also covers a scenario where request parameters can't be parsed into a valid JSON object. (Issue [#49](https://github.com/inaka/Jayme/issues/49))
+
+#### Bug Fixes
+
+- `parameters` are now actually used in `NSURLSessionBackend` (ex `ServerBackend`). (Issue [#49](https://github.com/inaka/Jayme/issues/49))
+- `"Content-Type": "application/json"` header is no longer duplicated in requests. (Issue [#50](https://github.com/inaka/Jayme/issues/50))
 
 ---
 
