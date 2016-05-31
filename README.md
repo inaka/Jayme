@@ -356,7 +356,7 @@ We are sure you will have to develop more complex scenarios and face bigger chal
 
 If you still have some hesitations about the usage of this library, there is an `Example` folder inside the repo containing a basic implementation of some repositories integrated with view controllers.
 
-The example needs a local server to work, which you can configure really quick by doing:
+The example needs a local server to work, which you can configure really quickly by doing:
 
 ```shell
 cd Jayme/Example/Server
@@ -379,6 +379,6 @@ python -m SimpleHTTPServer 8080
 
 For **questions** or **general comments** regarding the use of this library, please use our public [hipchat room](http://inaka.net/hipchat).
 
-If you find any **bug**, find a **problem** while using this library, or have suggestions that can make it better, please [open an issue](https://github.com/inaka/Jayme/issues/new) in this repo (or a pull request).
+If you find any **bug**, a **problem** while using this library, or have **suggestions** that can make it better, please [open an issue](https://github.com/inaka/Jayme/issues/new) in this repo (or a pull request).
 
 You can also check all of our open-source projects at [inaka.github.io](inaka.github.io).
