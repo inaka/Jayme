@@ -26,9 +26,9 @@ import Foundation
 /// Discrete enumeration representing the possible errors that can be produced within the backend and repository layers.
 public enum JaymeError: ErrorType {
     
-    /* URL string is bad formed such that NSURL can't be built
+    /* Request could not be built. Can be due to a bad formed URL or non-JSON-parsable parameters
      */
-    case BadURL
+    case BadRequest
     
     /* No error was produced, but either no valid response was found or the returned `NSData` object is corrupted or unexpected
      */

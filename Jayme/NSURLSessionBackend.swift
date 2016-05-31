@@ -42,14 +42,13 @@ public class NSURLSessionBackend: Backend {
     /// - A `JaymeError` indicating which error is produced
     public func futureForPath(path: String, method: HTTPMethodName, parameters: [String: AnyObject]? = nil) -> Future<(NSData?, PageInfo?), JaymeError> {
         return Future() { completion in
-            guard let url = self.urlForPath(path) else {
-                completion(.Failure(.BadURL))
+            guard let request = try? self.requestWithPath(path, method: method, parameters: parameters) else {
+                completion(.Failure(JaymeError.BadRequest))
                 return
             }
             let requestNumber = Logger.sharedLogger.requestCounter
             Logger.sharedLogger.requestCounter += 1
-            Logger.sharedLogger.log("Jayme: Request #\(requestNumber) | URL: \(url) | method: \(method.rawValue)")
-            let request = self.requestWithURL(url, method: method)
+            Logger.sharedLogger.log("Jayme: Request #\(requestNumber) | URL: \(request.URL!.absoluteString) | method: \(method.rawValue)")
             let task = self.session.dataTaskWithRequest(request) { data, response, error in
                 let response: FullHTTPResponse = (data, response, error)
                 let result = self.responseParser.parseResponse(response)
@@ -80,13 +79,24 @@ public class NSURLSessionBackend: Backend {
         return self.baseURL?.URLByAppendingPathComponent(path)
     }
     
-    private func requestWithURL(URL: NSURL, method: HTTPMethodName) -> NSURLRequest {
-        let request = NSMutableURLRequest(URL: URL)
+    private func requestWithPath(path: String, method: HTTPMethodName, parameters: [String: AnyObject]?) throws -> NSURLRequest {
+        guard let url = self.urlForPath(path) else {
+            throw JaymeError.BadRequest
+        }
+        let request = NSMutableURLRequest(URL: url)
         request.HTTPMethod = method.rawValue
         for header in self.configuration.httpHeaders {
             request.addValue(header.value, forHTTPHeaderField: header.field)
         }
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        guard let params = parameters else {
+            return request
+        }
+        do {
+            let body = try NSJSONSerialization.dataWithJSONObject(params, options: .PrettyPrinted)
+            request.HTTPBody = body
+        } catch {
+            throw JaymeError.BadRequest
+        }
         return request
     }
     
