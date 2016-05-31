@@ -27,28 +27,28 @@ import Foundation
 
 /// ServerBackend -> NSURLSessionBackend
 @available(*, unavailable, renamed = "NSURLSessionBackend")
-typealias ServerBackend = NSURLSessionBackend
+public typealias ServerBackend = NSURLSessionBackend
 
 /// ServerBackendConfiguration -> NSURLSessionBackendConfiguration
 @available(*, unavailable, renamed = "NSURLSessionBackendConfiguration")
-typealias ServerBackendConfiguration = NSURLSessionBackendConfiguration
+public typealias ServerBackendConfiguration = NSURLSessionBackendConfiguration
 
 /// ServerBackendError -> JaymeError
 @available(*, unavailable, renamed = "JaymeError")
-typealias ServerBackendError = JaymeError
+public typealias ServerBackendError = JaymeError
 
 /// ServerRepository -> CRUDRepository
 @available(*, unavailable, renamed = "CRUDRepository")
-typealias ServerRepository = CRUDRepository
+public typealias ServerRepository = CRUDRepository
 
 /// StringDictionary -> [String: AnyObject]
 @available(*, unavailable, renamed = "[String: AnyObject]")
-typealias StringDictionary = [String: AnyObject]
+public typealias StringDictionary = [String: AnyObject]
 
 /// ServerPagedRepository -> PagedRepository
 @available(*, unavailable, renamed = "PagedRepository")
-typealias ServerPagedRepository = PagedRepository
+public typealias ServerPagedRepository = PagedRepository
 
 /// Identifier -> IdentifierType: CustomStringConvertible
 @available(*, unavailable, message = "Replace `Identifier` with any type that conforms to `CustomStringConvertible`.")
-typealias Identifier = String
+public typealias Identifier = String
