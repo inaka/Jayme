@@ -24,7 +24,7 @@ It provides a neat API to deal with REST communication, leaving your `ViewContro
 ##Features
 
 - **Protocol-Oriented**
-  - Jayme has been built following the concepts of [protocol-oriented programming](https://developer.apple.com/videos/play/wwdc2015/408/), encouraging composition over inheritance, whenever possible.
+  - Jayme was built following the concepts of [protocol-oriented programming](https://developer.apple.com/videos/play/wwdc2015/408/), encouraging composition over inheritance, whenever possible.
 - **Generics**
   - In order to provide high flexibility, generics and associated types are present almost everywhere in the library.
 - **Error Handling**
@@ -249,7 +249,7 @@ Do you see how simple and neat the code ended up being in your `ViewController` 
 
 #### Adding a bit of condiment to your first Repository
 
-Of course, not all the repositories are as trivial as the one we've just created. Jayme will make your life really easy when it comes to such basic repository configurations. But, what if we need more complex stuff?
+Of course, not all the repositories are as trivial as the one we've just created. Jayme will make your life easier when it comes to such basic repository configurations. But, what if we need more complex stuff?
 
 Let's suppose that now we go a step further and we pretend to add a `Post` entity in our app. We also want to add support so that we can fetch all the posts that were created by a certain user.
 
