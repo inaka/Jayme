@@ -144,7 +144,7 @@ Next, there's a detailed description of each item mentioned above:
 
 ## Example
 
-#### Creating your first Repository
+#### Create your first Repository
 
 Let's pretend we want to create a repository that holds users and has basic CRUD functionality.
 
@@ -247,7 +247,7 @@ Do you see how simple and neat the code ended up being in your `ViewController` 
 
 
 
-#### Adding a bit of condiment to your first Repository
+#### Add a bit of condiment to your first Repository
 
 Of course, not all the repositories are as trivial as the one we've just created. Jayme will make your life easier when it comes to such basic repository configurations. But, what if we need more complex stuff?
 
@@ -329,7 +329,7 @@ Notice here:
 
 
 
-#### Setting up a custom logging function
+#### Set up your own logging function
 
 If you're relying on third party libraries to manage your logs, or if you have your own custom logging implementation, you can inject it so that Jayme uses it for its internal logging.
 
