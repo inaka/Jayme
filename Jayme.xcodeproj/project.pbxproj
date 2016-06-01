@@ -189,12 +189,13 @@
 			isa = PBXGroup;
 			children = (
 				5163A0701CD78AC700B0EEEF /* Async Util */,
+				5163A0691CD78A8000B0EEEF /* Backend */,
+				5163A06B1CD78A8F00B0EEEF /* Entity */,
+				51F29C841CFF72FF0048BCBB /* Error */,
+				5163A06E1CD78AB000B0EEEF /* HTTP */,
 				5163A0711CD78AD300B0EEEF /* Logger */,
 				5169EADF1CF780300047B572 /* Parsers */,
-				5163A0691CD78A8000B0EEEF /* Backend */,
 				5163A06C1CD78A9B00B0EEEF /* Repositories */,
-				5163A06B1CD78A8F00B0EEEF /* Entities */,
-				5163A06E1CD78AB000B0EEEF /* HTTP */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -213,29 +214,27 @@
 			children = (
 				5163A0741CD7946000B0EEEF /* NSURLSessionBackend.swift */,
 				5163A0761CD7960800B0EEEF /* NSURLSessionBackendConfiguration.swift */,
-				5163A0781CD7967900B0EEEF /* JaymeError.swift */,
 				5163A07A1CD7970200B0EEEF /* HTTPResponseParser.swift */,
 			);
 			name = NSURLSessionBackend;
 			sourceTree = "<group>";
 		};
-		5163A06B1CD78A8F00B0EEEF /* Entities */ = {
+		5163A06B1CD78A8F00B0EEEF /* Entity */ = {
 			isa = PBXGroup;
 			children = (
 				5163A0821CD79FAB00B0EEEF /* Identifiable.swift */,
 				5163A0841CD7A01500B0EEEF /* DictionaryInitializable.swift */,
 				5163A0861CD7A0DB00B0EEEF /* DictionaryRepresentable.swift */,
 			);
-			name = Entities;
+			name = Entity;
 			sourceTree = "<group>";
 		};
 		5163A06C1CD78A9B00B0EEEF /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
 				5163A07C1CD797E800B0EEEF /* Repository.swift */,
-				5163A07E1CD79A3B00B0EEEF /* CRUDRepository.swift */,
-				5163A0801CD79C6300B0EEEF /* PagedRepository.swift */,
-				5163A08E1CD7A1E800B0EEEF /* PageInfo.swift */,
+				51F29C861CFF73660048BCBB /* CRUDRepository */,
+				51F29C851CFF73580048BCBB /* PagedRepository */,
 			);
 			name = Repositories;
 			sourceTree = "<group>";
@@ -368,6 +367,31 @@
 				5189519F1CD91E3600089906 /* Controller */,
 			);
 			name = Source;
+			sourceTree = "<group>";
+		};
+		51F29C841CFF72FF0048BCBB /* Error */ = {
+			isa = PBXGroup;
+			children = (
+				5163A0781CD7967900B0EEEF /* JaymeError.swift */,
+			);
+			name = Error;
+			sourceTree = "<group>";
+		};
+		51F29C851CFF73580048BCBB /* PagedRepository */ = {
+			isa = PBXGroup;
+			children = (
+				5163A0801CD79C6300B0EEEF /* PagedRepository.swift */,
+				5163A08E1CD7A1E800B0EEEF /* PageInfo.swift */,
+			);
+			name = PagedRepository;
+			sourceTree = "<group>";
+		};
+		51F29C861CFF73660048BCBB /* CRUDRepository */ = {
+			isa = PBXGroup;
+			children = (
+				5163A07E1CD79A3B00B0EEEF /* CRUDRepository.swift */,
+			);
+			name = CRUDRepository;
 			sourceTree = "<group>";
 		};
 		51F6D1CC1CF89D0500E998F0 /* Identifiers */ = {
