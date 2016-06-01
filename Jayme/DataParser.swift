@@ -26,6 +26,9 @@ import Foundation
 /// Provides functions to be used within a repository for converting Dictionaries into Entities an chaining their results with `Future` convenient functions (e.g. `map` and `andThen`
 public class DataParser {
     
+    /// Public default initializer
+    public init() { }
+    
     /// Returns a `Future` containing a dictionary initialized with the optional data passed by parameter, or `JaymeError.BadResponse` if the dictionary can't be initialized from that data.
     public func dictionaryFromData(maybeData: NSData?) -> Future<[String: AnyObject], JaymeError> {
         return Future() { completion in

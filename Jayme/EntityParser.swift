@@ -26,6 +26,9 @@ import Foundation
 /// Provides functions to be used within a repository for converting Dictionaries into Entities an chaining their results with `Future` convenient functions (e.g. `map` and `andThen`)
 public class EntityParser<EntityType: DictionaryInitializable> {
     
+    /// Public default initializer
+    public init() { }
+    
     /// Returns a `Future` containing an entity initialized with the dictionary value passed by parameter, or `JaymeError.ParsingError` if the entity could not be initialized.
     public func entityFromDictionary(dictionary: [String: AnyObject]) -> Future<EntityType, JaymeError> {
         return Future() { completion in
