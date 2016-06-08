@@ -1,5 +1,5 @@
 // Jayme
-// ServerPagedRepositoryTests.swift
+// PagedRepositoryTests.swift
 //
 // Copyright (c) 2016 Inaka - http://inaka.net/
 //
@@ -24,16 +24,16 @@
 import XCTest
 @testable import Jayme
 
-class ServerPagedRepositoryTests: XCTestCase {
+class PagedRepositoryTests: XCTestCase {
 
-    var backend: FakeServerBackend!
+    var backend: TestingBackend!
     var repository: TestDocumentPagedRepository!
     
     override func setUp() {
         super.setUp()
         self.continueAfterFailure = false
         
-        let backend = FakeServerBackend()
+        let backend = TestingBackend()
         self.backend = backend
         self.repository = TestDocumentPagedRepository(backend: backend, pageSize: 2)
     }
@@ -41,7 +41,7 @@ class ServerPagedRepositoryTests: XCTestCase {
 
 // MARK: - Calls To Backend Tests
 
-extension ServerPagedRepositoryTests {
+extension PagedRepositoryTests {
     
     func testFindAllCall() {
         self.repository.findByPage(pageNumber: 1)
@@ -52,7 +52,7 @@ extension ServerPagedRepositoryTests {
 
 // MARK: - Response Parsing Tests
 
-extension ServerPagedRepositoryTests {
+extension PagedRepositoryTests {
 
     // Check the PageInfo object that is returned
     func testFindAllSuccessCallback() {
@@ -97,11 +97,11 @@ extension ServerPagedRepositoryTests {
         
         // Simulated completion
         self.backend.completion = { completion in
-            let error = ServerBackendError.NotFound
+            let error = JaymeError.NotFound
             completion(.Failure(error))
         }
         
-        let expectation = self.expectationWithDescription("Expected ServerBackendError.NotFound")
+        let expectation = self.expectationWithDescription("Expected JaymeError.NotFound")
         
         let future = self.repository.findByPage(pageNumber: 1)
         future.start() { result in

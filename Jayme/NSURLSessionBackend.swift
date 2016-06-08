@@ -1,5 +1,5 @@
 // Jayme
-// ServerBackend.swift
+// NSURLSessionBackend.swift
 //
 // Copyright (c) 2016 Inaka - http://inaka.net/
 //
@@ -24,12 +24,12 @@
 import Foundation
 
 /// Provides a Backend that connects to a server using HTTP REST requests via `NSURLSession`
-public class ServerBackend: Backend {
+public class NSURLSessionBackend: Backend {
     
     public typealias BackendReturnType = (NSData?, PageInfo?)
-    public typealias BackendErrorType = ServerBackendError
+    public typealias BackendErrorType = JaymeError
     
-    public init(configuration: ServerBackendConfiguration = ServerBackendConfiguration.defaultConfiguration,
+    public init(configuration: NSURLSessionBackendConfiguration = NSURLSessionBackendConfiguration.defaultConfiguration,
          session: NSURLSession = NSURLSession.sharedSession(),
          responseParser: HTTPResponseParser = HTTPResponseParser()) {
         self.configuration = configuration
@@ -39,17 +39,16 @@ public class ServerBackend: Backend {
     
     /// Returns a `Future` containing either:
     /// - A tuple with possible `NSData` relevant to the HTTP response and a possible `PageInfo` object if there is pagination-related info associated to the HTTP response
-    /// - A `ServerBackendError` indicating which error is produced
-    public func futureForPath(path: String, method: HTTPMethodName, parameters: [String: AnyObject]? = nil) -> Future<(NSData?, PageInfo?), ServerBackendError> {
+    /// - A `JaymeError` indicating which error is produced
+    public func futureForPath(path: String, method: HTTPMethodName, parameters: [String: AnyObject]? = nil) -> Future<(NSData?, PageInfo?), JaymeError> {
         return Future() { completion in
-            guard let url = self.urlForPath(path) else {
-                completion(.Failure(.BadURL))
+            guard let request = try? self.requestWithPath(path, method: method, parameters: parameters) else {
+                completion(.Failure(JaymeError.BadRequest))
                 return
             }
             let requestNumber = Logger.sharedLogger.requestCounter
             Logger.sharedLogger.requestCounter += 1
-            Logger.sharedLogger.log("Jayme: Request #\(requestNumber) | URL: \(url) | method: \(method.rawValue)")
-            let request = self.requestWithURL(url, method: method)
+            Logger.sharedLogger.log("Jayme: Request #\(requestNumber) | URL: \(request.URL!.absoluteString) | method: \(method.rawValue)")
             let task = self.session.dataTaskWithRequest(request) { data, response, error in
                 let response: FullHTTPResponse = (data, response, error)
                 let result = self.responseParser.parseResponse(response)
@@ -68,7 +67,7 @@ public class ServerBackend: Backend {
     
     // MARK: - Private
     
-    private let configuration: ServerBackendConfiguration
+    private let configuration: NSURLSessionBackendConfiguration
     private let session: NSURLSession
     private let responseParser: HTTPResponseParser
     
@@ -80,13 +79,24 @@ public class ServerBackend: Backend {
         return self.baseURL?.URLByAppendingPathComponent(path)
     }
     
-    private func requestWithURL(URL: NSURL, method: HTTPMethodName) -> NSURLRequest {
-        let request = NSMutableURLRequest(URL: URL)
+    private func requestWithPath(path: String, method: HTTPMethodName, parameters: [String: AnyObject]?) throws -> NSURLRequest {
+        guard let url = self.urlForPath(path) else {
+            throw JaymeError.BadRequest
+        }
+        let request = NSMutableURLRequest(URL: url)
         request.HTTPMethod = method.rawValue
         for header in self.configuration.httpHeaders {
             request.addValue(header.value, forHTTPHeaderField: header.field)
         }
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        guard let params = parameters else {
+            return request
+        }
+        do {
+            let body = try NSJSONSerialization.dataWithJSONObject(params, options: .PrettyPrinted)
+            request.HTTPBody = body
+        } catch {
+            throw JaymeError.BadRequest
+        }
         return request
     }
     

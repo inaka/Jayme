@@ -23,13 +23,13 @@
 
 import Foundation
 
-class PostRepository: ServerRepository {
+class PostRepository: CRUDRepository {
     
     typealias EntityType = Post
-    let backend = ServerBackend()
-    let path = "posts"
+    let backend = NSURLSessionBackend()
+    let name = "posts"
     
-    func findPostsForUser(user: User) -> Future<[Post], ServerBackendError> {
+    func findPostsForUser(user: User) -> Future<[Post], JaymeError> {
         return self.findAll().map {
             $0.filter { $0.authorID == user.id }
         }

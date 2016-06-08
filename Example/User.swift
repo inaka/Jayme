@@ -24,25 +24,25 @@
 import Foundation
 
 struct User: Identifiable {
-    let id: Identifier
+    let id: String
     let name: String
     let email: String
 }
 
 extension User: DictionaryInitializable, DictionaryRepresentable {
     
-    init?(dictionary: StringDictionary) {
+    init(dictionary: [String: AnyObject]) throws {
         guard let
             id = dictionary["id"] as? String,
             name = dictionary["name"] as? String,
             email = dictionary["email"] as? String
-            else { return nil }
+            else { throw JaymeError.ParsingError }
         self.id = id
         self.name = name
         self.email = email
     }
     
-    var dictionaryValue: StringDictionary {
+    var dictionaryValue: [String: AnyObject] {
         return [
             "id": self.id,
             "name": self.name,

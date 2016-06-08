@@ -24,13 +24,13 @@
 import Foundation
 @testable import Jayme
 
-class TestDocumentPagedRepository: ServerPagedRepository {
+class TestDocumentPagedRepository: PagedRepository {
     typealias EntityType = TestDocument
-    let path = "documents"
-    let backend: ServerBackend
+    let name = "documents"
+    let backend: NSURLSessionBackend
     let pageSize: Int
     
-    init(backend: ServerBackend, pageSize: Int) {
+    init(backend: NSURLSessionBackend, pageSize: Int) {
         self.backend = backend
         self.pageSize = pageSize
     }

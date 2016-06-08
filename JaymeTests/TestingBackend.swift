@@ -1,5 +1,5 @@
 // Jayme
-// FakeServerBackend.swift
+// TestingBackend.swift
 //
 // Copyright (c) 2016 Inaka - http://inaka.net/
 //
@@ -24,15 +24,15 @@
 import Foundation
 @testable import Jayme
 
-class FakeServerBackend: ServerBackend {
+class TestingBackend: NSURLSessionBackend {
     
     var path: Path?
     var method: HTTPMethodName?
     var parameters: [String: AnyObject]?
     
-    var completion: Future<(NSData?, PageInfo?), ServerBackendError>.FutureAsyncOperation = { completion in }
+    var completion: Future<(NSData?, PageInfo?), JaymeError>.FutureAsyncOperation = { completion in }
     
-    override func futureForPath(path: String, method: HTTPMethodName, parameters: [String: AnyObject]? = nil) -> Future <(NSData?, PageInfo?), ServerBackendError> {
+    override func futureForPath(path: String, method: HTTPMethodName, parameters: [String: AnyObject]? = nil) -> Future <(NSData?, PageInfo?), JaymeError> {
         self.path = path
         self.method = method
         self.parameters = parameters

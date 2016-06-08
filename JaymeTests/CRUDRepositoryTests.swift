@@ -1,5 +1,5 @@
 // Jayme
-// ServerRepositoryTests.swift
+// CRUDRepositoryTests.swift
 //
 // Copyright (c) 2016 Inaka - http://inaka.net/
 //
@@ -21,19 +21,21 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+// swiftlint:disable file_length
+
 import XCTest
 @testable import Jayme
 
-class ServerRepositoryTests: XCTestCase {
+class CRUDRepositoryTests: XCTestCase {
     
-    var backend: FakeServerBackend!
+    var backend: TestingBackend!
     var repository: TestDocumentRepository!
     
     override func setUp() {
         super.setUp()
         self.continueAfterFailure = false
         
-        let backend = FakeServerBackend()
+        let backend = TestingBackend()
         self.backend = backend
         self.repository = TestDocumentRepository(backend: backend)
     }
@@ -42,7 +44,7 @@ class ServerRepositoryTests: XCTestCase {
 
 // MARK: - Calls To Backend Tests
 
-extension ServerRepositoryTests {
+extension CRUDRepositoryTests {
     
     func testFindAllCall() {
         self.repository.findAll()
@@ -89,20 +91,13 @@ extension ServerRepositoryTests {
         self.repository.delete(document)
         XCTAssertEqual(self.backend.path, "documents/123")
         XCTAssertEqual(self.backend.method, .DELETE)
-        guard let
-            id = self.backend.parameters?["id"] as? String,
-            name = self.backend.parameters?["name"] as? String else {
-                XCTFail("Wrong parameters"); return
-        }
-        XCTAssertEqual(id, "123")
-        XCTAssertEqual(name, "a")
     }
     
 }
 
 // MARK: - Response Callbacks Tests
 
-extension ServerRepositoryTests {
+extension CRUDRepositoryTests {
     
     func testFindAllSuccessCallback() {
         
@@ -137,11 +132,11 @@ extension ServerRepositoryTests {
         
         // Simulated completion
         self.backend.completion = { completion in
-            let error = ServerBackendError.NotFound
+            let error = JaymeError.NotFound
             completion(.Failure(error))
         }
         
-        let expectation = self.expectationWithDescription("Expected ServerBackendError.NotFound")
+        let expectation = self.expectationWithDescription("Expected JaymeError.NotFound")
         
         let future = self.repository.findAll()
         future.start() { result in
@@ -207,7 +202,7 @@ extension ServerRepositoryTests {
         
         // Simulated completion
         self.backend.completion = { completion in
-            let error = ServerBackendError.NotFound
+            let error = JaymeError.NotFound
             completion(.Failure(error))
         }
         
@@ -280,7 +275,9 @@ extension ServerRepositoryTests {
         
         // Simulated completion
         self.backend.completion = { completion in
-            completion(.Success((nil, nil)))
+            let json = ["id": "1", "name": "a"]
+            let data = try! NSJSONSerialization.dataWithJSONObject(json, options: .PrettyPrinted)
+            completion(.Success((data, nil)))
         }
         
         let expectation = self.expectationWithDescription("Expected to get a success")
@@ -288,8 +285,10 @@ extension ServerRepositoryTests {
         let document = TestDocument(id: "_", name: "_")
         let future = self.repository.create(document)
         future.start() { result in
-            guard case .Success = result
+            guard case .Success(let document) = result
                 else { XCTFail(); return }
+            XCTAssertEqual(document.id, "1")
+            XCTAssertEqual(document.name, "a")
             expectation.fulfill()
         }
         
@@ -302,7 +301,7 @@ extension ServerRepositoryTests {
         
         // Simulated completion
         self.backend.completion = { completion in
-            let error = ServerBackendError.NotFound
+            let error = JaymeError.NotFound
             completion(.Failure(error))
         }
         
@@ -326,7 +325,9 @@ extension ServerRepositoryTests {
         
         // Simulated completion
         self.backend.completion = { completion in
-            completion(.Success((nil, nil)))
+            let json = ["id": "1", "name": "a"]
+            let data = try! NSJSONSerialization.dataWithJSONObject(json, options: .PrettyPrinted)
+            completion(.Success((data, nil)))
         }
         
         let expectation = self.expectationWithDescription("Expected to get a success")
@@ -334,8 +335,10 @@ extension ServerRepositoryTests {
         let document = TestDocument(id: "_", name: "_")
         let future = self.repository.update(document)
         future.start() { result in
-            guard case .Success = result
+            guard case .Success(let document) = result
                 else { XCTFail(); return }
+            XCTAssertEqual(document.id, "1")
+            XCTAssertEqual(document.name, "a")
             expectation.fulfill()
         }
         
@@ -348,7 +351,7 @@ extension ServerRepositoryTests {
         
         // Simulated completion
         self.backend.completion = { completion in
-            let error = ServerBackendError.NotFound
+            let error = JaymeError.NotFound
             completion(.Failure(error))
         }
         
@@ -393,7 +396,7 @@ extension ServerRepositoryTests {
         
         // Simulated completion
         self.backend.completion = { completion in
-            let error = ServerBackendError.NotFound
+            let error = JaymeError.NotFound
             completion(.Failure(error))
         }
         

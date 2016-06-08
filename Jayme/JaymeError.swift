@@ -1,5 +1,5 @@
 // Jayme
-// TestDocumentRepository.swift
+// JaymeError.swift
 //
 // Copyright (c) 2016 Inaka - http://inaka.net/
 //
@@ -22,14 +22,38 @@
 // THE SOFTWARE.
 
 import Foundation
-@testable import Jayme
 
-class TestDocumentRepository: CRUDRepository {
-    typealias EntityType = TestDocument
-    let name = "documents"
-    let backend: NSURLSessionBackend
+/// Discrete enumeration representing the possible errors that can be produced within the backend and repository layers.
+public enum JaymeError: ErrorType {
     
-    init(backend: NSURLSessionBackend) {
-        self.backend = backend
-    }
+    /* Request could not be built. Can be due to a bad formed URL or non-JSON-parsable parameters
+     */
+    case BadRequest
+    
+    /* No error was produced, but either no valid response was found or the returned `NSData` object is corrupted or unexpected
+     */
+    case BadResponse
+    
+    /* Returned `NSData` object could not be parsed as expected
+     */
+    case ParsingError
+    
+    /* Server returned 404 or 410. Useful as a special case in `.findByID()` requests
+     */
+    case NotFound
+    
+    /* Server returned any 5xx status code
+     Contains the 5xx status code
+     */
+    case ServerError(statusCode: Int)
+    
+    /* Server returned any other status code that is not contemplated as a special case
+     */
+    case Undefined(statusCode: Int)
+    
+    /* An error occurred while sending the request (e.g. a timeout or no internet connection)
+     Contains the `NSError` with the information about it
+     */
+    case Other(NSError)
+    
 }

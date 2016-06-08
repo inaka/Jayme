@@ -1,5 +1,5 @@
 // Jayme
-// ServerBackendError.swift
+// NSURLSessionBackendConfiguration.swift
 //
 // Copyright (c) 2016 Inaka - http://inaka.net/
 //
@@ -23,37 +23,17 @@
 
 import Foundation
 
-/// Discrete enumeration representing the possible errors that can be produced within the ServerBackend and ServerRepository layers.
-public enum ServerBackendError: ErrorType {
+/// Structure used for holding relevant information that NSURLSessionBackend needs in order to work.
+public struct NSURLSessionBackendConfiguration {
     
-    /* URL string is bad formed such that NSURL can't be built
-     */
-    case BadURL
+    let basePath: Path
+    let httpHeaders: [HTTPHeader]
     
-    /* No error was produced, but either no valid response was found or the returned `NSData` object is corrupted or unexpected
-     */
-    case BadResponse
+    public static var defaultConfiguration = NSURLSessionBackendConfiguration(basePath: "http://localhost:8080",
+                                                                 httpHeaders: NSURLSessionBackendConfiguration.defaultHTTPHeaders)
     
-    /* Returned `NSData` object could not be parsed as expected
-     */
-    case ParsingError
+    // MARK: - Private
     
-    /* Server returned 404 or 410. Useful as a special case in `.findByID()` requests
-     */
-    case NotFound
-    
-    /* Server returned any 5xx status code
-     Contains the 5xx status code
-     */
-    case ServerError(statusCode: Int)
-    
-    /* Server returned any other status code that is not contemplated as a special case
-     */
-    case Undefined(statusCode: Int)
-    
-    /* An error occurred while sending the request (e.g. a timeout or no internet connection)
-     Contains the `NSError` with the information about it
-     */
-    case Other(NSError)
-    
+    private static var defaultHTTPHeaders = [HTTPHeader(field: "Accept", value: "application/json"),
+                                             HTTPHeader(field: "Content-Type", value: "application/json")]
 }

@@ -1,5 +1,5 @@
-// Jayme
-// ServerBackendConfiguration.swift
+// JaymeExample
+// Extensions.swift
 //
 // Copyright (c) 2016 Inaka - http://inaka.net/
 //
@@ -23,17 +23,8 @@
 
 import Foundation
 
-/// Structure used for holding a base path and HTTP headers to be used in ServerBackend's URL requests.
-public struct ServerBackendConfiguration {
-    
-    let basePath: Path
-    let httpHeaders: [HTTPHeader]
-    
-    public static var defaultConfiguration = ServerBackendConfiguration(basePath: "http://localhost:8080",
-                                                                 httpHeaders: ServerBackendConfiguration.defaultHTTPHeaders)
-    
-    // MARK: - Private
-    
-    private static var defaultHTTPHeaders = [HTTPHeader(field: "Accept", value: "application/json"),
-                                             HTTPHeader(field: "Content-Type", value: "application/json")]
+extension String: CustomStringConvertible {
+    public var description: String {
+        return self
+    }
 }

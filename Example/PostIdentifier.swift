@@ -1,5 +1,5 @@
-// Jayme
-// TestDocumentRepository.swift
+// JaymeExample
+// PostIdentifier.swift
 //
 // Copyright (c) 2016 Inaka - http://inaka.net/
 //
@@ -22,14 +22,20 @@
 // THE SOFTWARE.
 
 import Foundation
-@testable import Jayme
 
-class TestDocumentRepository: CRUDRepository {
-    typealias EntityType = TestDocument
-    let name = "documents"
-    let backend: NSURLSessionBackend
-    
-    init(backend: NSURLSessionBackend) {
-        self.backend = backend
+/// Enumeration for identifying a Post via either a local ID or a server-defined ID, and being able to distinguish which scenario it corresponds to.
+enum PostIdentifier {
+    case Local(String)
+    case Server(String)
+}
+
+extension PostIdentifier: CustomStringConvertible {
+    var description: String {
+        switch self {
+        case .Local(let id):
+            return "local_\(id)"
+        case .Server(let id):
+            return id
+        }
     }
 }
