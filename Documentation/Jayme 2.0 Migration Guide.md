@@ -29,28 +29,15 @@ They are listed below:
 
 - `path` variable has been renamed to `name` in `Repository` protocol declaration. (related issue: [#17](https://github.com/inaka/Jayme/issues/17))
   - You have to change every `path` appearance in your Repositories by using `name` instead.
-
 - `init?(dictionary: StringDictionary)` has been replaced by `init(dictionary: [String: AnyObject]) throws`. (related issues: [#25](https://github.com/inaka/Jayme/issues/25), [#28](https://github.com/inaka/Jayme/issues/28))
   - `StringDictionary` → `[String: AnyObject]` replacements should be suggested by the compiler.
   - You have to manually replace your `init?` initializers for every class or struct that conforms to `DictionaryInitializable` by its throwable equivalent.
   - You have to perform `{ throw JaymeError.ParsingError }` whenever you can't initialize a `DictionaryInitializable` object instead of performing `{ return nil }`.
-
 - `Identifier` typealias no longer exists. Now your entities define their own identifier type.  (related issue: [#22](https://github.com/inaka/Jayme/issues/22))
 
   - You have to change every `Identifier` appearance and replace it by a concrete type you need to use (e.g. `String`, `Int`, or your own, as long as it conforms to `CustomStringConvertible`). This change should be suggested by the compiler.
-
   - However, since by default `String` does not conform to `CustomStringConvertible`, you'd probably want to add this extension to your code: 
-
-    - ```swift
-      extension String: CustomStringConvertible {
-          public var description: String {
-              return self
-          }
-      }
-      ```
-
-
-
+    - `extension String: CustomStringConvertible { public var description: String { return self } }`
 - Convenient parsing functions under one of the extensions in `ServerRepository` (now `CRUDRepository`) have been moved into separated new classes called `DataParser` and `EntityParser`. If you were calling those functions somewhere in your code, you have to change their calls to use those parsers classes instead of your repository itself. (related issue: [#20](https://github.com/inaka/Jayme/issues/20))
   - Possible replacements are:
     - `self.parseDataAsArray(…)` → `DataParser().dictionariesFromData(…)`
