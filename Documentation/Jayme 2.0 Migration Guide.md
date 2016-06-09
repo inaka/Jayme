@@ -44,6 +44,9 @@ They are listed below:
     - `self.parseDataAsDictionary(…)` → `DataParser().dictionaryFromData(…)`
     - `self.parseEntitiesFromArray(…)` → `EntityParser().entitiesFromDictionaries(…)`
     - `self.parseEntityFromDictionary(…)` → `EntityParser().entityFromDictionary(…)`
+- Results from Repositories using `NSURLBackend` (ex `ServerBackend`) are now returned on the main thread, instead of on a background thread.
+  - This will not break your existing code, but it's strongly recommended that you remove any possible `dispatch_async(dispatch_get_main_queue()) { ... }` call that you could have performed within your ViewControllers when getting results back from any repository. These calls are unnecessary now.
+
 
 ---
 
