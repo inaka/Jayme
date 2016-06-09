@@ -6,13 +6,17 @@ All notable changes to this project will be documented in this file. `Jayme` a
 
 ### 2.x Releases
 
-- `2.0.x` Releases - [2.0.0](#200)
+- `2.0.x` Releases - [2.0.0](#200) | [2.0.1](#201)
 
 ### 1.x Releases
 
 - `1.0.x` Releases - [1.0.1](#101) | [1.0.2](#102) | [1.0.3](#103) | [1.0.4](#104) 
 
 ---
+
+## 2.0.1
+
+- Results from repositories are returned on the main thread. (Issue [#55](https://github.com/inaka/Jayme/issues/19))
 
 ## 2.0.0
 
