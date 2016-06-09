@@ -44,9 +44,7 @@ class UserDetailViewController: UIViewController {
             switch result {
             case .Success(let posts):
                 self.posts = posts
-                dispatch_async(dispatch_get_main_queue()) {
-                    self.tableView.reloadData()
-                }
+                self.tableView.reloadData()
             case .Failure(let error):
                 self.showAlertControllerForError(error)
             }
