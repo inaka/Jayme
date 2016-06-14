@@ -32,13 +32,13 @@ public struct NSURLSessionBackendConfiguration {
     public static var defaultConfiguration = NSURLSessionBackendConfiguration(basePath: "http://localhost:8080",
                                                                  httpHeaders: NSURLSessionBackendConfiguration.defaultHTTPHeaders)
     
+    public init(basePath: Path, httpHeaders: [HTTPHeader]) {
+        self.basePath = basePath
+        self.httpHeaders = httpHeaders
+    }
+    
     // MARK: - Private
     
     private static var defaultHTTPHeaders = [HTTPHeader(field: "Accept", value: "application/json"),
                                              HTTPHeader(field: "Content-Type", value: "application/json")]
-    
-    init(basePath: Path, httpHeaders: [HTTPHeader]){
-        self.basePath = basePath
-        self.httpHeaders = httpHeaders
-    }
 }
