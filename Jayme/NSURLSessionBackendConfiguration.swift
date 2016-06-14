@@ -26,8 +26,8 @@ import Foundation
 /// Structure used for holding relevant information that NSURLSessionBackend needs in order to work.
 public struct NSURLSessionBackendConfiguration {
     
-    let basePath: Path
-    let httpHeaders: [HTTPHeader]
+    public let basePath: Path
+    public let httpHeaders: [HTTPHeader]
     
     public static var defaultConfiguration = NSURLSessionBackendConfiguration(basePath: "http://localhost:8080",
                                                                  httpHeaders: NSURLSessionBackendConfiguration.defaultHTTPHeaders)
@@ -36,4 +36,9 @@ public struct NSURLSessionBackendConfiguration {
     
     private static var defaultHTTPHeaders = [HTTPHeader(field: "Accept", value: "application/json"),
                                              HTTPHeader(field: "Content-Type", value: "application/json")]
+    
+    init(basePath: Path, httpHeaders: [HTTPHeader]){
+        self.basePath = basePath
+        self.httpHeaders = httpHeaders
+    }
 }
