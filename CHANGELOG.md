@@ -16,7 +16,7 @@ All notable changes to this project will be documented in this file. `Jayme` a
 
 ## 2.0.1
 
-- `create(...)` function in `CRUDRepository` no longer attachs the `:id` parameter in its `POST` URL. (Issue [#63](https://github.com/inaka/Jayme/issues/63))
+- `create(...)` function in `CRUDRepository` no longer attaches the `:id` parameter in its `POST` URL. (Issue [#63](https://github.com/inaka/Jayme/issues/63))
 - Results from repositories are now returned on the main thread. (Issue [#55](https://github.com/inaka/Jayme/issues/55))
 - Added `PATCH` verb in `HTTPMethodName` enumeration. (Issue [#57](https://github.com/inaka/Jayme/issues/57))
 
