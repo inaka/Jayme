@@ -61,7 +61,7 @@ extension CRUDRepositoryTests {
     func testCreateCall() {
         let document = TestDocument(id: "123", name: "a")
         self.repository.create(document)
-        XCTAssertEqual(self.backend.path, "documents/123")
+        XCTAssertEqual(self.backend.path, "documents")
         XCTAssertEqual(self.backend.method, .POST)
         guard let
             id = self.backend.parameters?["id"] as? String,
