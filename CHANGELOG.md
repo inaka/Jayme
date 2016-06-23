@@ -6,13 +6,19 @@ All notable changes to this project will be documented in this file. `Jayme` a
 
 ### 2.x Releases
 
-- `2.0.x` Releases - [2.0.0](#200)
+- `2.0.x` Releases - [2.0.0](#200) | [2.0.1](#201)
 
 ### 1.x Releases
 
 - `1.0.x` Releases - [1.0.1](#101) | [1.0.2](#102) | [1.0.3](#103) | [1.0.4](#104) 
 
 ---
+
+## 2.0.1
+
+- `create(...)` function in `CRUDRepository` no longer attaches the `:id` parameter in its `POST` URL. (Issue [#63](https://github.com/inaka/Jayme/issues/63))
+- Results from repositories are now returned on the main thread. (Issue [#55](https://github.com/inaka/Jayme/issues/55))
+- Added `PATCH` verb in `HTTPMethodName` enumeration. (Issue [#57](https://github.com/inaka/Jayme/issues/57))
 
 ## 2.0.0
 
