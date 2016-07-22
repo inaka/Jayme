@@ -284,7 +284,7 @@ You can take a look at the [UserRepositoryTests](/JaymeTests/UserRepositoryTests
 
 > For further information on how to configure your whole test environment, check out the [sample project](#sample-project).
 
-#### 6. Configure a custom logging function
+#### 6. Configure your logging function
 
 If you are relying on third party libraries to manage your logs, or if you have your own custom logging implementation, you can inject it so that Jayme uses it for its internal logging.
 
