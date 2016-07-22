@@ -18,8 +18,6 @@
 // specific language governing permissions and limitations
 // under the License.
 
-// swiftlint:disable file_length
-
 import XCTest
 @testable import Jayme
 
