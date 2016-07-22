@@ -23,7 +23,18 @@ import Foundation
 class UserRepository: CRUDRepository {
     
     typealias EntityType = User
-    let backend = NSURLSessionBackend()
+    let backend: NSURLSessionBackend
     let name = "users"
+    
+    init(backend: NSURLSessionBackend = NSURLSessionBackend()) {
+        self.backend = backend
+    }
+    
+    func findActiveUsers() -> Future<[User], JaymeError> {
+        let path = "\(self.name)/active"
+        return self.backend.futureForPath(path, method: .GET, parameters: nil)
+            .andThen { DataParser().dictionariesFromData($0.0) }
+            .andThen { EntityParser().entitiesFromDictionaries($0) }
+    }
     
 }

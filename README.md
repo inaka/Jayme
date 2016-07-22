@@ -1,6 +1,6 @@
 ![Logo](https://raw.githubusercontent.com/inaka/Jayme/master/Assets/logo.png)
 
-***The abstraction layer that eases RESTful interconnections in Swift***
+***An abstraction layer that eases RESTful interconnections in Swift***
 
 ------
 
@@ -14,7 +14,7 @@ Jayme **defines a neat architecture to manage the REST layer** in your Swift cod
 
 The idea behind this library is to **separate concerns**: Your view controllers should handle neither networking code nor heavy business logic code, in order to stay lightweight.
 
-It provides a neat API to deal with REST communication, as well as default implementations for basic [CRUD functionality](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete) and [pagination](https://github.com/davidcelis/api-pagination).
+The library provides a neat API to deal with REST communication, as well as default implementations for basic [CRUD functionality](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete) and [pagination](https://github.com/davidcelis/api-pagination).
 
 ![Jayme's Architecture In A Nutshell](https://raw.githubusercontent.com/inaka/Jayme/master/Assets/V2/architecture-diagram.png)
 
@@ -36,7 +36,7 @@ It provides a neat API to deal with REST communication, as well as default imple
   - In cooperation with protocol orientation, they make the library very customizable.
 - **Error Handling**
   - Jayme comes with a default list of **discrete** errors (`enum JaymeError`).
-  - In order to help the view controller layer differentiate meaningful UI flows, some particular scenarios that are usually treated as `success` cases are encapsulated as errors in `JaymeError`, for instance: a response with any `5xx` status code.
+  - In order to help the view controller layer differentiate meaningful UI flows, some particular scenarios, that are usually treated as `success` cases, are actually encapsulated as errors in `JaymeError`, for instance: a response with any `5xx` status code.
   - If you need different error definitions, the library allows you to use your own error types, with the aid of associated types.
 - **Futures / Results**
   - From experience, we've found out that the [Future Pattern](https://realm.io/news/swift-summit-javier-soto-futures/) is a very convenient way for writing asynchronous code. In consequence, we decided to develop Jayme around that pattern.
@@ -66,24 +66,24 @@ Here is a brief description of each relevant term, based on how Jayme, in partic
   - Your *networking code* will usually live in **backends**.
 - An **Entity** represents a *thing* that is meaningful in your application; for example, a user.
   - Actually, there is no definition of a *concrete* `Entity` in the library. Instead, repositories use entities as an *associated type*, named `EntityType` (examples of entity types are: `User`, `Post`, `Comment`, and so on). Any entity type you define should conform to `Identifiable`, `DictionaryInitializable` and `DictionaryRepresentable`, so that entities can be identified, initialized with a dictionary and represented through a dictionary, respectively.
-  - As for identifying entities, we've come up with a flexible approach: Entity identifiers are not tied to any concrete type (for instance: `String` or `Int`); instead, it's up to you to define which kind of identifier each of your entity types use. This means that you could have entity types having `Int` ids, others having `String`, or whatever best fits your needs.
+  - As for identifying entities, Jayme takes a flexible approach: Entity identifiers (*a.k.a. id's*) are not tied to any concrete type (for instance: `String` or `Int`); instead, it's up to you to define which kind of identifier each of your entity types use. This means that you could have entity types having `Int` ids, others having `String`, or whatever best fits your needs. You can check out the [sample project](#sample-project) to see more complex identifier scenarios.
 
 
 
 
 ## Default Implementations
 
-Jayme comes with some protocols and classes containing default implementations for common functionality, such as CRUD (create, read, update, delete) and pagination. There are many ways to approach those: Jayme is aimed to follow the conventions that we usually follow at [Inaka](http://inaka.net/).
+Jayme comes with some protocols and classes containing default implementations for common functionality, such as CRUD (create, read, update, delete) and pagination. There are many ways to approach those: Jayme is aimed to follow the conventions that we normally follow at [Inaka](http://inaka.net/).
 
 These default implementations are:
 
-- **[NSURLSessionBackend](Jayme/NSURLSessionBackend.swift)**: A *class* that connects to a server using `NSURLSession` mechanisms.
-- **[CRUDRepository](Jayme/CRUDRepository.swift)**: A *protocol* that provides elemental CRUD functionality.
-- **[PagedRepository](Jayme/PagedRepository.swift)**: A *protocol* that provides read functionality with pagination.
+- **[NSURLSessionBackend](Jayme/NSURLSessionBackend.swift)**: A class that connects to a server using `NSURLSession` mechanisms.
+- **[CRUDRepository](Jayme/CRUDRepository.swift)**: A protocol that provides elemental CRUD functionality.
+- **[PagedRepository](Jayme/PagedRepository.swift)**: A protocol that provides read functionality with pagination.
 
-> We suggest you to take a look at these 3 classes to find out how their methods work, they are easy to read and well-documented.
+> We suggest you to take a look at these 3 files to find out how their methods work; they are easy to read and well-documented.
 
-These conform to `Backend` and `Repository` protocols respectively, which are very abstract. If you need to implement your own conventions, you can skip these default implementations mentioned above and write your own, making them conform to the `Backend` and `Repository` protocols.
+You will observe that they conform to `Backend` and `Repository` protocols respectively, which are very abstract. If you need to implement your own conventions, you can skip these default implementations mentioned above and write your own, as long as they conform to the `Backend` and `Repository` protocols.
 
 ![Jayme's Customization](https://raw.githubusercontent.com/inaka/Jayme/master/Assets/V2/customization-diagram.png)
 
@@ -91,11 +91,11 @@ These conform to `Backend` and `Repository` protocols respectively, which are ve
 
 ## Example
 
-In this example, you'll first learn how to setup a repository with basic CRUD functionality. At the end, you'll be taught how to add extra functionality to it and test any extra functionality you add.
+In this example, you'll first learn how to setup a repository with basic CRUD functionality. At the end, you'll find instructions on how to add (and test) extra functionality to your repositories, as well as how to configure your own logging function.
 
-#### Before Starting: Configure your Backend
+#### Before starting: Configure your backend
 
-By default, whenever you initialize a `NSURLSessionBackend` instance, it's created with a default configuration object, which uses basic HTTP headers for JSON communication, as well as `localhost:8080` as the default base URL path. You will normally change that. You do it just like this:
+By default, when you initialize a `NSURLSessionBackend` instance, it's created with a default configuration object, which uses basic HTTP headers for JSON communication, as well as `localhost:8080` as the default base URL path. You will normally change that. You do it just like this:
 
 ```swift
 extension NSURLSessionBackend {
@@ -110,7 +110,7 @@ extension NSURLSessionBackend {
 } 
 ```
 
-Then, whenever you need to instantiate a backend with your configuration, instead of calling `NSURLSessionBackend()`, you would:
+Then, whenever you need to instantiate a backend with your configuration, instead of calling the regular `NSURLSessionBackend()`, you would:
 
 ```swift
 let backend = NSURLSessionBackend.myAppBackend()
@@ -118,7 +118,7 @@ let backend = NSURLSessionBackend.myAppBackend()
 
 #### 1. Create your first entity type
 
-First, let's create a `User` structure, for holding basic user data.
+First, you will create a `User` structure, for holding basic user data.
 
 You have to make it conform to `Identifiable`, `DictionaryInitializable` and `DictionaryRepresentable` to match the generic `EntityType` that the `Repository` contract requires.
 
@@ -179,16 +179,16 @@ class UserRepository: CRUDRepository {
 Notice these things here:
 
 1. A `typealias` is used in order to tie the generic `EntityType` to a concrete type (your `User`), hence letting the repository know which kind of entity it works with.
-2. `BackendType` is tied to the `NSURLSessionBackend` type in the `CRUDRepository` definition. However, since the latter is a protocol, you still need to *instantiate* a `NSURLSessionBackend` in your concrete repository.
-3. The `name` that you provide usually represents the name that is given for a group of these kind of entities. That name is what is going to be used for composing a `path` which, at a later stage, the backend is going to hit for basic CRUD operations (e.g. `DELETE localhost:8080/users/123`).
+2. `BackendType` is tied to the `NSURLSessionBackend` type in the [CRUDRepository](/Jayme/CRUDRepository.swift#L25) definition. However, since the latter is a protocol, you still need to *instantiate* a `NSURLSessionBackend` in your concrete repository.
+3. The `name` that you provide usually represents the name that is given for a group of these kind of entities. That name is what is going to be used for composing a `path` which, at a later stage, the backend is going to hit for basic CRUD operations (for instance: `DELETE localhost:8080/users/123`).
 
 That's it! With this basic configuration you're all set to perform CRUD asynchronous operations with your users from anywhere in your app.
 
-> If you need pagination functionality, you can make it also conform to `PagedRepository`, and you'll get that functionality for free.
+> If you need pagination functionality, you can make your repository also conform to `PagedRepository`, and you'll get that functionality for free. Check out the code documentation for further information.
 
 #### 3. Perform basic CRUD operations
 
-Here are some examples of methods that you can call from your view controller:
+Here are some examples of functions that you can call from your view controller:
 
 ```swift
 UserRepository().findAll().start() { result in
@@ -230,7 +230,7 @@ func findActiveUsers() -> Future<[User], JaymeError> {
 }
 ```
 
-And easily call it, like this:
+And easily use it, like this:
 
 ```swift
 UserRepository().findActiveUsers().start() { result in
@@ -252,35 +252,47 @@ Things to stand out here:
 
 #### 5. Test your repository
 
-Testing any custom method that you add to your own repositories allows you to guarantee that your business logic works as you would expect. Although optional, doing so is quite simple, and encouraged.
+Testing any custom function that you add to your own repositories allows you to guarantee that your business logic works as you would expect. 
 
-Here's what your repository would normally look like:
+Writing these tests is optional and has a steep learning curve, but once you get the hang of it, testing your repositories becomes a piece of cake. For that reason, we encourage you to learn this process.
+
+Here's what your repository would usually look like, when connected to a view controller:
 
 ![Testing Your Repository 1](https://raw.githubusercontent.com/inaka/Jayme/master/Assets/V2/testability-diagram-1.png)
 
-Here's what your repository would look like from the testing target perspective:
+Here's what your repository would look like, from the testing target perspective:
 
 ![Testing Your Repository 2](https://raw.githubusercontent.com/inaka/Jayme/master/Assets/V2/testability-diagram-2.png)
 
-And here's what your testing functions would look like:
+Usually, there will be three kind of asserts you'd want to perform onto a function in a repository:
+
+- That the `path` and `method` sent to the backend are correct.
+- That upon a successful response, results are parsed as expected.
+- That upon any failure scenario, a proper `JaymeError` is returned.
+
+Here's a simple snippet exposing what the simplest test would be like:
 
 ```swift
-
+func testFindActiveUsersCall() {
+    self.repository.findActiveUsers()
+    XCTAssertEqual(self.backend.path, "users/active")
+    XCTAssertEqual(self.backend.method, .GET)
+}
 ```
 
+You can take a look at the [UserRepositoryTests](/Example/Tests/UserRepositoryTests.swift) file from the example to see the whole test suite.
 
+> For further information on how to configure your whole test environment, check out the [sample project](#sample-project).
 
-## Custom Logging
+#### 6. Configure a custom logging function
 
-If you're relying on third party libraries to manage your logs, or if you have your own custom logging implementation, you can inject it so that Jayme uses it for its internal logging.
+If you are relying on third party libraries to manage your logs, or if you have your own custom logging implementation, you can inject it so that Jayme uses it for its internal logging.
 
-Doing so is quite simple: You only have to set a different `loggingFunction` in the `Logger.sharedLogger` instance (which by default, uses the native `print`).
-
-Here you have a code sample demonstrating quickly how you can achieve that:
+Here's an example exposing how to achieve that:
 
 ```swift
 Jayme.Logger.sharedLogger.loggingFunction = { (items: Any..., separator: String, terminator: String) -> () in
-	CustomDebugLog("\(items)")
+	YourCustomLoggingFunction("\(items)")
 }
 ```
 
@@ -288,13 +300,13 @@ Jayme.Logger.sharedLogger.loggingFunction = { (items: Any..., separator: String,
 
 ## Sample Project
 
-If you still have some hesitations about the usage of this library, there is an `Example` folder inside the repo containing a basic implementation of some repositories integrated with view controllers.
+If you still have some hesitations about the usage of this library, there is an [Example](/Example) folder inside the repo containing a basic implementation of some repositories integrated with view controllers.
 
 This sample project needs a local server to work, which you can configure really quickly by doing:
 
 ```shell
-cd Jayme/Example/Server
-python -m SimpleHTTPServer 8080
+$ cd Jayme/Example/Server
+$ python -m SimpleHTTPServer 8080
 ```
 
 
