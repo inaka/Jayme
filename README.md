@@ -10,7 +10,7 @@
 
 ## Overview
 
-Jayme **defines a neat architecture to manage the REST layer** in your Swift code.
+Jayme **defines a neat architecture for REST management** in your Swift code.
 
 The idea behind this library is to **separate concerns**: Your view controllers should handle neither networking code nor heavy business logic code, in order to stay lightweight.
 
