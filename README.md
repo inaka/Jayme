@@ -280,7 +280,7 @@ func testFindActiveUsersCall() {
 }
 ```
 
-You can take a look at the [UserRepositoryTests](/Example/Tests/UserRepositoryTests.swift) file from the example to see the whole test suite.
+You can take a look at the [UserRepositoryTests](/JaymeTests/UserRepositoryTests.swift) file to see the whole test suite.
 
 > For further information on how to configure your whole test environment, check out the [sample project](#sample-project).
 
