@@ -217,7 +217,7 @@ As you might have noticed, the code at the view controller layer ends up being n
 
 #### 4. Add extra functionality to your repository
 
-By default, you only get five elemental methods from `CRUDRepository`. It happens very often that you need to add more complex functionality that is guided by the business rules of your app. There are many examples that can be thought of. Let's simulate a simple one: You need to fetch a certain set of users (not all of them), which are find under the `/users/active` path in your server API.
+By default, you only get five elemental methods from `CRUDRepository`. It happens very often that you need to add more complex functionality that is guided by the business' rules of your app. There are many examples that can be thought of. Let's simulate a simple one: You need to fetch a certain set of users (not all of them), which are find under the `/users/active` path in your server API.
 
 You can define your own fetching function in `UserRepository` as follows:
 
