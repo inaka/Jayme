@@ -154,7 +154,7 @@ extension CRUDRepositoryTests {
             completion(.Success((corruptedData, nil)))
         }
         
-        let expectation = self.expectationWithDescription("Expected to get a .BadResponse error")
+        let expectation = self.expectationWithDescription("Expected to get a JaymeError.BadResponse")
         
         let future = self.repository.findAll()
         future.start() { result in
@@ -203,7 +203,7 @@ extension CRUDRepositoryTests {
             completion(.Failure(error))
         }
         
-        let expectation = self.expectationWithDescription("Expected to get a .NotFound error")
+        let expectation = self.expectationWithDescription("Expected to get JaymeError.NotFound")
         
         let future = self.repository.findByID("_")
         future.start() { result in
@@ -227,7 +227,7 @@ extension CRUDRepositoryTests {
             completion(.Success((corruptedData, nil)))
         }
         
-        let expectation = self.expectationWithDescription("Expected to get a .BadResponse error")
+        let expectation = self.expectationWithDescription("Expected to get JaymeError.BadResponse")
         
         let future = self.repository.findByID("_")
         future.start() { result in
@@ -252,7 +252,7 @@ extension CRUDRepositoryTests {
             completion(.Success((data, nil)))
         }
         
-        let expectation = self.expectationWithDescription("Expected to get a .BadResponse error")
+        let expectation = self.expectationWithDescription("Expected to get JaymeError.ParsingError")
         
         let future = self.repository.findByID("_")
         future.start() { result in
