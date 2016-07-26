@@ -49,13 +49,15 @@ public class NSURLSessionBackend: Backend {
             let task = self.session.dataTaskWithRequest(request) { data, response, error in
                 let response: FullHTTPResponse = (data, response, error)
                 let result = self.responseParser.parseResponse(response)
-                switch result {
-                case .Success(let maybeData, let pageInfo):
-                    Logger.sharedLogger.log("Jayme: Response #\(requestNumber) | Success")
-                    completion(.Success(maybeData, pageInfo))
-                case .Failure(let error):
-                    Logger.sharedLogger.log("Jayme: Response #\(requestNumber) | Failure, error: \(error)")
-                    completion(.Failure(error))
+                dispatch_async(dispatch_get_main_queue()) {
+                    switch result {
+                    case .Success(let maybeData, let pageInfo):
+                        Logger.sharedLogger.log("Jayme: Response #\(requestNumber) | Success")
+                        completion(.Success(maybeData, pageInfo))
+                    case .Failure(let error):
+                        Logger.sharedLogger.log("Jayme: Response #\(requestNumber) | Failure, error: \(error)")
+                        completion(.Failure(error))
+                    }
                 }
             }
             task.resume()

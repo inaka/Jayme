@@ -43,9 +43,7 @@ class UsersViewController: UIViewController {
             switch result {
             case .Success(let users):
                 self.users = users
-                dispatch_async(dispatch_get_main_queue()) {
-                    self.tableView.reloadData()
-                }
+                self.tableView.reloadData()
             case .Failure(let error):
                 self.showAlertControllerForError(error)
             }

@@ -48,7 +48,7 @@ public extension CRUDRepository {
     
     /// Creates the entity in the repository. Returns a `Future` with the created entity or a `JaymeError`
     public func create(entity: EntityType) -> Future<EntityType, JaymeError> {
-        let path = self.pathForID(entity.id)
+        let path = self.name
         return self.backend.futureForPath(path, method: .POST, parameters: entity.dictionaryValue)
             .andThen { DataParser().dictionaryFromData($0.0) }
             .andThen { EntityParser().entityFromDictionary($0) }
