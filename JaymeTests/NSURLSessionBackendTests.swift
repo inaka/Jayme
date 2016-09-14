@@ -1,5 +1,5 @@
 // Jayme
-// NSURLSessionBackendTests.swift
+// URLSessionBackendTests.swift
 //
 // Copyright (c) 2016 Inaka - http://inaka.net/
 //
@@ -21,7 +21,7 @@
 import XCTest
 @testable import Jayme
 
-class NSURLSessionBackendTests: XCTestCase {
+class URLSessionBackendTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
@@ -32,12 +32,12 @@ class NSURLSessionBackendTests: XCTestCase {
 
 // MARK: - Tests
 
-extension NSURLSessionBackendTests {
+extension URLSessionBackendTests {
     
     func testBadURL() {
-        let configuration = NSURLSessionBackendConfiguration(basePath: "http://próblematiç_url", httpHeaders: [])
-        let backend = NSURLSessionBackend(configuration: configuration)
-        let future = backend.futureForPath("_", method: .GET)
+        let configuration = URLSessionBackendConfiguration(basePath: "http://próblematiç_url", httpHeaders: [])
+        let backend = URLSessionBackend(configuration: configuration)
+        let future = backend.future(path: "_", method: .GET)
         let expectation = self.expectation(description: "Expected .Failure with .BadRequest error")
         future.start { result in
             guard
@@ -52,10 +52,10 @@ extension NSURLSessionBackendTests {
     }
 
     func testBadParameters() {
-        let backend = NSURLSessionBackend()
+        let backend = URLSessionBackend()
         let problematicString = String(bytes: [0xD8, 0x00] as [UInt8], encoding: String.Encoding.utf16BigEndian)!
         let problematicParams = ["foo": problematicString]
-        let future = backend.futureForPath("_", method: .GET, parameters: problematicParams as [String : AnyObject]?)
+        let future = backend.future(path: "_", method: .GET, parameters: problematicParams as [String : AnyObject]?)
         let expectation = self.expectation(description: "Expected .Failure with .BadRequest error")
         future.start { result in
             guard
@@ -73,9 +73,9 @@ extension NSURLSessionBackendTests {
         let session = FakeURLSession()
         let parser = FakeHTTPResponseParser()
         let headers = [HTTPHeader(field: "Content-Type", value: "application/json")]
-        let configuration = NSURLSessionBackendConfiguration(basePath: "http://localhost:8080", httpHeaders: headers)
-        let backend = NSURLSessionBackend(configuration: configuration, session: session, responseParser: parser)
-        let future = backend.futureForPath("/users/1", method: .PUT, parameters: ["id": "1", "name": "John"])
+        let configuration = URLSessionBackendConfiguration(basePath: "http://localhost:8080", httpHeaders: headers)
+        let backend = URLSessionBackend(configuration: configuration, session: session, responseParser: parser)
+        let future = backend.future(path: "/users/1", method: .PUT, parameters: ["id": "1", "name": "John"])
         let expectation = self.expectation(description: "Expected NSURLRequest with proper path, method, parameters and headers.")
         future.start { _ in expectation.fulfill() }
         self.waitForExpectations(timeout: 3) { error in
@@ -102,8 +102,8 @@ extension NSURLSessionBackendTests {
         session.urlResponse = exampleURLResponse
         session.error = exampleError
         let parser = FakeHTTPResponseParser()
-        let backend = NSURLSessionBackend(session: session, responseParser: parser)
-        let future = backend.futureForPath("_", method: .GET)
+        let backend = URLSessionBackend(session: session, responseParser: parser)
+        let future = backend.future(path: "_", method: .GET)
         let expectation = self.expectation(description: "Expected .Failure with .BadURL error")
         future.start { _ in expectation.fulfill() }
         self.waitForExpectations(timeout: 3) { error in
@@ -125,8 +125,8 @@ extension NSURLSessionBackendTests {
         let result = HTTPResponseParserResult.success((data: exampleData, pageInfo: examplePageInfo))
         let parser = FakeHTTPResponseParser(result: result)
    
-        let backend = NSURLSessionBackend(session: session, responseParser: parser)
-        let future = backend.futureForPath("_", method: .GET)
+        let backend = URLSessionBackend(session: session, responseParser: parser)
+        let future = backend.future(path: "_", method: .GET)
         let expectation = self.expectation(description: "Expected .Failure with .BadURL error")
         future.start { result in
             guard case .success(let data, let pageInfo) = result
@@ -146,8 +146,8 @@ extension NSURLSessionBackendTests {
         let result = HTTPResponseParserResult.failure(exampleError)
         let parser = FakeHTTPResponseParser(result: result)
         
-        let backend = NSURLSessionBackend(session: session, responseParser: parser)
-        let future = backend.futureForPath("_", method: .GET)
+        let backend = URLSessionBackend(session: session, responseParser: parser)
+        let future = backend.future(path: "_", method: .GET)
         let expectation = self.expectation(description: "Expected .Failure with .ServerError")
         future.start { result in
             guard

@@ -30,7 +30,7 @@ class FakeHTTPResponseParser: HTTPResponseParser {
         self.result = result
     }
     
-    override func parseResponse(_ response: FullHTTPResponse) -> HTTPResponseParserResult {
+    override func parse(_ response: FullHTTPResponse) -> HTTPResponseParserResult {
         self.response = response
         return self.result
     }

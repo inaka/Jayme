@@ -24,9 +24,9 @@ import Foundation
 class TestDocumentRepository: CRUDRepository {
     typealias EntityType = TestDocument
     let name = "documents"
-    let backend: NSURLSessionBackend
+    let backend: URLSessionBackend
     
-    init(backend: NSURLSessionBackend) {
+    init(backend: URLSessionBackend) {
         self.backend = backend
     }
 }

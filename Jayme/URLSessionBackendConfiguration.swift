@@ -1,5 +1,5 @@
 // Jayme
-// NSURLSessionBackendConfiguration.swift
+// URLSessionBackendConfiguration.swift
 //
 // Copyright (c) 2016 Inaka - http://inaka.net/
 //
@@ -20,14 +20,14 @@
 
 import Foundation
 
-/// Structure used for holding relevant information that NSURLSessionBackend needs in order to work.
-public struct NSURLSessionBackendConfiguration {
+/// Structure used for holding relevant information that URLSessionBackend needs in order to work.
+public struct URLSessionBackendConfiguration {
     
     public let basePath: Path
     public let httpHeaders: [HTTPHeader]
     
-    public static var defaultConfiguration = NSURLSessionBackendConfiguration(basePath: "http://localhost:8080",
-                                                                 httpHeaders: NSURLSessionBackendConfiguration.defaultHTTPHeaders)
+    public static var defaultConfiguration = URLSessionBackendConfiguration(basePath: "http://localhost:8080",
+                                                                 httpHeaders: URLSessionBackendConfiguration.defaultHTTPHeaders)
     
     public init(basePath: Path, httpHeaders: [HTTPHeader]) {
         self.basePath = basePath

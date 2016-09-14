@@ -13,8 +13,8 @@
 		5163A0381CD7879900B0EEEF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5163A0301CD7879900B0EEEF /* LaunchScreen.storyboard */; };
 		5163A0391CD7879900B0EEEF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5163A0321CD7879900B0EEEF /* Main.storyboard */; };
 		5163A0731CD78B5E00B0EEEF /* Backend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5163A0721CD78B5E00B0EEEF /* Backend.swift */; };
-		5163A0751CD7946000B0EEEF /* NSURLSessionBackend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5163A0741CD7946000B0EEEF /* NSURLSessionBackend.swift */; };
-		5163A0771CD7960800B0EEEF /* NSURLSessionBackendConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5163A0761CD7960800B0EEEF /* NSURLSessionBackendConfiguration.swift */; };
+		5163A0751CD7946000B0EEEF /* URLSessionBackend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5163A0741CD7946000B0EEEF /* URLSessionBackend.swift */; };
+		5163A0771CD7960800B0EEEF /* URLSessionBackendConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5163A0761CD7960800B0EEEF /* URLSessionBackendConfiguration.swift */; };
 		5163A0791CD7967900B0EEEF /* JaymeError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5163A0781CD7967900B0EEEF /* JaymeError.swift */; };
 		5163A07B1CD7970200B0EEEF /* HTTPResponseParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5163A07A1CD7970200B0EEEF /* HTTPResponseParser.swift */; };
 		5163A07D1CD797E800B0EEEF /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5163A07C1CD797E800B0EEEF /* Repository.swift */; };
@@ -78,8 +78,8 @@
 		5163A0331CD7879900B0EEEF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5163A0341CD7879900B0EEEF /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5163A0721CD78B5E00B0EEEF /* Backend.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Backend.swift; sourceTree = "<group>"; };
-		5163A0741CD7946000B0EEEF /* NSURLSessionBackend.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSURLSessionBackend.swift; sourceTree = "<group>"; };
-		5163A0761CD7960800B0EEEF /* NSURLSessionBackendConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSURLSessionBackendConfiguration.swift; sourceTree = "<group>"; };
+		5163A0741CD7946000B0EEEF /* URLSessionBackend.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLSessionBackend.swift; sourceTree = "<group>"; };
+		5163A0761CD7960800B0EEEF /* URLSessionBackendConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLSessionBackendConfiguration.swift; sourceTree = "<group>"; };
 		5163A0781CD7967900B0EEEF /* JaymeError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JaymeError.swift; sourceTree = "<group>"; };
 		5163A07A1CD7970200B0EEEF /* HTTPResponseParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPResponseParser.swift; sourceTree = "<group>"; };
 		5163A07C1CD797E800B0EEEF /* Repository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
@@ -206,19 +206,19 @@
 			isa = PBXGroup;
 			children = (
 				5163A0721CD78B5E00B0EEEF /* Backend.swift */,
-				5163A06A1CD78A8700B0EEEF /* NSURLSessionBackend */,
+				5163A06A1CD78A8700B0EEEF /* URLSessionBackend */,
 			);
 			name = Backend;
 			sourceTree = "<group>";
 		};
-		5163A06A1CD78A8700B0EEEF /* NSURLSessionBackend */ = {
+		5163A06A1CD78A8700B0EEEF /* URLSessionBackend */ = {
 			isa = PBXGroup;
 			children = (
-				5163A0741CD7946000B0EEEF /* NSURLSessionBackend.swift */,
-				5163A0761CD7960800B0EEEF /* NSURLSessionBackendConfiguration.swift */,
+				5163A0741CD7946000B0EEEF /* URLSessionBackend.swift */,
+				5163A0761CD7960800B0EEEF /* URLSessionBackendConfiguration.swift */,
 				5163A07A1CD7970200B0EEEF /* HTTPResponseParser.swift */,
 			);
-			name = NSURLSessionBackend;
+			name = URLSessionBackend;
 			sourceTree = "<group>";
 		};
 		5163A06B1CD78A8F00B0EEEF /* Entity */ = {
@@ -527,7 +527,7 @@
 				5163A0951CD7A51800B0EEEF /* Result.swift in Sources */,
 				5163A08F1CD7A1E800B0EEEF /* PageInfo.swift in Sources */,
 				5163A08D1CD7A1B300B0EEEF /* HTTPMethodName.swift in Sources */,
-				5163A0751CD7946000B0EEEF /* NSURLSessionBackend.swift in Sources */,
+				5163A0751CD7946000B0EEEF /* URLSessionBackend.swift in Sources */,
 				5163A0931CD7A35F00B0EEEF /* Future.swift in Sources */,
 				518951A51CD923F300089906 /* UserDetailViewController.swift in Sources */,
 				5163A07D1CD797E800B0EEEF /* Repository.swift in Sources */,
@@ -538,7 +538,7 @@
 				5169EAE11CF780540047B572 /* EntityParser.swift in Sources */,
 				518951AB1CD928D300089906 /* PostTableViewCell.swift in Sources */,
 				5163A0851CD7A01500B0EEEF /* DictionaryInitializable.swift in Sources */,
-				5163A0771CD7960800B0EEEF /* NSURLSessionBackendConfiguration.swift in Sources */,
+				5163A0771CD7960800B0EEEF /* URLSessionBackendConfiguration.swift in Sources */,
 				5163A0831CD79FAB00B0EEEF /* Identifiable.swift in Sources */,
 				5163A0871CD7A0DB00B0EEEF /* DictionaryRepresentable.swift in Sources */,
 				51F6D1CB1CF89B9B00E998F0 /* PostIdentifier.swift in Sources */,

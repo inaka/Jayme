@@ -45,24 +45,24 @@ class UsersViewController: UIViewController {
                 self.users = users
                 self.tableView.reloadData()
             case .failure(let error):
-                self.showAlertControllerForError(error)
+                self.showAlertController(for: error)
             }
         }
     }
     
-    fileprivate func showAlertControllerForError(_ error: JaymeError) {
-        let message = self.descriptionForError(error)
+    fileprivate func showAlertController(for error: JaymeError) {
+        let message = self.description(for: error)
         let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
     
-    fileprivate func descriptionForError(_ error: JaymeError) -> String {
+    fileprivate func description(for error: JaymeError) -> String {
         switch error {
         case .serverError(let code):
             return "Server Error (code: \(code))"
-        case .other(let nsError):
-            return nsError.localizedDescription
+        case .other(let innerError):
+            return innerError.localizedDescription
         default:
             return "Unexpected error"
         }
@@ -78,16 +78,16 @@ extension UsersViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: UserTableViewCell.Identifier) as! UserTableViewCell
-        cell.user = self.userAtIndexPath(indexPath)
+        cell.user = self.user(at: indexPath)
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.selectedUser = self.userAtIndexPath(indexPath)
+        self.selectedUser = self.user(at: indexPath)
         self.performSegue(withIdentifier: "ShowUserDetail", sender: self)
     }
     
-    fileprivate func userAtIndexPath(_ indexPath: IndexPath) -> User {
+    fileprivate func user(at indexPath: IndexPath) -> User {
         return self.users[(indexPath as NSIndexPath).row]
     }
     

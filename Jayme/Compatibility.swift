@@ -24,13 +24,13 @@ import Foundation
 
 /// This file is provided with the aim of providing compatibility between library versions.
 
-/// ServerBackend -> NSURLSessionBackend
-//@available(*, unavailable, renamed : "NSURLSessionBackend")
-//public typealias ServerBackend = NSURLSessionBackend
+/// ServerBackend -> URLSessionBackend
+//@available(*, unavailable, renamed : "URLSessionBackend")
+//public typealias ServerBackend = URLSessionBackend
 //
-///// ServerBackendConfiguration -> NSURLSessionBackendConfiguration
-//@available(*, unavailable, renamed : "NSURLSessionBackendConfiguration")
-//public typealias ServerBackendConfiguration = NSURLSessionBackendConfiguration
+///// ServerBackendConfiguration -> URLSessionBackendConfiguration
+//@available(*, unavailable, renamed : "URLSessionBackendConfiguration")
+//public typealias ServerBackendConfiguration = URLSessionBackendConfiguration
 //
 ///// ServerBackendError -> JaymeError
 //@available(*, unavailable, renamed : "JaymeError")

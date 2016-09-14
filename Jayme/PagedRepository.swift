@@ -24,7 +24,7 @@ import Foundation
 public protocol PagedRepository: Repository {
     /// Indicates the number of entities to be fetched per page
     var pageSize: Int { get }
-    var backend: NSURLSessionBackend { get }
+    var backend: URLSessionBackend { get }
 }
 
 public extension PagedRepository {
@@ -33,13 +33,13 @@ public extension PagedRepository {
     public func findByPage(pageNumber: Int) -> Future<([EntityType], PageInfo), JaymeError> {
         let path = self.name + "?page=\(pageNumber)&per_page=\(self.pageSize)"
         var pageInfo: PageInfo?
-        let future = self.backend.futureForPath(path, method: .GET, parameters: nil)
+        let future = self.backend.future(path: path, method: .GET, parameters: nil)
             .andThen {
                 pageInfo = $0.1
-                return DataParser().dictionariesFromData($0.0)
+                return DataParser().dictionaries(from: $0.0)
             }
             .andThen {
-                EntityParser<EntityType>().entitiesFromDictionaries($0)
+                EntityParser<EntityType>().entities(from: $0)
             }
             .map {
                 return ($0, pageInfo!)

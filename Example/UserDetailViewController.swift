@@ -36,26 +36,26 @@ class UserDetailViewController: UIViewController {
     fileprivate var posts = [Post]()
     
     fileprivate func loadPosts() {
-        let future = PostRepository().findPostsForUser(self.user)
+        let future = PostRepository().findPosts(for: self.user)
         future.start { result in
             switch result {
             case .success(let posts):
                 self.posts = posts
                 self.tableView.reloadData()
             case .failure(let error):
-                self.showAlertControllerForError(error)
+                self.showAlertController(for: error)
             }
         }
     }
     
-    fileprivate func showAlertControllerForError(_ error: JaymeError) {
-        let message = self.descriptionForError(error)
+    fileprivate func showAlertController(for error: JaymeError) {
+        let message = self.description(for: error)
         let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
     
-    fileprivate func descriptionForError(_ error: JaymeError) -> String {
+    fileprivate func description(for error: JaymeError) -> String {
         switch error {
         case .serverError(let code):
             return "Server Error (code: \(code))"

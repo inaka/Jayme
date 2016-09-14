@@ -22,7 +22,7 @@ import Foundation
 
 /// Provides a Repository with convenient implementations ready to be used in any repository that needs basic CRUD functionality.
 public protocol CRUDRepository: Repository {
-    var backend: NSURLSessionBackend { get }
+    var backend: URLSessionBackend { get }
 }
 
 // MARK: - Basic Methods API
@@ -32,46 +32,46 @@ public extension CRUDRepository {
     /// Returns a `Future` containing an array of all the `Entity` objects in the repository.
     public func findAll() -> Future<[EntityType], JaymeError> {
         let path = self.name
-        return self.backend.futureForPath(path, method: .GET, parameters: nil)
-            .andThen { DataParser().dictionariesFromData($0.0) }
-            .andThen { EntityParser().entitiesFromDictionaries($0) }
+        return self.backend.future(path: path, method: .GET, parameters: nil)
+            .andThen { DataParser().dictionaries(from: $0.0) }
+            .andThen { EntityParser().entities(from: $0) }
     }
     
     /// Returns a `Future` containing the `Entity` matching the `id`.
     /// Watch out for a `.Failure` case with `EntityNotFound` error.
-    public func findByID(_ id: EntityType.IdentifierType) -> Future<EntityType, JaymeError> {
-        let path = self.pathForID(id)
-        return self.backend.futureForPath(path, method: .GET, parameters: nil)
-            .andThen { DataParser().dictionaryFromData($0.0) }
-            .andThen { EntityParser().entityFromDictionary($0) }
+    public func find(byId id: EntityType.IdentifierType) -> Future<EntityType, JaymeError> {
+        let path = self.path(for: id)
+        return self.backend.future(path: path, method: .GET, parameters: nil)
+            .andThen { DataParser().dictionary(from: $0.0) }
+            .andThen { EntityParser().entity(from: $0) }
     }
     
     /// Creates the entity in the repository. Returns a `Future` with the created entity or a `JaymeError`
     public func create(_ entity: EntityType) -> Future<EntityType, JaymeError> {
         let path = self.name
-        return self.backend.futureForPath(path, method: .POST, parameters: entity.dictionaryValue)
-            .andThen { DataParser().dictionaryFromData($0.0) }
-            .andThen { EntityParser().entityFromDictionary($0) }
+        return self.backend.future(path: path, method: .POST, parameters: entity.dictionaryValue)
+            .andThen { DataParser().dictionary(from: $0.0) }
+            .andThen { EntityParser().entity(from: $0) }
     }
     
     /// Updates the entity in the repository. Returns a `Future` with the updated entity or a `JaymeError`
     public func update(_ entity: EntityType) -> Future<EntityType, JaymeError> {
-        let path = self.pathForID(entity.id)
-        return self.backend.futureForPath(path, method: .PUT, parameters: entity.dictionaryValue)
-            .andThen { DataParser().dictionaryFromData($0.0) }
-            .andThen { EntityParser().entityFromDictionary($0) }
+        let path = self.path(for: entity.id)
+        return self.backend.future(path: path, method: .PUT, parameters: entity.dictionaryValue)
+            .andThen { DataParser().dictionary(from: $0.0) }
+            .andThen { EntityParser().entity(from: $0) }
     }
     
     /// Deletes the entity from the repository. Returns a `Future` with a `Void` result or a `JaymeError`
     public func delete(_ entity: EntityType) -> Future<Void, JaymeError> {
-        let path = self.pathForID(entity.id)
-        return self.backend.futureForPath(path, method: .DELETE, parameters: nil)
+        let path = self.path(for: entity.id)
+        return self.backend.future(path: path, method: .DELETE, parameters: nil)
             .map { _ in return }
     }
     
     // MARK: - Private
     
-    fileprivate func pathForID(_ id: EntityType.IdentifierType) -> Path {
+    fileprivate func path(for id: EntityType.IdentifierType) -> Path {
         return "\(self.name)/\(id)"
     }
     

@@ -21,7 +21,7 @@
 import Foundation
 @testable import Jayme
 
-class TestingBackend: NSURLSessionBackend {
+class TestingBackend: URLSessionBackend {
     
     var path: Path?
     var method: HTTPMethodName?
@@ -29,8 +29,7 @@ class TestingBackend: NSURLSessionBackend {
     
     var completion: Future<(Data?, PageInfo?), JaymeError>.FutureAsyncOperation = { completion in }
     
-    override func futureForPath(_ path: String, method: HTTPMethodName, parameters: [String: Any]? = nil) -> Future <(Data?, PageInfo?), JaymeError> {
-        Jayme.Logger.sharedLogger.log("ASDASDASD")
+    override func future(path: String, method: HTTPMethodName, parameters: [String: Any]? = nil) -> Future <(Data?, PageInfo?), JaymeError> {
         self.path = path
         self.method = method
         self.parameters = parameters

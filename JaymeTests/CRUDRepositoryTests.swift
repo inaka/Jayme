@@ -50,7 +50,7 @@ extension CRUDRepositoryTests {
     }
     
     func testFindByIDCall() {
-        let _ = self.repository.findByID("123")
+        let _ = self.repository.find(byId: "123")
         XCTAssertEqual(self.backend.path, "documents/123")
         XCTAssertEqual(self.backend.method, .GET)
     }
@@ -182,7 +182,7 @@ extension CRUDRepositoryTests {
         
         let expectation = self.expectation(description: "Expected to find a document")
         
-        let future = self.repository.findByID("1")
+        let future = self.repository.find(byId: "1")
         future.start() { result in
             guard case .success(let document) = result
                 else { XCTFail(); return }
@@ -206,7 +206,7 @@ extension CRUDRepositoryTests {
         
         let expectation = self.expectation(description: "Expected to get JaymeError.NotFound")
         
-        let future = self.repository.findByID("_")
+        let future = self.repository.find(byId: "_")
         future.start() { result in
             guard
                 case .failure(let error) = result,
@@ -230,7 +230,7 @@ extension CRUDRepositoryTests {
         
         let expectation = self.expectation(description: "Expected to get JaymeError.BadResponse")
         
-        let future = self.repository.findByID("_")
+        let future = self.repository.find(byId: "_")
         future.start() { result in
             guard
                 case .failure(let error) = result,
@@ -255,7 +255,7 @@ extension CRUDRepositoryTests {
         
         let expectation = self.expectation(description: "Expected to get JaymeError.ParsingError")
         
-        let future = self.repository.findByID("_")
+        let future = self.repository.find(byId: "_")
         future.start() { result in
             guard
                 case .failure(let error) = result,

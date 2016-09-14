@@ -35,7 +35,7 @@ public enum JaymeError: Error {
      */
     case parsingError
     
-    /* Server returned 404 or 410. Useful as a special case in `.findByID()` requests
+    /* Server returned 404 or 410. Useful as a special case in `.find(byId: )` requests
      */
     case notFound
     

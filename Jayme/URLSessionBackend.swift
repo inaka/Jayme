@@ -1,5 +1,5 @@
 // Jayme
-// NSURLSessionBackend.swift
+// URLSessionBackend.swift
 //
 // Copyright (c) 2016 Inaka - http://inaka.net/
 //
@@ -20,13 +20,13 @@
 
 import Foundation
 
-/// Provides a Backend that connects to a server using HTTP REST requests via `NSURLSession`
-open class NSURLSessionBackend: Backend {
+/// Provides a Backend that connects to a server using HTTP REST requests via `URLSession`
+open class URLSessionBackend: Backend {
     
     public typealias BackendReturnType = (Data?, PageInfo?)
     public typealias BackendErrorType = JaymeError
     
-    public init(configuration: NSURLSessionBackendConfiguration = NSURLSessionBackendConfiguration.defaultConfiguration,
+    public init(configuration: URLSessionBackendConfiguration = URLSessionBackendConfiguration.defaultConfiguration,
          session: URLSession = URLSession.shared,
          responseParser: HTTPResponseParser = HTTPResponseParser()) {
         self.configuration = configuration
@@ -37,9 +37,9 @@ open class NSURLSessionBackend: Backend {
     /// Returns a `Future` containing either:
     /// - A tuple with possible `NSData` relevant to the HTTP response and a possible `PageInfo` object if there is pagination-related info associated to the HTTP response
     /// - A `JaymeError` indicating which error is produced
-    open func futureForPath(_ path: String, method: HTTPMethodName, parameters: [String: Any]? = nil) -> Future<(Data?, PageInfo?), JaymeError> {
+    open func future(path: String, method: HTTPMethodName, parameters: [String: Any]? = nil) -> Future<(Data?, PageInfo?), JaymeError> {
         return Future() { completion in
-            guard let request = try? self.requestWithPath(path, method: method, parameters: parameters) else {
+            guard let request = try? self.request(path: path, method: method, parameters: parameters) else {
                 completion(.failure(JaymeError.badRequest))
                 return
             }
@@ -48,7 +48,7 @@ open class NSURLSessionBackend: Backend {
             Logger.sharedLogger.log("Jayme: Request #\(requestNumber) | URL: \(request.url!.absoluteString) | method: \(method.rawValue)")
             let task = self.session.dataTask(with: request) { data, response, error in
                 let response: FullHTTPResponse = (data, response, error)
-                let result = self.responseParser.parseResponse(response)
+                let result = self.responseParser.parse(response)
                 DispatchQueue.main.async {
                     switch result {
                     case .success(let maybeData, let pageInfo):
@@ -66,7 +66,7 @@ open class NSURLSessionBackend: Backend {
     
     // MARK: - Private
     
-    fileprivate let configuration: NSURLSessionBackendConfiguration
+    fileprivate let configuration: URLSessionBackendConfiguration
     fileprivate let session: URLSession
     fileprivate let responseParser: HTTPResponseParser
     
@@ -74,12 +74,12 @@ open class NSURLSessionBackend: Backend {
         return URL(string: self.configuration.basePath)
     }
     
-    fileprivate func urlForPath(_ path: String) -> URL? {
+    fileprivate func url(for path: String) -> URL? {
         return self.baseURL?.appendingPathComponent(path)
     }
     
-    fileprivate func requestWithPath(_ path: String, method: HTTPMethodName, parameters: [String: Any]?) throws -> URLRequest {
-        guard let url = self.urlForPath(path) else {
+    fileprivate func request(path: String, method: HTTPMethodName, parameters: [String: Any]?) throws -> URLRequest {
+        guard let url = self.url(for: path) else {
             throw JaymeError.badRequest
         }
         let request = NSMutableURLRequest(url: url)

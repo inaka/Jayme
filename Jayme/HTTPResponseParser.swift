@@ -25,23 +25,23 @@ typealias HTTPResponseParserResult = Result<(data: Data?, pageInfo: PageInfo?), 
 
 open class HTTPResponseParser {
     
-    func parseResponse(_ response: FullHTTPResponse) -> HTTPResponseParserResult {
+    func parse(_ response: FullHTTPResponse) -> HTTPResponseParserResult {
         if let error = response.error {
             return .failure(.other(error))
         }
         guard let urlResponse = response.urlResponse as? HTTPURLResponse else {
             return .failure(.badResponse)
         }
-        if let error = self.errorForStatusCode(urlResponse.statusCode) {
+        if let error = self.error(forStatusCode: urlResponse.statusCode) {
             return .failure(error)
         }
-        let pageInfo = self.pageInfoFromHeaders(urlResponse.allHeaderFields)
+        let pageInfo = self.pageInfo(fromHeaders: urlResponse.allHeaderFields)
         return .success(data: response.data, pageInfo: pageInfo)
     }
     
     // MARK: - Private
     
-    fileprivate func errorForStatusCode(_ code: Int) -> JaymeError? {
+    fileprivate func error(forStatusCode code: Int) -> JaymeError? {
         switch code {
         case 200...299:
             return nil
@@ -54,9 +54,9 @@ open class HTTPResponseParser {
         }
     }
     
-    fileprivate func pageInfoFromHeaders(_ headers: [AnyHashable: Any]) -> PageInfo? {
-        guard let
-            totalString = headers["X-Total"] as? String,
+    fileprivate func pageInfo(fromHeaders headers: [AnyHashable: Any]) -> PageInfo? {
+        guard
+            let totalString = headers["X-Total"] as? String,
             let perPageString = headers["X-Per-Page"] as? String,
             let pageString = headers["X-Page"] as? String,
             let total = Int(totalString),
