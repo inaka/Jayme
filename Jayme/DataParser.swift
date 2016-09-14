@@ -21,38 +21,38 @@
 import Foundation
 
 /// Provides functions to be used within a repository for converting Dictionaries into Entities an chaining their results with `Future` convenient functions (e.g. `map` and `andThen`
-public class DataParser {
+open class DataParser {
     
     /// Public default initializer
     public init() { }
     
     /// Returns a `Future` containing a dictionary initialized with the optional data passed by parameter, or `JaymeError.BadResponse` if the dictionary can't be initialized from that data.
-    public func dictionaryFromData(maybeData: NSData?) -> Future<[String: AnyObject], JaymeError> {
+    open func dictionaryFromData(_ maybeData: Data?) -> Future<[String: Any], JaymeError> {
         return Future() { completion in
             guard let
                 data = maybeData,
-                result = try? NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments),
-                dictionary = result as? [String: AnyObject]
+                let result = try? JSONSerialization.jsonObject(with: data, options: .allowFragments),
+                let dictionary = result as? [String: Any]
                 else {
-                    completion(.Failure(.BadResponse))
+                    completion(.failure(.badResponse))
                     return
             }
-            completion(.Success(dictionary))
+            completion(.success(dictionary))
         }
     }
     
      /// Returns a `Future` containing an array of dictionaries initialized with the optional data passed by parameter, or `JaymeError.BadResponse` if the array can't be initialized from that data.
-    public func dictionariesFromData(maybeData: NSData?) -> Future<[[String: AnyObject]], JaymeError> {
+    open func dictionariesFromData(_ maybeData: Data?) -> Future<[[String: Any]], JaymeError> {
         return Future() { completion in
-            guard let
-                data = maybeData,
-                result = try? NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments),
-                array = result as? [[String: AnyObject]]
+            guard
+                let data = maybeData,
+                let result = try? JSONSerialization.jsonObject(with: data, options: .allowFragments),
+                let array = result as? [[String: Any]]
                 else {
-                    completion(.Failure(.BadResponse))
+                    completion(.failure(.badResponse))
                     return
             }
-            completion(.Success(array))
+            completion(.success(array))
         }
     }
     

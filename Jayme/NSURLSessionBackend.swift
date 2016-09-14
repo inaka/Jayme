@@ -21,13 +21,13 @@
 import Foundation
 
 /// Provides a Backend that connects to a server using HTTP REST requests via `NSURLSession`
-public class NSURLSessionBackend: Backend {
+open class NSURLSessionBackend: Backend {
     
-    public typealias BackendReturnType = (NSData?, PageInfo?)
+    public typealias BackendReturnType = (Data?, PageInfo?)
     public typealias BackendErrorType = JaymeError
     
     public init(configuration: NSURLSessionBackendConfiguration = NSURLSessionBackendConfiguration.defaultConfiguration,
-         session: NSURLSession = NSURLSession.sharedSession(),
+         session: URLSession = URLSession.shared,
          responseParser: HTTPResponseParser = HTTPResponseParser()) {
         self.configuration = configuration
         self.session = session
@@ -37,26 +37,26 @@ public class NSURLSessionBackend: Backend {
     /// Returns a `Future` containing either:
     /// - A tuple with possible `NSData` relevant to the HTTP response and a possible `PageInfo` object if there is pagination-related info associated to the HTTP response
     /// - A `JaymeError` indicating which error is produced
-    public func futureForPath(path: String, method: HTTPMethodName, parameters: [String: AnyObject]? = nil) -> Future<(NSData?, PageInfo?), JaymeError> {
+    open func futureForPath(_ path: String, method: HTTPMethodName, parameters: [String: Any]? = nil) -> Future<(Data?, PageInfo?), JaymeError> {
         return Future() { completion in
             guard let request = try? self.requestWithPath(path, method: method, parameters: parameters) else {
-                completion(.Failure(JaymeError.BadRequest))
+                completion(.failure(JaymeError.badRequest))
                 return
             }
             let requestNumber = Logger.sharedLogger.requestCounter
             Logger.sharedLogger.requestCounter += 1
-            Logger.sharedLogger.log("Jayme: Request #\(requestNumber) | URL: \(request.URL!.absoluteString) | method: \(method.rawValue)")
-            let task = self.session.dataTaskWithRequest(request) { data, response, error in
+            Logger.sharedLogger.log("Jayme: Request #\(requestNumber) | URL: \(request.url!.absoluteString) | method: \(method.rawValue)")
+            let task = self.session.dataTask(with: request) { data, response, error in
                 let response: FullHTTPResponse = (data, response, error)
                 let result = self.responseParser.parseResponse(response)
-                dispatch_async(dispatch_get_main_queue()) {
+                DispatchQueue.main.async {
                     switch result {
-                    case .Success(let maybeData, let pageInfo):
+                    case .success(let maybeData, let pageInfo):
                         Logger.sharedLogger.log("Jayme: Response #\(requestNumber) | Success")
-                        completion(.Success(maybeData, pageInfo))
-                    case .Failure(let error):
+                        completion(.success(maybeData, pageInfo))
+                    case .failure(let error):
                         Logger.sharedLogger.log("Jayme: Response #\(requestNumber) | Failure, error: \(error)")
-                        completion(.Failure(error))
+                        completion(.failure(error))
                     }
                 }
             }
@@ -66,37 +66,37 @@ public class NSURLSessionBackend: Backend {
     
     // MARK: - Private
     
-    private let configuration: NSURLSessionBackendConfiguration
-    private let session: NSURLSession
-    private let responseParser: HTTPResponseParser
+    fileprivate let configuration: NSURLSessionBackendConfiguration
+    fileprivate let session: URLSession
+    fileprivate let responseParser: HTTPResponseParser
     
-    private var baseURL: NSURL? {
-        return NSURL(string: self.configuration.basePath)
+    fileprivate var baseURL: URL? {
+        return URL(string: self.configuration.basePath)
     }
     
-    private func urlForPath(path: String) -> NSURL? {
-        return self.baseURL?.URLByAppendingPathComponent(path)
+    fileprivate func urlForPath(_ path: String) -> URL? {
+        return self.baseURL?.appendingPathComponent(path)
     }
     
-    private func requestWithPath(path: String, method: HTTPMethodName, parameters: [String: AnyObject]?) throws -> NSURLRequest {
+    fileprivate func requestWithPath(_ path: String, method: HTTPMethodName, parameters: [String: Any]?) throws -> URLRequest {
         guard let url = self.urlForPath(path) else {
-            throw JaymeError.BadRequest
+            throw JaymeError.badRequest
         }
-        let request = NSMutableURLRequest(URL: url)
-        request.HTTPMethod = method.rawValue
+        let request = NSMutableURLRequest(url: url)
+        request.httpMethod = method.rawValue
         for header in self.configuration.httpHeaders {
             request.addValue(header.value, forHTTPHeaderField: header.field)
         }
         guard let params = parameters else {
-            return request
+            return request as URLRequest
         }
         do {
-            let body = try NSJSONSerialization.dataWithJSONObject(params, options: .PrettyPrinted)
-            request.HTTPBody = body
+            let body = try JSONSerialization.data(withJSONObject: params, options: .prettyPrinted)
+            request.httpBody = body
         } catch {
-            throw JaymeError.BadRequest
+            throw JaymeError.badRequest
         }
-        return request
+        return request as URLRequest
     }
     
 }

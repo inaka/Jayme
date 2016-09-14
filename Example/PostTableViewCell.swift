@@ -38,12 +38,12 @@ class PostTableViewCell: UITableViewCell {
     
 }
 
-private extension NSDate {
+private extension Date {
     
     func formatted() -> String {
-        let formatter = NSDateFormatter()
-        formatter.dateStyle = .MediumStyle
-        return formatter.stringFromDate(self)
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        return formatter.string(from: self)
     }
     
 }

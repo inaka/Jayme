@@ -22,16 +22,16 @@ import Foundation
 
 /// Enumeration for identifying a Post via either a local ID or a server-defined ID, and being able to distinguish which scenario it corresponds to.
 enum PostIdentifier {
-    case Local(String)
-    case Server(String)
+    case local(String)
+    case server(String)
 }
 
 extension PostIdentifier: CustomStringConvertible {
     var description: String {
         switch self {
-        case .Local(let id):
+        case .local(let id):
             return "local_\(id)"
-        case .Server(let id):
+        case .server(let id):
             return id
         }
     }

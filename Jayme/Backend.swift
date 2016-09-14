@@ -31,9 +31,9 @@ public protocol Backend {
     
     /// The associated type for handling errors within the `Future` object in `futureForPath`
     /// Classes conforming to `Backend` must tie this associated type to a concrete type
-    associatedtype BackendErrorType: ErrorType
+    associatedtype BackendErrorType: Error
     
     /// Returns a `Future` for a given path with a specific HTTPMethod, optionally passing a parameters dictionary.
-    func futureForPath(path: String, method: HTTPMethodName, parameters: [String: AnyObject]?) -> Future<BackendReturnType, BackendErrorType>
+    func futureForPath(_ path: String, method: HTTPMethodName, parameters: [String: Any]?) -> Future<BackendReturnType, BackendErrorType>
     
 }

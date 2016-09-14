@@ -21,23 +21,28 @@
 import Foundation
 
 /// Class for managing internal logging
-public class Logger {
+open class Logger {
     
     /// Singleton shared instance
-    public static let sharedLogger = Logger()
+    open static let sharedLogger = Logger()
     
     /// Switch for enabling or disabling Jayme's logs
-    public var enableLogs = true
+    open var enableLogs = true
     
     /// Function to be used for logging; defaulted to `print`
-    public var loggingFunction: (items: Any..., separator: String, terminator: String) -> () = print
+    open var loggingFunction: ((_ items: [Any], _ separator: String, _ terminator: String) -> ())?
     
     // MARK: - Private
     
     internal var requestCounter = 0
-    internal func log(items: Any..., separator: String = " ", terminator: String = "\n") {
+    internal func log(_ items: Any..., _ separator: String = " ", _ terminator: String = "\n") {
+        
         if self.enableLogs {
-            self.loggingFunction(items: items, separator: separator, terminator: terminator)
+            guard let loggingFunction = self.loggingFunction else {
+                print(items, separator: separator, terminator: terminator)
+                return
+            }
+            loggingFunction(items, separator, terminator)
         }
     }
     

@@ -20,32 +20,34 @@
 
 import Foundation
 
+// FIXME: Fix this file for Swift 3.0
+
 /// This file is provided with the aim of providing compatibility between library versions.
 
 /// ServerBackend -> NSURLSessionBackend
-@available(*, unavailable, renamed = "NSURLSessionBackend")
-public typealias ServerBackend = NSURLSessionBackend
-
-/// ServerBackendConfiguration -> NSURLSessionBackendConfiguration
-@available(*, unavailable, renamed = "NSURLSessionBackendConfiguration")
-public typealias ServerBackendConfiguration = NSURLSessionBackendConfiguration
-
-/// ServerBackendError -> JaymeError
-@available(*, unavailable, renamed = "JaymeError")
-public typealias ServerBackendError = JaymeError
-
-/// ServerRepository -> CRUDRepository
-@available(*, unavailable, renamed = "CRUDRepository")
-public typealias ServerRepository = CRUDRepository
-
-/// StringDictionary -> [String: AnyObject]
-@available(*, unavailable, renamed = "[String: AnyObject]")
-public typealias StringDictionary = [String: AnyObject]
-
-/// ServerPagedRepository -> PagedRepository
-@available(*, unavailable, renamed = "PagedRepository")
-public typealias ServerPagedRepository = PagedRepository
-
-/// Identifier -> IdentifierType: CustomStringConvertible
-@available(*, unavailable, message = "Replace `Identifier` with any type that conforms to `CustomStringConvertible`.")
-public typealias Identifier = String
+//@available(*, unavailable, renamed : "NSURLSessionBackend")
+//public typealias ServerBackend = NSURLSessionBackend
+//
+///// ServerBackendConfiguration -> NSURLSessionBackendConfiguration
+//@available(*, unavailable, renamed : "NSURLSessionBackendConfiguration")
+//public typealias ServerBackendConfiguration = NSURLSessionBackendConfiguration
+//
+///// ServerBackendError -> JaymeError
+//@available(*, unavailable, renamed : "JaymeError")
+//public typealias ServerBackendError = JaymeError
+//
+///// ServerRepository -> CRUDRepository
+//@available(*, unavailable, renamed : "CRUDRepository")
+//public typealias ServerRepository = CRUDRepository
+//
+///// StringDictionary -> [String: AnyObject]
+//@available(*, unavailable, renamed: "[String: AnyObject]")
+//public typealias StringDictionary = [String: AnyObject]
+//
+///// ServerPagedRepository -> PagedRepository
+//@available(*, unavailable, renamed : "PagedRepository")
+//public typealias ServerPagedRepository = PagedRepository
+//
+///// Identifier -> IdentifierType: CustomStringConvertible
+//@available(*, unavailable, message : "Replace `Identifier` with any type that conforms to `CustomStringConvertible`.")
+//public typealias Identifier = String

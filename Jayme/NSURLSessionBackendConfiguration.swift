@@ -36,6 +36,6 @@ public struct NSURLSessionBackendConfiguration {
     
     // MARK: - Private
     
-    private static var defaultHTTPHeaders = [HTTPHeader(field: "Accept", value: "application/json"),
+    fileprivate static var defaultHTTPHeaders = [HTTPHeader(field: "Accept", value: "application/json"),
                                              HTTPHeader(field: "Content-Type", value: "application/json")]
 }

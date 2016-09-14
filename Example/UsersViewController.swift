@@ -29,39 +29,39 @@ class UsersViewController: UIViewController {
         self.loadUsers()
     }
     
-    @IBAction func refresh(sender: UIBarButtonItem) {
+    @IBAction func refresh(_ sender: UIBarButtonItem) {
         self.loadUsers()
     }
     
     // MARK: - Private
     
-    private var users = [User]()
-    private var selectedUser: User?
+    fileprivate var users = [User]()
+    fileprivate var selectedUser: User?
     
-    private func loadUsers() {
+    fileprivate func loadUsers() {
         UserRepository().findAll().start { result in
             switch result {
-            case .Success(let users):
+            case .success(let users):
                 self.users = users
                 self.tableView.reloadData()
-            case .Failure(let error):
+            case .failure(let error):
                 self.showAlertControllerForError(error)
             }
         }
     }
     
-    private func showAlertControllerForError(error: JaymeError) {
+    fileprivate func showAlertControllerForError(_ error: JaymeError) {
         let message = self.descriptionForError(error)
-        let alert = UIAlertController(title: "Error", message: message, preferredStyle: .Alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-        self.presentViewController(alert, animated: true, completion: nil)
+        let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
     
-    private func descriptionForError(error: JaymeError) -> String {
+    fileprivate func descriptionForError(_ error: JaymeError) -> String {
         switch error {
-        case .ServerError(let code):
+        case .serverError(let code):
             return "Server Error (code: \(code))"
-        case .Other(let nsError):
+        case .other(let nsError):
             return nsError.localizedDescription
         default:
             return "Unexpected error"
@@ -72,31 +72,31 @@ class UsersViewController: UIViewController {
 
 extension UsersViewController: UITableViewDataSource, UITableViewDelegate {
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.users.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(UserTableViewCell.Identifier) as! UserTableViewCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: UserTableViewCell.Identifier) as! UserTableViewCell
         cell.user = self.userAtIndexPath(indexPath)
         return cell
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.selectedUser = self.userAtIndexPath(indexPath)
-        self.performSegueWithIdentifier("ShowUserDetail", sender: self)
+        self.performSegue(withIdentifier: "ShowUserDetail", sender: self)
     }
     
-    private func userAtIndexPath(indexPath: NSIndexPath) -> User {
-        return self.users[indexPath.row]
+    fileprivate func userAtIndexPath(_ indexPath: IndexPath) -> User {
+        return self.users[(indexPath as NSIndexPath).row]
     }
     
 }
 
 extension UsersViewController {
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        guard let controller = segue.destinationViewController as? UserDetailViewController else {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let controller = segue.destination as? UserDetailViewController else {
             return
         }
         controller.user = self.selectedUser!

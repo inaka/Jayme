@@ -39,7 +39,7 @@ public extension CRUDRepository {
     
     /// Returns a `Future` containing the `Entity` matching the `id`.
     /// Watch out for a `.Failure` case with `EntityNotFound` error.
-    public func findByID(id: EntityType.IdentifierType) -> Future<EntityType, JaymeError> {
+    public func findByID(_ id: EntityType.IdentifierType) -> Future<EntityType, JaymeError> {
         let path = self.pathForID(id)
         return self.backend.futureForPath(path, method: .GET, parameters: nil)
             .andThen { DataParser().dictionaryFromData($0.0) }
@@ -47,7 +47,7 @@ public extension CRUDRepository {
     }
     
     /// Creates the entity in the repository. Returns a `Future` with the created entity or a `JaymeError`
-    public func create(entity: EntityType) -> Future<EntityType, JaymeError> {
+    public func create(_ entity: EntityType) -> Future<EntityType, JaymeError> {
         let path = self.name
         return self.backend.futureForPath(path, method: .POST, parameters: entity.dictionaryValue)
             .andThen { DataParser().dictionaryFromData($0.0) }
@@ -55,7 +55,7 @@ public extension CRUDRepository {
     }
     
     /// Updates the entity in the repository. Returns a `Future` with the updated entity or a `JaymeError`
-    public func update(entity: EntityType) -> Future<EntityType, JaymeError> {
+    public func update(_ entity: EntityType) -> Future<EntityType, JaymeError> {
         let path = self.pathForID(entity.id)
         return self.backend.futureForPath(path, method: .PUT, parameters: entity.dictionaryValue)
             .andThen { DataParser().dictionaryFromData($0.0) }
@@ -63,7 +63,7 @@ public extension CRUDRepository {
     }
     
     /// Deletes the entity from the repository. Returns a `Future` with a `Void` result or a `JaymeError`
-    public func delete(entity: EntityType) -> Future<Void, JaymeError> {
+    public func delete(_ entity: EntityType) -> Future<Void, JaymeError> {
         let path = self.pathForID(entity.id)
         return self.backend.futureForPath(path, method: .DELETE, parameters: nil)
             .map { _ in return }
@@ -71,7 +71,7 @@ public extension CRUDRepository {
     
     // MARK: - Private
     
-    private func pathForID(id: EntityType.IdentifierType) -> Path {
+    fileprivate func pathForID(_ id: EntityType.IdentifierType) -> Path {
         return "\(self.name)/\(id)"
     }
     

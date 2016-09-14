@@ -35,9 +35,9 @@ extension HTTPResponseParserTests {
     func testBadResponse() {
         let response: FullHTTPResponse = (data: nil, urlResponse: nil, error: nil)
         let result = HTTPResponseParser().parseResponse(response)
-        guard case
-            .Failure(let error) = result,
-            .BadResponse = error
+        guard
+            case .failure(let error) = result,
+            case .badResponse = error
             else { XCTFail(); return }
     }
     
@@ -45,11 +45,11 @@ extension HTTPResponseParserTests {
         let exampleError = NSError(domain: "Test", code: 1, userInfo: nil)
         let response: FullHTTPResponse = (data: nil, urlResponse: nil, error: exampleError)
         let result = HTTPResponseParser().parseResponse(response)
-        guard case
-            .Failure(let error) = result,
-            .Other(let nsError) = error
+        guard
+            case .failure(let error) = result,
+            case .other(let innerError) = error
             else { XCTFail(); return }
-        XCTAssertEqual(nsError, exampleError)
+        XCTAssertEqual(innerError as NSError, exampleError)
     }
     
 }
@@ -59,93 +59,93 @@ extension HTTPResponseParserTests {
 extension HTTPResponseParserTests {
     
     func test200Success() {
-        let url = NSURL(string: "_")!
-        let exampleData = NSData()
-        let urlResponse = NSHTTPURLResponse(URL: url, statusCode: 200, HTTPVersion: nil, headerFields: nil)
+        let url = URL(string: "_")!
+        let exampleData = Data()
+        let urlResponse = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)
         let response: FullHTTPResponse = (data: exampleData, urlResponse: urlResponse, error: nil)
         
         let result = HTTPResponseParser().parseResponse(response)
-        guard case .Success(let data, _) = result
+        guard case .success(let data, _) = result
             else { XCTFail(); return }
         XCTAssertEqual(data, exampleData)
     }
     
     func test204Success() {
-        let url = NSURL(string: "_")!
-        let exampleData = NSData()
-        let urlResponse = NSHTTPURLResponse(URL: url, statusCode: 204, HTTPVersion: nil, headerFields: nil)
+        let url = URL(string: "_")!
+        let exampleData = Data()
+        let urlResponse = HTTPURLResponse(url: url, statusCode: 204, httpVersion: nil, headerFields: nil)
         let response: FullHTTPResponse = (data: exampleData, urlResponse: urlResponse, error: nil)
         
         let result = HTTPResponseParser().parseResponse(response)
-        guard case .Success(let data, _) = result
+        guard case .success(let data, _) = result
             else { XCTFail(); return }
         XCTAssertEqual(data, exampleData)
     }
     
     func test403Forbidden() {
-        let url = NSURL(string: "_")!
-        let exampleData = NSData()
-        let urlResponse = NSHTTPURLResponse(URL: url, statusCode: 403, HTTPVersion: nil, headerFields: nil)
+        let url = URL(string: "_")!
+        let exampleData = Data()
+        let urlResponse = HTTPURLResponse(url: url, statusCode: 403, httpVersion: nil, headerFields: nil)
         let response: FullHTTPResponse = (data: exampleData, urlResponse: urlResponse, error: nil)
         
         let result = HTTPResponseParser().parseResponse(response)
-        guard case
-            .Failure(let error) = result,
-            .Undefined(let statusCode) = error
+        guard
+            case .failure(let error) = result,
+            case .undefined(let statusCode) = error
             else { XCTFail(); return }
         XCTAssertEqual(statusCode, 403)
     }
     
     func test404NotFound() {
-        let url = NSURL(string: "_")!
-        let exampleData = NSData()
-        let urlResponse = NSHTTPURLResponse(URL: url, statusCode: 404, HTTPVersion: nil, headerFields: nil)
+        let url = URL(string: "_")!
+        let exampleData = Data()
+        let urlResponse = HTTPURLResponse(url: url, statusCode: 404, httpVersion: nil, headerFields: nil)
         let response: FullHTTPResponse = (data: exampleData, urlResponse: urlResponse, error: nil)
         
         let result = HTTPResponseParser().parseResponse(response)
-        guard case
-            .Failure(let error) = result,
-            .NotFound = error
+        guard
+            case .failure(let error) = result,
+            case .notFound = error
             else { XCTFail(); return }
     }
     
     func test410Gone() {
-        let url = NSURL(string: "_")!
-        let exampleData = NSData()
-        let urlResponse = NSHTTPURLResponse(URL: url, statusCode: 410, HTTPVersion: nil, headerFields: nil)
+        let url = URL(string: "_")!
+        let exampleData = Data()
+        let urlResponse = HTTPURLResponse(url: url, statusCode: 410, httpVersion: nil, headerFields: nil)
         let response: FullHTTPResponse = (data: exampleData, urlResponse: urlResponse, error: nil)
         
         let result = HTTPResponseParser().parseResponse(response)
-        guard case
-            .Failure(let error) = result,
-            .NotFound = error
+        guard
+            case .failure(let error) = result,
+            case .notFound = error
             else { XCTFail(); return }
     }
     
     func test500ServerInternalError() {
-        let url = NSURL(string: "_")!
-        let exampleData = NSData()
-        let urlResponse = NSHTTPURLResponse(URL: url, statusCode: 500, HTTPVersion: nil, headerFields: nil)
+        let url = URL(string: "_")!
+        let exampleData = Data()
+        let urlResponse = HTTPURLResponse(url: url, statusCode: 500, httpVersion: nil, headerFields: nil)
         let response: FullHTTPResponse = (data: exampleData, urlResponse: urlResponse, error: nil)
         
         let result = HTTPResponseParser().parseResponse(response)
-        guard case
-            .Failure(let error) = result,
-            .ServerError(let statusCode) = error
+        guard
+            case .failure(let error) = result,
+            case .serverError(let statusCode) = error
             else { XCTFail(); return }
         XCTAssertEqual(statusCode, 500)
     }
     
     func test503ServiceUnavailable() {
-        let url = NSURL(string: "_")!
-        let exampleData = NSData()
-        let urlResponse = NSHTTPURLResponse(URL: url, statusCode: 503, HTTPVersion: nil, headerFields: nil)
+        let url = URL(string: "_")!
+        let exampleData = Data()
+        let urlResponse = HTTPURLResponse(url: url, statusCode: 503, httpVersion: nil, headerFields: nil)
         let response: FullHTTPResponse = (data: exampleData, urlResponse: urlResponse, error: nil)
         
         let result = HTTPResponseParser().parseResponse(response)
-        guard case
-            .Failure(let error) = result,
-            .ServerError(let statusCode) = error
+        guard
+            case .failure(let error) = result,
+            case .serverError(let statusCode) = error
             else { XCTFail(); return }
         XCTAssertEqual(statusCode, 503)
     }
@@ -157,11 +157,11 @@ extension HTTPResponseParserTests {
 extension HTTPResponseParserTests {
 
     func testWithoutPageInfo() {
-        let url = NSURL(string: "_")!
-        let urlResponse = NSHTTPURLResponse(URL: url, statusCode: 200, HTTPVersion: nil, headerFields: nil)
+        let url = URL(string: "_")!
+        let urlResponse = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)
         let response: FullHTTPResponse = (data: nil, urlResponse: urlResponse, error: nil)
         let result = HTTPResponseParser().parseResponse(response)
-        guard case .Success(_, let pageInfo) = result
+        guard case .success(_, let pageInfo) = result
             else { XCTFail(); return }
         XCTAssertNil(pageInfo)
     }
@@ -170,14 +170,14 @@ extension HTTPResponseParserTests {
         // Using standard pagination headers described here:
         // https://github.com/davidcelis/api-pagination
         
-        let url = NSURL(string: "_")!
+        let url = URL(string: "_")!
         let headerFields = ["X-Total": "100",
                             "X-Per-Page": "20",
                             "X-Page": "5"]
-        let urlResponse = NSHTTPURLResponse(URL: url, statusCode: 200, HTTPVersion: nil, headerFields: headerFields)
+        let urlResponse = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: headerFields)
         let response: FullHTTPResponse = (data: nil, urlResponse: urlResponse, error: nil)
         let result = HTTPResponseParser().parseResponse(response)
-        guard case .Success(_, let maybePageInfo) = result
+        guard case .success(_, let maybePageInfo) = result
             else { XCTFail(); return }
         guard let pageInfo = maybePageInfo
             else { XCTFail(); return }

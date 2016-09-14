@@ -21,14 +21,14 @@
 import Foundation
 
 /// Represents the result of an asynchronous operation
-public enum Result<T, E: ErrorType> {
+public enum Result<T, E: Error> {
     
     /// Indicates that the operation has been completed successfully
     /// Wraps the relevant data associated to the operation response
-    case Success(T)
+    case success(T)
     
     /// Indicates that the operation could not be completed or has been completed but unsuccessfully
     /// Wraps the relevant error associated to the failure cause
-    case Failure(E)
+    case failure(E)
     
 }

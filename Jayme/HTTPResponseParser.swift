@@ -20,48 +20,48 @@
 
 import Foundation
 
-typealias FullHTTPResponse = (data: NSData?, urlResponse: NSURLResponse?, error: NSError?)
-typealias HTTPResponseParserResult = Result<(data: NSData?, pageInfo: PageInfo?), JaymeError>
+typealias FullHTTPResponse = (data: Data?, urlResponse: URLResponse?, error: Error?)
+typealias HTTPResponseParserResult = Result<(data: Data?, pageInfo: PageInfo?), JaymeError>
 
-public class HTTPResponseParser {
+open class HTTPResponseParser {
     
-    func parseResponse(response: FullHTTPResponse) -> HTTPResponseParserResult {
+    func parseResponse(_ response: FullHTTPResponse) -> HTTPResponseParserResult {
         if let error = response.error {
-            return .Failure(.Other(error))
+            return .failure(.other(error))
         }
-        guard let urlResponse = response.urlResponse as? NSHTTPURLResponse else {
-            return .Failure(.BadResponse)
+        guard let urlResponse = response.urlResponse as? HTTPURLResponse else {
+            return .failure(.badResponse)
         }
         if let error = self.errorForStatusCode(urlResponse.statusCode) {
-            return .Failure(error)
+            return .failure(error)
         }
         let pageInfo = self.pageInfoFromHeaders(urlResponse.allHeaderFields)
-        return .Success(data: response.data, pageInfo: pageInfo)
+        return .success(data: response.data, pageInfo: pageInfo)
     }
     
     // MARK: - Private
     
-    private func errorForStatusCode(code: Int) -> JaymeError? {
+    fileprivate func errorForStatusCode(_ code: Int) -> JaymeError? {
         switch code {
         case 200...299:
             return nil
         case 404, 410:
-            return .NotFound
+            return .notFound
         case 500...599:
-            return .ServerError(statusCode: code)
+            return .serverError(statusCode: code)
         default:
-            return .Undefined(statusCode: code)
+            return .undefined(statusCode: code)
         }
     }
     
-    private func pageInfoFromHeaders(headers: [NSObject: AnyObject]) -> PageInfo? {
+    fileprivate func pageInfoFromHeaders(_ headers: [AnyHashable: Any]) -> PageInfo? {
         guard let
             totalString = headers["X-Total"] as? String,
-            perPageString = headers["X-Per-Page"] as? String,
-            pageString = headers["X-Page"] as? String,
-            total = Int(totalString),
-            perPage = Int(perPageString),
-            page = Int(pageString)
+            let perPageString = headers["X-Per-Page"] as? String,
+            let pageString = headers["X-Page"] as? String,
+            let total = Int(totalString),
+            let perPage = Int(perPageString),
+            let page = Int(pageString)
             else { return nil }
         return PageInfo(number: page, size: perPage, total: total)
     }
