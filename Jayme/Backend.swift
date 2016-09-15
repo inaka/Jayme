@@ -34,6 +34,6 @@ public protocol Backend {
     associatedtype BackendErrorType: Error
     
     /// Returns a `Future` for a given path with a specific HTTPMethod, optionally passing a parameters dictionary.
-    func future(path: String, method: HTTPMethodName, parameters: [String: Any]?) -> Future<BackendReturnType, BackendErrorType>
+    func future(path: Path, method: HTTPMethodName, parameters: [String: Any]?) -> Future<BackendReturnType, BackendErrorType>
     
 }

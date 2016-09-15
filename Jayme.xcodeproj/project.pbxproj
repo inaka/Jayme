@@ -35,7 +35,7 @@
 		516ECB0B1CD7AB6A0090A176 /* TestingBackend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 516ECB011CD7AB6A0090A176 /* TestingBackend.swift */; };
 		516ECB0C1CD7AB6A0090A176 /* FakeURLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 516ECB021CD7AB6A0090A176 /* FakeURLSession.swift */; };
 		516ECB0D1CD7AB6A0090A176 /* HTTPResponseParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 516ECB031CD7AB6A0090A176 /* HTTPResponseParserTests.swift */; };
-		516ECB0E1CD7AB6A0090A176 /* NSURLSessionBackendTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 516ECB041CD7AB6A0090A176 /* NSURLSessionBackendTests.swift */; };
+		516ECB0E1CD7AB6A0090A176 /* URLSessionBackendTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 516ECB041CD7AB6A0090A176 /* URLSessionBackendTests.swift */; };
 		516ECB0F1CD7AB6A0090A176 /* PagedRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 516ECB051CD7AB6A0090A176 /* PagedRepositoryTests.swift */; };
 		516ECB101CD7AB6A0090A176 /* CRUDRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 516ECB061CD7AB6A0090A176 /* CRUDRepositoryTests.swift */; };
 		516ECB111CD7AB6A0090A176 /* TestDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 516ECB071CD7AB6A0090A176 /* TestDocument.swift */; };
@@ -100,7 +100,7 @@
 		516ECB011CD7AB6A0090A176 /* TestingBackend.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestingBackend.swift; sourceTree = "<group>"; };
 		516ECB021CD7AB6A0090A176 /* FakeURLSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FakeURLSession.swift; sourceTree = "<group>"; };
 		516ECB031CD7AB6A0090A176 /* HTTPResponseParserTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPResponseParserTests.swift; sourceTree = "<group>"; };
-		516ECB041CD7AB6A0090A176 /* NSURLSessionBackendTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSURLSessionBackendTests.swift; sourceTree = "<group>"; };
+		516ECB041CD7AB6A0090A176 /* URLSessionBackendTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLSessionBackendTests.swift; sourceTree = "<group>"; };
 		516ECB051CD7AB6A0090A176 /* PagedRepositoryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PagedRepositoryTests.swift; sourceTree = "<group>"; };
 		516ECB061CD7AB6A0090A176 /* CRUDRepositoryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CRUDRepositoryTests.swift; sourceTree = "<group>"; };
 		516ECB071CD7AB6A0090A176 /* TestDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestDocument.swift; sourceTree = "<group>"; };
@@ -294,7 +294,7 @@
 			children = (
 				51AE549D1D4275E900797FC8 /* UserRepositoryTests.swift */,
 				5198F7341D42623B00917B7E /* Example */,
-				516ECB041CD7AB6A0090A176 /* NSURLSessionBackendTests.swift */,
+				516ECB041CD7AB6A0090A176 /* URLSessionBackendTests.swift */,
 				518CEA3E1CD8DD5900A4CA06 /* PageInfoTests.swift */,
 				516ECB061CD7AB6A0090A176 /* CRUDRepositoryTests.swift */,
 				516ECB051CD7AB6A0090A176 /* PagedRepositoryTests.swift */,
@@ -560,7 +560,7 @@
 				518CEA3F1CD8DD5900A4CA06 /* PageInfoTests.swift in Sources */,
 				516ECB101CD7AB6A0090A176 /* CRUDRepositoryTests.swift in Sources */,
 				516ECB0A1CD7AB6A0090A176 /* FakeHTTPResponseParser.swift in Sources */,
-				516ECB0E1CD7AB6A0090A176 /* NSURLSessionBackendTests.swift in Sources */,
+				516ECB0E1CD7AB6A0090A176 /* URLSessionBackendTests.swift in Sources */,
 				516ECB0D1CD7AB6A0090A176 /* HTTPResponseParserTests.swift in Sources */,
 				516ECB131CD7AB6A0090A176 /* TestDocumentRepository.swift in Sources */,
 				516ECB0C1CD7AB6A0090A176 /* FakeURLSession.swift in Sources */,

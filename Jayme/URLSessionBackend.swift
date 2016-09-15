@@ -37,7 +37,7 @@ open class URLSessionBackend: Backend {
     /// Returns a `Future` containing either:
     /// - A tuple with possible `NSData` relevant to the HTTP response and a possible `PageInfo` object if there is pagination-related info associated to the HTTP response
     /// - A `JaymeError` indicating which error is produced
-    open func future(path: String, method: HTTPMethodName, parameters: [String: Any]? = nil) -> Future<(Data?, PageInfo?), JaymeError> {
+    open func future(path: Path, method: HTTPMethodName, parameters: [String: Any]? = nil) -> Future<(Data?, PageInfo?), JaymeError> {
         return Future() { completion in
             guard let request = try? self.request(path: path, method: method, parameters: parameters) else {
                 completion(.failure(JaymeError.badRequest))
@@ -74,11 +74,11 @@ open class URLSessionBackend: Backend {
         return URL(string: self.configuration.basePath)
     }
     
-    fileprivate func url(for path: String) -> URL? {
+    fileprivate func url(for path: Path) -> URL? {
         return self.baseURL?.appendingPathComponent(path)
     }
     
-    fileprivate func request(path: String, method: HTTPMethodName, parameters: [String: Any]?) throws -> URLRequest {
+    fileprivate func request(path: Path, method: HTTPMethodName, parameters: [String: Any]?) throws -> URLRequest {
         guard let url = self.url(for: path) else {
             throw JaymeError.badRequest
         }
