@@ -20,13 +20,13 @@
 
 import Foundation
 
-/// Provides functions to be used within a repository for converting Dictionaries into Entities an chaining their results with `Future` convenient functions (e.g. `map` and `andThen`
+/// Provides functions to be used within a repository for converting dictionaries into entities an chaining their results with convenient `Future` functions (e.g. `map` and `andThen`).
 open class DataParser {
     
-    /// Public default initializer
+    /// Public default initializer.
     public init() { }
     
-    /// Returns a `Future` containing a dictionary initialized with the optional data passed by parameter, or `JaymeError.BadResponse` if the dictionary can't be initialized from that data.
+    /// Returns a `Future` containing a dictionary initialized with the optional data passed by parameter, or `JaymeError.badResponse` if the dictionary can't be initialized from that data.
     open func dictionary(from possibleData: Data?) -> Future<[String: Any], JaymeError> {
         return Future() { completion in
             guard let
@@ -41,7 +41,7 @@ open class DataParser {
         }
     }
     
-     /// Returns a `Future` containing an array of dictionaries initialized with the optional data passed by parameter, or `JaymeError.BadResponse` if the array can't be initialized from that data.
+     /// Returns a `Future` containing an array of dictionaries initialized with the optional data passed by parameter, or `JaymeError.badResponse` if the array can't be initialized from that data.
     open func dictionaries(from possibleData: Data?) -> Future<[[String: Any]], JaymeError> {
         return Future() { completion in
             guard

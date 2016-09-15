@@ -20,13 +20,13 @@
 
 import Foundation
 
-/// Provides functions to be used within a repository for converting Dictionaries into Entities an chaining their results with `Future` convenient functions (e.g. `map` and `andThen`)
+/// Provides functions to be used within a repository for converting dictionaries into entities an chaining their results with convenient `Future`  functions (e.g. `map` and `andThen`).
 open class EntityParser<EntityType: DictionaryInitializable> {
     
-    /// Public default initializer
+    /// Public default initializer.
     public init() { }
     
-    /// Returns a `Future` containing an entity initialized with the dictionary value passed by parameter, or `JaymeError.ParsingError` if the entity could not be initialized.
+    /// Returns a `Future` containing an entity initialized with the dictionary value passed by parameter, or `JaymeError.parsingError` if the entity could not be initialized.
     open func entity(from dictionary: [String: Any]) -> Future<EntityType, JaymeError> {
         return Future() { completion in
             guard let entity = try? EntityType(dictionary: dictionary) else {
@@ -37,7 +37,7 @@ open class EntityParser<EntityType: DictionaryInitializable> {
         }
     }
     
-    /// Returns a `Future` containing an array of those entities that could be parsed from the `dictionaries` array passed by parameter.
+    /// Returns a `Future` containing an array of those entities that could be parsed from the `dictionaries` array passed by parameter. Any entity that can't be parsed is discarded in the array.
     open func entities(from dictionaries: [[String: Any]]) -> Future<[EntityType], JaymeError> {
         return Future() { completion in
             let entities = dictionaries.flatMap({ try? EntityType(dictionary: $0) })

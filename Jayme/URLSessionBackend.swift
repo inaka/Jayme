@@ -20,7 +20,7 @@
 
 import Foundation
 
-/// Provides a Backend that connects to a server using HTTP REST requests via `URLSession`
+/// Provides a `Backend` that connects to a server using HTTP REST requests via `URLSession`.
 open class URLSessionBackend: Backend {
     
     public typealias BackendReturnType = (Data?, PageInfo?)
@@ -35,8 +35,8 @@ open class URLSessionBackend: Backend {
     }
     
     /// Returns a `Future` containing either:
-    /// - A tuple with possible `NSData` relevant to the HTTP response and a possible `PageInfo` object if there is pagination-related info associated to the HTTP response
-    /// - A `JaymeError` indicating which error is produced
+    /// - A tuple with possible `NSData` relevant to the HTTP response and a possible `PageInfo` object if there is pagination-related info associated to it.
+    /// - A `JaymeError` holding the error that occurred.
     open func future(path: Path, method: HTTPMethodName, parameters: [String: Any]? = nil) -> Future<(Data?, PageInfo?), JaymeError> {
         return Future() { completion in
             guard let request = try? self.request(path: path, method: method, parameters: parameters) else {

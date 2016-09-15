@@ -20,16 +20,16 @@
 
 import Foundation
 
-/// Class for managing internal logging
+/// Class for managing internal logging.
 open class Logger {
     
-    /// Singleton shared instance
+    /// Singleton shared instance.
     open static let sharedLogger = Logger()
     
-    /// Switch for enabling or disabling Jayme's logs
+    /// Switch for enabling or disabling Jayme's logs.
     open var enableLogs = true
     
-    /// Function to be used for logging; defaulted to `print`
+    /// Function to be used for logging; defaulted to `print`.
     open var loggingFunction: ((_ items: [Any], _ separator: String, _ terminator: String) -> ())?
     
     // MARK: - Private

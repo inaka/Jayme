@@ -20,7 +20,7 @@
 
 import Foundation
 
-/// Structure used for holding relevant information that URLSessionBackend needs in order to work.
+/// A `struct` that holds relevant configuration data that URLSessionBackend needs in order to work.
 public struct URLSessionBackendConfiguration {
     
     public let basePath: Path

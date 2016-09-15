@@ -23,19 +23,19 @@ import Foundation
 /// Discrete enumeration representing the possible errors that can be produced within the backend and repository layers.
 public enum JaymeError: Error {
     
-    /* Request could not be built. Can be due to a bad formed URL or non-JSON-parsable parameters
+    /* Request could not be built. Can be due to a bad formed URL or non-JSON-parsable parameters.
      */
     case badRequest
     
-    /* No error was produced, but either no valid response was found or the returned `NSData` object is corrupted or unexpected
+    /* No error was produced, but either no valid response was found or the returned `NSData` object is corrupted or unexpected.
      */
     case badResponse
     
-    /* Returned `NSData` object could not be parsed as expected
+    /* Returned `NSData` object could not be parsed as expected.
      */
     case parsingError
     
-    /* Server returned 404 or 410. Useful as a special case in `.find(byId: )` requests
+    /* Server returned 404 or 410. Useful as a special case in `.find(byId:)` requests.
      */
     case notFound
     
@@ -44,12 +44,12 @@ public enum JaymeError: Error {
      */
     case serverError(statusCode: Int)
     
-    /* Server returned any other status code that is not contemplated as a special case
+    /* Server returned any other status code that is not contemplated as a special case.
      */
     case undefined(statusCode: Int)
     
-    /* An error occurred while sending the request (e.g. a timeout or no internet connection)
-     Contains the `Error` with the information about it
+    /* An error occurred while sending the request (e.g. a timeout or no internet connection).
+     Contains the `Error` with the information about it.
      */
     case other(Error)
     

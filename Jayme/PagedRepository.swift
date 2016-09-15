@@ -20,16 +20,16 @@
 
 import Foundation
 
-/// Provides a Repository with read functionality with pagination, based on Grape conventions (https://github.com/davidcelis/api-pagination)
+/// Provides a `Repository` serving read functionality with pagination, based on Grape conventions (https://github.com/davidcelis/api-pagination)
 public protocol PagedRepository: Repository {
-    /// Indicates the number of entities to be fetched per page
+    /// Indicates the number of entities to be fetched per page.
     var pageSize: Int { get }
     var backend: URLSessionBackend { get }
 }
 
 public extension PagedRepository {
     
-    /// Returns a `Future` containing a tuple with an array of all the `Entity` objects in the repository and a PageInfo object with pagination-related data
+    /// Returns a `Future` containing a tuple with an array of all the entities in the repository and a `PageInfo` object containing pagination-related data.
     public func findByPage(pageNumber: Int) -> Future<([EntityType], PageInfo), JaymeError> {
         let path = self.name + "?page=\(pageNumber)&per_page=\(self.pageSize)"
         var pageInfo: PageInfo?

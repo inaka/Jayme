@@ -21,22 +21,23 @@
 import Foundation
 
 
-/// Abstraction for representing a Repository of a certain kind of Entities
+/// Abstraction that represents a repository of a certain kind of entities.
 public protocol Repository {
         
-    /// The Entity type going to be used in the Repository
-    /// Classes conforming to `Repository` must tie this associated type to a concrete type
+    /// The entity type that the repository works with (e.g. `User`).
+    /// Classes conforming to `Repository` must tie this associated type to a concrete type.
     associatedtype EntityType: Identifiable, DictionaryInitializable, DictionaryRepresentable
     
-    /// The Backend type going to be used in the Repository
+    /// The backend type going to be used in the repository.
     associatedtype BackendType: Backend
     
-    /// The Backend that the repository will use for performing asynchronous operations
-    /// Classes conforming to `Repository` must provide it
+    /// The `Backend` that the repository will use for performing asynchronous operations.
+    /// Classes conforming to `Repository` must provide it.
     var backend: BackendType { get }
     
-    /// A name that refers to the group of entities associated with the repository (e.g. "users")
-    /// Classes conforming to `Repository` must provide this name
+    /// A name that refers to the group of entities associated with the repository (e.g. `"users"`).
+    /// Classes conforming to `Repository` must provide this name.
+    /// This name will usually be used for composing paths (e.g. `"localhost:8080/users").
     var name: String { get }
 
 }
