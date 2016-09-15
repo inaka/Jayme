@@ -49,7 +49,7 @@ extension CRUDRepositoryTests {
         XCTAssertEqual(self.backend.method, .GET)
     }
     
-    func testFindByIDCall() {
+    func testFindByIdCall() {
         let _ = self.repository.find(byId: "123")
         XCTAssertEqual(self.backend.path, "documents/123")
         XCTAssertEqual(self.backend.method, .GET)
@@ -171,7 +171,7 @@ extension CRUDRepositoryTests {
         }
     }
     
-    func testFindByIDSuccessCallback() {
+    func testFindByIdSuccessCallback() {
         
         // Simulated completion
         self.backend.completion = { completion in
@@ -196,7 +196,7 @@ extension CRUDRepositoryTests {
         }
     }
     
-    func testFindByIDFailureNotFoundCallback() {
+    func testFindByIdFailureNotFoundCallback() {
         
         // Simulated completion
         self.backend.completion = { completion in
@@ -220,7 +220,7 @@ extension CRUDRepositoryTests {
         }
     }
     
-    func testFindByIDFailureBadResponseCallback() {
+    func testFindByIdFailureBadResponseCallback() {
         
         // Simulated completion
         self.backend.completion = { completion in
@@ -244,7 +244,7 @@ extension CRUDRepositoryTests {
         }
     }
     
-    func testFindByIDFailureParsingErrorCallback() {
+    func testFindByIdFailureParsingErrorCallback() {
         
         // Simulated completion
         self.backend.completion = { completion in

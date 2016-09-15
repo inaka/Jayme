@@ -28,7 +28,7 @@ class PostRepository: CRUDRepository {
     
     func findPosts(for user: User) -> Future<[Post], JaymeError> {
         return self.findAll().map {
-            $0.filter { $0.authorID == user.id }
+            $0.filter { $0.authorId == user.id }
         }
     }
     
