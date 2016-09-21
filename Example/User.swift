@@ -41,9 +41,9 @@ extension User: DictionaryInitializable, DictionaryRepresentable {
     
     var dictionaryValue: [String: Any] {
         return [
-            "id": self.id as AnyObject,
-            "name": self.name as AnyObject,
-            "email": self.email as AnyObject
+            "id": self.id,
+            "name": self.name,
+            "email": self.email
         ]
     }
     
