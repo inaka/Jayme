@@ -135,7 +135,7 @@ struct User: Identifiable {
 
 extension User: DictionaryInitializable, DictionaryRepresentable {
     
-    init(dictionary: [String: AnyObject]) throws {
+    init(dictionary: [String: Any]) throws {
         let json = JSON(dictionary)
         guard let
             id = json["id"] as? String,
@@ -147,7 +147,7 @@ extension User: DictionaryInitializable, DictionaryRepresentable {
         self.email = email
     }
     
-    var dictionaryValue: [String: AnyObject] {
+    var dictionaryValue: [String: Any] {
         return [
             "id": self.id,
             "name": self.name,
