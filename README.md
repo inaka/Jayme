@@ -22,6 +22,7 @@ The library provides a neat API to deal with REST communication, as well as defa
 
 ## Migration Guides
 
+- [Jayme 3.0 Migration Guide](https://github.com/inaka/Jayme/blob/master/Documentation/Jayme%203.0%20Migration%20Guide.md)
 - [Jayme 2.0 Migration Guide](https://github.com/inaka/Jayme/blob/master/Documentation/Jayme%202.0%20Migration%20Guide.md)
 
 

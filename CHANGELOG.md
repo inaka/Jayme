@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file. `Jayme` a
 
 ---
 
+### 3.x Releases
+
+- `3.0.x` releases - [3.0.0](#300)
+
 ### 2.x Releases
 
 - `2.0.x` Releases - [2.0.0](#200) | [2.0.1](#201)
@@ -13,6 +17,10 @@ All notable changes to this project will be documented in this file. `Jayme` a
 - `1.0.x` Releases - [1.0.1](#101) | [1.0.2](#102) | [1.0.3](#103) | [1.0.4](#104) 
 
 ---
+
+## 3.0.0
+
+- All of the changes involved in this release are due to [Swift 3 breaking changes](https://apple.github.io/swift-evolution/) and its [new APIs design](https://swift.org/documentation/api-design-guidelines/).
 
 ## 2.0.1
 
