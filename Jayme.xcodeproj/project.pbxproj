@@ -13,8 +13,8 @@
 		5163A0381CD7879900B0EEEF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5163A0301CD7879900B0EEEF /* LaunchScreen.storyboard */; };
 		5163A0391CD7879900B0EEEF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5163A0321CD7879900B0EEEF /* Main.storyboard */; };
 		5163A0731CD78B5E00B0EEEF /* Backend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5163A0721CD78B5E00B0EEEF /* Backend.swift */; };
-		5163A0751CD7946000B0EEEF /* NSURLSessionBackend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5163A0741CD7946000B0EEEF /* NSURLSessionBackend.swift */; };
-		5163A0771CD7960800B0EEEF /* NSURLSessionBackendConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5163A0761CD7960800B0EEEF /* NSURLSessionBackendConfiguration.swift */; };
+		5163A0751CD7946000B0EEEF /* URLSessionBackend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5163A0741CD7946000B0EEEF /* URLSessionBackend.swift */; };
+		5163A0771CD7960800B0EEEF /* URLSessionBackendConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5163A0761CD7960800B0EEEF /* URLSessionBackendConfiguration.swift */; };
 		5163A0791CD7967900B0EEEF /* JaymeError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5163A0781CD7967900B0EEEF /* JaymeError.swift */; };
 		5163A07B1CD7970200B0EEEF /* HTTPResponseParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5163A07A1CD7970200B0EEEF /* HTTPResponseParser.swift */; };
 		5163A07D1CD797E800B0EEEF /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5163A07C1CD797E800B0EEEF /* Repository.swift */; };
@@ -35,7 +35,7 @@
 		516ECB0B1CD7AB6A0090A176 /* TestingBackend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 516ECB011CD7AB6A0090A176 /* TestingBackend.swift */; };
 		516ECB0C1CD7AB6A0090A176 /* FakeURLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 516ECB021CD7AB6A0090A176 /* FakeURLSession.swift */; };
 		516ECB0D1CD7AB6A0090A176 /* HTTPResponseParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 516ECB031CD7AB6A0090A176 /* HTTPResponseParserTests.swift */; };
-		516ECB0E1CD7AB6A0090A176 /* NSURLSessionBackendTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 516ECB041CD7AB6A0090A176 /* NSURLSessionBackendTests.swift */; };
+		516ECB0E1CD7AB6A0090A176 /* URLSessionBackendTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 516ECB041CD7AB6A0090A176 /* URLSessionBackendTests.swift */; };
 		516ECB0F1CD7AB6A0090A176 /* PagedRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 516ECB051CD7AB6A0090A176 /* PagedRepositoryTests.swift */; };
 		516ECB101CD7AB6A0090A176 /* CRUDRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 516ECB061CD7AB6A0090A176 /* CRUDRepositoryTests.swift */; };
 		516ECB111CD7AB6A0090A176 /* TestDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 516ECB071CD7AB6A0090A176 /* TestDocument.swift */; };
@@ -78,8 +78,8 @@
 		5163A0331CD7879900B0EEEF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5163A0341CD7879900B0EEEF /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5163A0721CD78B5E00B0EEEF /* Backend.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Backend.swift; sourceTree = "<group>"; };
-		5163A0741CD7946000B0EEEF /* NSURLSessionBackend.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSURLSessionBackend.swift; sourceTree = "<group>"; };
-		5163A0761CD7960800B0EEEF /* NSURLSessionBackendConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSURLSessionBackendConfiguration.swift; sourceTree = "<group>"; };
+		5163A0741CD7946000B0EEEF /* URLSessionBackend.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLSessionBackend.swift; sourceTree = "<group>"; };
+		5163A0761CD7960800B0EEEF /* URLSessionBackendConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLSessionBackendConfiguration.swift; sourceTree = "<group>"; };
 		5163A0781CD7967900B0EEEF /* JaymeError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JaymeError.swift; sourceTree = "<group>"; };
 		5163A07A1CD7970200B0EEEF /* HTTPResponseParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPResponseParser.swift; sourceTree = "<group>"; };
 		5163A07C1CD797E800B0EEEF /* Repository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
@@ -100,7 +100,7 @@
 		516ECB011CD7AB6A0090A176 /* TestingBackend.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestingBackend.swift; sourceTree = "<group>"; };
 		516ECB021CD7AB6A0090A176 /* FakeURLSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FakeURLSession.swift; sourceTree = "<group>"; };
 		516ECB031CD7AB6A0090A176 /* HTTPResponseParserTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPResponseParserTests.swift; sourceTree = "<group>"; };
-		516ECB041CD7AB6A0090A176 /* NSURLSessionBackendTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSURLSessionBackendTests.swift; sourceTree = "<group>"; };
+		516ECB041CD7AB6A0090A176 /* URLSessionBackendTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLSessionBackendTests.swift; sourceTree = "<group>"; };
 		516ECB051CD7AB6A0090A176 /* PagedRepositoryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PagedRepositoryTests.swift; sourceTree = "<group>"; };
 		516ECB061CD7AB6A0090A176 /* CRUDRepositoryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CRUDRepositoryTests.swift; sourceTree = "<group>"; };
 		516ECB071CD7AB6A0090A176 /* TestDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestDocument.swift; sourceTree = "<group>"; };
@@ -206,19 +206,19 @@
 			isa = PBXGroup;
 			children = (
 				5163A0721CD78B5E00B0EEEF /* Backend.swift */,
-				5163A06A1CD78A8700B0EEEF /* NSURLSessionBackend */,
+				5163A06A1CD78A8700B0EEEF /* URLSessionBackend */,
 			);
 			name = Backend;
 			sourceTree = "<group>";
 		};
-		5163A06A1CD78A8700B0EEEF /* NSURLSessionBackend */ = {
+		5163A06A1CD78A8700B0EEEF /* URLSessionBackend */ = {
 			isa = PBXGroup;
 			children = (
-				5163A0741CD7946000B0EEEF /* NSURLSessionBackend.swift */,
-				5163A0761CD7960800B0EEEF /* NSURLSessionBackendConfiguration.swift */,
+				5163A0741CD7946000B0EEEF /* URLSessionBackend.swift */,
+				5163A0761CD7960800B0EEEF /* URLSessionBackendConfiguration.swift */,
 				5163A07A1CD7970200B0EEEF /* HTTPResponseParser.swift */,
 			);
-			name = NSURLSessionBackend;
+			name = URLSessionBackend;
 			sourceTree = "<group>";
 		};
 		5163A06B1CD78A8F00B0EEEF /* Entity */ = {
@@ -294,7 +294,7 @@
 			children = (
 				51AE549D1D4275E900797FC8 /* UserRepositoryTests.swift */,
 				5198F7341D42623B00917B7E /* Example */,
-				516ECB041CD7AB6A0090A176 /* NSURLSessionBackendTests.swift */,
+				516ECB041CD7AB6A0090A176 /* URLSessionBackendTests.swift */,
 				518CEA3E1CD8DD5900A4CA06 /* PageInfoTests.swift */,
 				516ECB061CD7AB6A0090A176 /* CRUDRepositoryTests.swift */,
 				516ECB051CD7AB6A0090A176 /* PagedRepositoryTests.swift */,
@@ -459,14 +459,16 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = Inaka;
 				TargetAttributes = {
 					5163A0081CD7873800B0EEEF = {
 						CreatedOnToolsVersion = 7.3;
+						LastSwiftMigration = 0800;
 					};
 					5163A01C1CD7873800B0EEEF = {
 						CreatedOnToolsVersion = 7.3;
+						LastSwiftMigration = 0800;
 						TestTargetID = 5163A0081CD7873800B0EEEF;
 					};
 				};
@@ -525,7 +527,7 @@
 				5163A0951CD7A51800B0EEEF /* Result.swift in Sources */,
 				5163A08F1CD7A1E800B0EEEF /* PageInfo.swift in Sources */,
 				5163A08D1CD7A1B300B0EEEF /* HTTPMethodName.swift in Sources */,
-				5163A0751CD7946000B0EEEF /* NSURLSessionBackend.swift in Sources */,
+				5163A0751CD7946000B0EEEF /* URLSessionBackend.swift in Sources */,
 				5163A0931CD7A35F00B0EEEF /* Future.swift in Sources */,
 				518951A51CD923F300089906 /* UserDetailViewController.swift in Sources */,
 				5163A07D1CD797E800B0EEEF /* Repository.swift in Sources */,
@@ -536,7 +538,7 @@
 				5169EAE11CF780540047B572 /* EntityParser.swift in Sources */,
 				518951AB1CD928D300089906 /* PostTableViewCell.swift in Sources */,
 				5163A0851CD7A01500B0EEEF /* DictionaryInitializable.swift in Sources */,
-				5163A0771CD7960800B0EEEF /* NSURLSessionBackendConfiguration.swift in Sources */,
+				5163A0771CD7960800B0EEEF /* URLSessionBackendConfiguration.swift in Sources */,
 				5163A0831CD79FAB00B0EEEF /* Identifiable.swift in Sources */,
 				5163A0871CD7A0DB00B0EEEF /* DictionaryRepresentable.swift in Sources */,
 				51F6D1CB1CF89B9B00E998F0 /* PostIdentifier.swift in Sources */,
@@ -558,7 +560,7 @@
 				518CEA3F1CD8DD5900A4CA06 /* PageInfoTests.swift in Sources */,
 				516ECB101CD7AB6A0090A176 /* CRUDRepositoryTests.swift in Sources */,
 				516ECB0A1CD7AB6A0090A176 /* FakeHTTPResponseParser.swift in Sources */,
-				516ECB0E1CD7AB6A0090A176 /* NSURLSessionBackendTests.swift in Sources */,
+				516ECB0E1CD7AB6A0090A176 /* URLSessionBackendTests.swift in Sources */,
 				516ECB0D1CD7AB6A0090A176 /* HTTPResponseParserTests.swift in Sources */,
 				516ECB131CD7AB6A0090A176 /* TestDocumentRepository.swift in Sources */,
 				516ECB0C1CD7AB6A0090A176 /* FakeURLSession.swift in Sources */,
@@ -614,8 +616,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -660,8 +664,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -680,6 +686,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -693,6 +700,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.inaka.Jayme;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -704,6 +712,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.inaka.Jayme;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -715,6 +724,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.inaka.JaymeTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Jayme.app/Jayme";
 			};
 			name = Debug;
@@ -727,6 +737,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.inaka.JaymeTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Jayme.app/Jayme";
 			};
 			name = Release;

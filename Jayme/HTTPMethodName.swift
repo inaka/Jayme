@@ -20,7 +20,7 @@
 
 import Foundation
 
-/// Discrete enumeration of possible HTTP methods
+/// Discrete enumeration of possible HTTP methods.
 public enum HTTPMethodName: String {
     case POST, GET, PUT, PATCH, DELETE
 }

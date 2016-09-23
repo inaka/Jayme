@@ -24,10 +24,10 @@ import Foundation
 class TestDocumentPagedRepository: PagedRepository {
     typealias EntityType = TestDocument
     let name = "documents"
-    let backend: NSURLSessionBackend
+    let backend: URLSessionBackend
     let pageSize: Int
     
-    init(backend: NSURLSessionBackend, pageSize: Int) {
+    init(backend: URLSessionBackend, pageSize: Int) {
         self.backend = backend
         self.pageSize = pageSize
     }

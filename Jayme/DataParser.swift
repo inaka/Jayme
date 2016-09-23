@@ -20,39 +20,39 @@
 
 import Foundation
 
-/// Provides functions to be used within a repository for converting Dictionaries into Entities an chaining their results with `Future` convenient functions (e.g. `map` and `andThen`
-public class DataParser {
+/// Provides functions to be used within a repository for converting dictionaries into entities an chaining their results with convenient `Future` functions (e.g. `map` and `andThen`).
+open class DataParser {
     
-    /// Public default initializer
+    /// Public default initializer.
     public init() { }
     
-    /// Returns a `Future` containing a dictionary initialized with the optional data passed by parameter, or `JaymeError.BadResponse` if the dictionary can't be initialized from that data.
-    public func dictionaryFromData(maybeData: NSData?) -> Future<[String: AnyObject], JaymeError> {
+    /// Returns a `Future` containing a dictionary initialized with the optional data passed by parameter, or `JaymeError.badResponse` if the dictionary can't be initialized from that data.
+    open func dictionary(from possibleData: Data?) -> Future<[String: Any], JaymeError> {
         return Future() { completion in
             guard let
-                data = maybeData,
-                result = try? NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments),
-                dictionary = result as? [String: AnyObject]
+                data = possibleData,
+                let result = try? JSONSerialization.jsonObject(with: data, options: .allowFragments),
+                let dictionary = result as? [String: Any]
                 else {
-                    completion(.Failure(.BadResponse))
+                    completion(.failure(.badResponse))
                     return
             }
-            completion(.Success(dictionary))
+            completion(.success(dictionary))
         }
     }
     
-     /// Returns a `Future` containing an array of dictionaries initialized with the optional data passed by parameter, or `JaymeError.BadResponse` if the array can't be initialized from that data.
-    public func dictionariesFromData(maybeData: NSData?) -> Future<[[String: AnyObject]], JaymeError> {
+     /// Returns a `Future` containing an array of dictionaries initialized with the optional data passed by parameter, or `JaymeError.badResponse` if the array can't be initialized from that data.
+    open func dictionaries(from possibleData: Data?) -> Future<[[String: Any]], JaymeError> {
         return Future() { completion in
-            guard let
-                data = maybeData,
-                result = try? NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments),
-                array = result as? [[String: AnyObject]]
+            guard
+                let data = possibleData,
+                let result = try? JSONSerialization.jsonObject(with: data, options: .allowFragments),
+                let array = result as? [[String: Any]]
                 else {
-                    completion(.Failure(.BadResponse))
+                    completion(.failure(.badResponse))
                     return
             }
-            completion(.Success(array))
+            completion(.success(array))
         }
     }
     

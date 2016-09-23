@@ -20,7 +20,7 @@
 
 import Foundation
 
-/// Protocol for allowing entities to be represented (parsed out) via a dictionary
+/// Protocol for allowing entities to be represented (parsed out) through a dictionary.
 public protocol DictionaryRepresentable {
-    var dictionaryValue: [String: AnyObject] { get }
+    var dictionaryValue: [String: Any] { get }
 }

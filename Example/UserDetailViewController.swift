@@ -33,33 +33,33 @@ class UserDetailViewController: UIViewController {
 
     // MARK: - Private
     
-    private var posts = [Post]()
+    fileprivate var posts = [Post]()
     
-    private func loadPosts() {
-        let future = PostRepository().findPostsForUser(self.user)
+    fileprivate func loadPosts() {
+        let future = PostRepository().findPosts(for: self.user)
         future.start { result in
             switch result {
-            case .Success(let posts):
+            case .success(let posts):
                 self.posts = posts
                 self.tableView.reloadData()
-            case .Failure(let error):
-                self.showAlertControllerForError(error)
+            case .failure(let error):
+                self.showAlertController(for: error)
             }
         }
     }
     
-    private func showAlertControllerForError(error: JaymeError) {
-        let message = self.descriptionForError(error)
-        let alert = UIAlertController(title: "Error", message: message, preferredStyle: .Alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-        self.presentViewController(alert, animated: true, completion: nil)
+    fileprivate func showAlertController(for error: JaymeError) {
+        let message = self.description(for: error)
+        let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
     
-    private func descriptionForError(error: JaymeError) -> String {
+    fileprivate func description(for error: JaymeError) -> String {
         switch error {
-        case .ServerError(let code):
+        case .serverError(let code):
             return "Server Error (code: \(code))"
-        case .Other(let nsError):
+        case .other(let nsError):
             return nsError.localizedDescription
         default:
             return "Unexpected error"
@@ -70,13 +70,13 @@ class UserDetailViewController: UIViewController {
 
 extension UserDetailViewController: UITableViewDataSource, UITableViewDelegate {
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.posts.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(PostTableViewCell.Identifier) as! PostTableViewCell
-        cell.post = self.posts[indexPath.row]
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.Identifier) as! PostTableViewCell
+        cell.post = self.posts[(indexPath as NSIndexPath).row]
         return cell
     }
     

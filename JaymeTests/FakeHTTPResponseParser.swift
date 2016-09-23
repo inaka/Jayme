@@ -26,11 +26,11 @@ class FakeHTTPResponseParser: HTTPResponseParser {
     var response: FullHTTPResponse?
     var result: HTTPResponseParserResult
     
-    init(result: HTTPResponseParserResult = .Success(data: nil, pageInfo: nil)) {
+    init(result: HTTPResponseParserResult = .success(data: nil, pageInfo: nil)) {
         self.result = result
     }
     
-    override func parseResponse(response: FullHTTPResponse) -> HTTPResponseParserResult {
+    override func parse(_ response: FullHTTPResponse) -> HTTPResponseParserResult {
         self.response = response
         return self.result
     }

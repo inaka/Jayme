@@ -20,23 +20,23 @@
 
 import Foundation
 
-/// Structure for holding information related to pagination
+/// Structure for holding pagination-related information.
 public struct PageInfo {
     
-    /// The current page number
+    /// The current page number.
     public let number: Int
     
-    /// The number of items per page
+    /// The number of items per page.
     public let size: Int
     
-    /// The total amount of items
+    /// The total amount of items.
     public let total: Int
     
 }
 
 public extension PageInfo {
     
-    /// Helper computed property to know whether or not there are more items to be fetched
+    /// Helper computed property for knowing whether or not there are more items to be fetched.
     public var more: Bool {
         return self.size * self.number < self.total
     }

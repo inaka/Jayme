@@ -22,34 +22,34 @@ import Foundation
 
 struct Post: Identifiable {
     let id: PostIdentifier
-    let authorID: String
+    let authorId: String
     let title: String
     let abstract: String
-    let date: NSDate
+    let date: Date
 }
 
 extension Post: DictionaryInitializable, DictionaryRepresentable {
     
-    init(dictionary: [String: AnyObject]) throws {
-        guard let
-            id = dictionary["id"] as? String,
-            authorID = dictionary["author_id"] as? String,
-            title = dictionary["title"] as? String,
-            abstract = dictionary["abstract"] as? String,
-            dateString = dictionary["date"] as? String,
-            date = dateString.toDate()
-            else { throw JaymeError.ParsingError }
-        self.id = .Server(id)
-        self.authorID = authorID
+    init(dictionary: [String: Any]) throws {
+        guard
+            let id = dictionary["id"] as? String,
+            let authorId = dictionary["author_id"] as? String,
+            let title = dictionary["title"] as? String,
+            let abstract = dictionary["abstract"] as? String,
+            let dateString = dictionary["date"] as? String,
+            let date = dateString.toDate()
+            else { throw JaymeError.parsingError }
+        self.id = .server(id)
+        self.authorId = authorId
         self.title = title
         self.abstract = abstract
         self.date = date
     }
     
-    var dictionaryValue: [String: AnyObject] {
+    var dictionaryValue: [String: Any] {
         return [
             "id": "\(self.id)",
-            "author_id": self.authorID,
+            "author_id": self.authorId,
             "title": self.title,
             "abstract": self.abstract,
             "date": self.date
@@ -60,10 +60,10 @@ extension Post: DictionaryInitializable, DictionaryRepresentable {
 
 private extension String {
     
-    func toDate() -> NSDate? {
-        let formatter = NSDateFormatter()
+    func toDate() -> Date? {
+        let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
-        return formatter.dateFromString(self)
+        return formatter.date(from: self)
     }
     
 }

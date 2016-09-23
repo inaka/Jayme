@@ -44,25 +44,26 @@ class CRUDRepositoryTests: XCTestCase {
 extension CRUDRepositoryTests {
     
     func testFindAllCall() {
-        self.repository.findAll()
+        let _ = self.repository.findAll()
         XCTAssertEqual(self.backend.path, "documents")
         XCTAssertEqual(self.backend.method, .GET)
     }
     
-    func testFindByIDCall() {
-        self.repository.findByID("123")
+    func testFindByIdCall() {
+        let _ = self.repository.find(byId: "123")
         XCTAssertEqual(self.backend.path, "documents/123")
         XCTAssertEqual(self.backend.method, .GET)
     }
     
     func testCreateCall() {
         let document = TestDocument(id: "123", name: "a")
-        self.repository.create(document)
+        let _ = self.repository.create(document)
         XCTAssertEqual(self.backend.path, "documents")
         XCTAssertEqual(self.backend.method, .POST)
-        guard let
-            id = self.backend.parameters?["id"] as? String,
-            name = self.backend.parameters?["name"] as? String else {
+        guard
+            let id = self.backend.parameters?["id"] as? String,
+            let name = self.backend.parameters?["name"] as? String
+            else {
                 XCTFail("Wrong parameters"); return
         }
         XCTAssertEqual(id, "123")
@@ -71,12 +72,12 @@ extension CRUDRepositoryTests {
     
     func testUpdateCall() {
         let document = TestDocument(id: "123", name: "b")
-        self.repository.update(document)
+        let _ = self.repository.update(document)
         XCTAssertEqual(self.backend.path, "documents/123")
         XCTAssertEqual(self.backend.method, .PUT)
         guard let
             id = self.backend.parameters?["id"] as? String,
-            name = self.backend.parameters?["name"] as? String else {
+            let name = self.backend.parameters?["name"] as? String else {
                 XCTFail("Wrong parameters"); return
         }
         XCTAssertEqual(id, "123")
@@ -85,7 +86,7 @@ extension CRUDRepositoryTests {
     
     func testDeleteCall() {
         let document = TestDocument(id: "123", name: "a")
-        self.repository.delete(document)
+        let _ = self.repository.delete(document)
         XCTAssertEqual(self.backend.path, "documents/123")
         XCTAssertEqual(self.backend.method, .DELETE)
     }
@@ -102,15 +103,15 @@ extension CRUDRepositoryTests {
         self.backend.completion = { completion in
             let json = [["id": "1", "name": "a"],
                         ["id": "2", "name": "b"]]
-            let data = try! NSJSONSerialization.dataWithJSONObject(json, options: .PrettyPrinted)
-            completion(.Success((data, nil)))
+            let data = try! JSONSerialization.data(withJSONObject: json, options: .prettyPrinted)
+            completion(.success((data, nil)))
         }
         
-        let expectation = self.expectationWithDescription("Expected 2 documents to be parsed")
+        let expectation = self.expectation(description: "Expected 2 documents to be parsed")
         
         let future = self.repository.findAll()
         future.start() { result in
-            guard case .Success(let documents) = result
+            guard case .success(let documents) = result
                 else { XCTFail(); return }
             XCTAssertEqual(documents.count, 2)
             XCTAssertEqual(documents[0].id, "1")
@@ -120,7 +121,7 @@ extension CRUDRepositoryTests {
             expectation.fulfill()
         }
         
-        self.waitForExpectationsWithTimeout(3) { error in
+        self.waitForExpectations(timeout: 3) { error in
             if let _ = error { XCTFail() }
         }
     }
@@ -129,20 +130,20 @@ extension CRUDRepositoryTests {
         
         // Simulated completion
         self.backend.completion = { completion in
-            let error = JaymeError.NotFound
-            completion(.Failure(error))
+            let error = JaymeError.notFound
+            completion(.failure(error))
         }
         
-        let expectation = self.expectationWithDescription("Expected JaymeError.NotFound")
+        let expectation = self.expectation(description: "Expected JaymeError.NotFound")
         
         let future = self.repository.findAll()
         future.start() { result in
-            guard case .Failure = result
+            guard case .failure = result
                 else { XCTFail(); return }
             expectation.fulfill()
         }
         
-        self.waitForExpectationsWithTimeout(3) { error in
+        self.waitForExpectations(timeout: 3) { error in
             if let _ = error { XCTFail() }
         }
     }
@@ -150,120 +151,120 @@ extension CRUDRepositoryTests {
     func testFindAllFailureBadResponseCallback() {
         // Simulated completion
         self.backend.completion = { completion in
-            let corruptedData = NSData()
-            completion(.Success((corruptedData, nil)))
+            let corruptedData = Data()
+            completion(.success((corruptedData, nil)))
         }
         
-        let expectation = self.expectationWithDescription("Expected to get a JaymeError.BadResponse")
+        let expectation = self.expectation(description: "Expected to get a JaymeError.BadResponse")
         
         let future = self.repository.findAll()
         future.start() { result in
-            guard case
-                .Failure(let error) = result,
-                .BadResponse = error
+            guard
+                case .failure(let error) = result,
+                case .badResponse = error
                 else { XCTFail(); return }
             expectation.fulfill()
         }
         
-        self.waitForExpectationsWithTimeout(3) { error in
+        self.waitForExpectations(timeout: 3) { error in
             if let _ = error { XCTFail() }
         }
     }
     
-    func testFindByIDSuccessCallback() {
+    func testFindByIdSuccessCallback() {
         
         // Simulated completion
         self.backend.completion = { completion in
             let json = ["id": "1", "name": "a"]
-            let data = try! NSJSONSerialization.dataWithJSONObject(json, options: .PrettyPrinted)
-            completion(.Success((data, nil)))
+            let data = try! JSONSerialization.data(withJSONObject: json, options: .prettyPrinted)
+            completion(.success((data, nil)))
         }
         
-        let expectation = self.expectationWithDescription("Expected to find a document")
+        let expectation = self.expectation(description: "Expected to find a document")
         
-        let future = self.repository.findByID("1")
+        let future = self.repository.find(byId: "1")
         future.start() { result in
-            guard case .Success(let document) = result
+            guard case .success(let document) = result
                 else { XCTFail(); return }
             XCTAssertEqual(document.id, "1")
             XCTAssertEqual(document.name, "a")
             expectation.fulfill()
         }
         
-        self.waitForExpectationsWithTimeout(3) { error in
+        self.waitForExpectations(timeout: 3) { error in
             if let _ = error { XCTFail() }
         }
     }
     
-    func testFindByIDFailureNotFoundCallback() {
+    func testFindByIdFailureNotFoundCallback() {
         
         // Simulated completion
         self.backend.completion = { completion in
-            let error = JaymeError.NotFound
-            completion(.Failure(error))
+            let error = JaymeError.notFound
+            completion(.failure(error))
         }
         
-        let expectation = self.expectationWithDescription("Expected to get JaymeError.NotFound")
+        let expectation = self.expectation(description: "Expected to get JaymeError.NotFound")
         
-        let future = self.repository.findByID("_")
+        let future = self.repository.find(byId: "_")
         future.start() { result in
-            guard case
-                .Failure(let error) = result,
-                .NotFound = error
+            guard
+                case .failure(let error) = result,
+                case .notFound = error
                 else { XCTFail(); return }
             expectation.fulfill()
         }
         
-        self.waitForExpectationsWithTimeout(3) { error in
+        self.waitForExpectations(timeout: 3) { error in
             if let _ = error { XCTFail() }
         }
     }
     
-    func testFindByIDFailureBadResponseCallback() {
+    func testFindByIdFailureBadResponseCallback() {
         
         // Simulated completion
         self.backend.completion = { completion in
-            let corruptedData = NSData()
-            completion(.Success((corruptedData, nil)))
+            let corruptedData = Data()
+            completion(.success((corruptedData, nil)))
         }
         
-        let expectation = self.expectationWithDescription("Expected to get JaymeError.BadResponse")
+        let expectation = self.expectation(description: "Expected to get JaymeError.BadResponse")
         
-        let future = self.repository.findByID("_")
+        let future = self.repository.find(byId: "_")
         future.start() { result in
-            guard case
-                .Failure(let error) = result,
-                .BadResponse = error
+            guard
+                case .failure(let error) = result,
+                case .badResponse = error
                 else { XCTFail(); return }
             expectation.fulfill()
         }
         
-        self.waitForExpectationsWithTimeout(3) { error in
+        self.waitForExpectations(timeout: 3) { error in
             if let _ = error { XCTFail() }
         }
     }
     
-    func testFindByIDFailureParsingErrorCallback() {
+    func testFindByIdFailureParsingErrorCallback() {
         
         // Simulated completion
         self.backend.completion = { completion in
             let wrongDictionary = ["id": "_"] // lacks 'name' field
-            let data = try! NSJSONSerialization.dataWithJSONObject(wrongDictionary, options: .PrettyPrinted)
-            completion(.Success((data, nil)))
+            let data = try! JSONSerialization.data(withJSONObject: wrongDictionary, options: .prettyPrinted)
+            completion(.success((data, nil)))
         }
         
-        let expectation = self.expectationWithDescription("Expected to get JaymeError.ParsingError")
+        let expectation = self.expectation(description: "Expected to get JaymeError.ParsingError")
         
-        let future = self.repository.findByID("_")
+        let future = self.repository.find(byId: "_")
         future.start() { result in
-            guard case
-                .Failure(let error) = result,
-                .ParsingError = error
+            guard
+                case .failure(let error) = result,
+                case .parsingError = error
                 else { XCTFail(); return }
             expectation.fulfill()
         }
         
-        self.waitForExpectationsWithTimeout(3) { error in
+        self.waitForExpectations(timeout: 3) { error in
             if let _ = error { XCTFail() }
         }
     }
@@ -273,23 +274,23 @@ extension CRUDRepositoryTests {
         // Simulated completion
         self.backend.completion = { completion in
             let json = ["id": "1", "name": "a"]
-            let data = try! NSJSONSerialization.dataWithJSONObject(json, options: .PrettyPrinted)
-            completion(.Success((data, nil)))
+            let data = try! JSONSerialization.data(withJSONObject: json, options: .prettyPrinted)
+            completion(.success((data, nil)))
         }
         
-        let expectation = self.expectationWithDescription("Expected to get a success")
+        let expectation = self.expectation(description: "Expected to get a success")
         
         let document = TestDocument(id: "_", name: "_")
         let future = self.repository.create(document)
         future.start() { result in
-            guard case .Success(let document) = result
+            guard case .success(let document) = result
                 else { XCTFail(); return }
             XCTAssertEqual(document.id, "1")
             XCTAssertEqual(document.name, "a")
             expectation.fulfill()
         }
         
-        self.waitForExpectationsWithTimeout(3) { error in
+        self.waitForExpectations(timeout: 3) { error in
             if let _ = error { XCTFail() }
         }
     }
@@ -298,21 +299,21 @@ extension CRUDRepositoryTests {
         
         // Simulated completion
         self.backend.completion = { completion in
-            let error = JaymeError.NotFound
-            completion(.Failure(error))
+            let error = JaymeError.notFound
+            completion(.failure(error))
         }
         
-        let expectation = self.expectationWithDescription("Expected to get an error")
+        let expectation = self.expectation(description: "Expected to get an error")
         
         let document = TestDocument(id: "_", name: "_")
         let future = self.repository.create(document)
         future.start() { result in
-            guard case .Failure = result
+            guard case .failure = result
                 else { XCTFail(); return }
             expectation.fulfill()
         }
         
-        self.waitForExpectationsWithTimeout(3) { error in
+        self.waitForExpectations(timeout: 3) { error in
             if let _ = error { XCTFail() }
         }
     }
@@ -323,23 +324,23 @@ extension CRUDRepositoryTests {
         // Simulated completion
         self.backend.completion = { completion in
             let json = ["id": "1", "name": "a"]
-            let data = try! NSJSONSerialization.dataWithJSONObject(json, options: .PrettyPrinted)
-            completion(.Success((data, nil)))
+            let data = try! JSONSerialization.data(withJSONObject: json, options: .prettyPrinted)
+            completion(.success((data, nil)))
         }
         
-        let expectation = self.expectationWithDescription("Expected to get a success")
+        let expectation = self.expectation(description: "Expected to get a success")
         
         let document = TestDocument(id: "_", name: "_")
         let future = self.repository.update(document)
         future.start() { result in
-            guard case .Success(let document) = result
+            guard case .success(let document) = result
                 else { XCTFail(); return }
             XCTAssertEqual(document.id, "1")
             XCTAssertEqual(document.name, "a")
             expectation.fulfill()
         }
         
-        self.waitForExpectationsWithTimeout(3) { error in
+        self.waitForExpectations(timeout: 3) { error in
             if let _ = error { XCTFail() }
         }
     }
@@ -348,21 +349,21 @@ extension CRUDRepositoryTests {
         
         // Simulated completion
         self.backend.completion = { completion in
-            let error = JaymeError.NotFound
-            completion(.Failure(error))
+            let error = JaymeError.notFound
+            completion(.failure(error))
         }
         
-        let expectation = self.expectationWithDescription("Expected to get an error")
+        let expectation = self.expectation(description: "Expected to get an error")
         
         let document = TestDocument(id: "_", name: "_")
         let future = self.repository.update(document)
         future.start() { result in
-            guard case .Failure = result
+            guard case .failure = result
                 else { XCTFail(); return }
             expectation.fulfill()
         }
         
-        self.waitForExpectationsWithTimeout(3) { error in
+        self.waitForExpectations(timeout: 3) { error in
             if let _ = error { XCTFail() }
         }
     }
@@ -371,20 +372,20 @@ extension CRUDRepositoryTests {
         
         // Simulated completion
         self.backend.completion = { completion in
-            completion(.Success((nil, nil)))
+            completion(.success((nil, nil)))
         }
         
-        let expectation = self.expectationWithDescription("Expected to get a success")
+        let expectation = self.expectation(description: "Expected to get a success")
         
         let document = TestDocument(id: "_", name: "_")
         let future = self.repository.delete(document)
         future.start() { result in
-            guard case .Success = result
+            guard case .success = result
                 else { XCTFail(); return }
             expectation.fulfill()
         }
         
-        self.waitForExpectationsWithTimeout(3) { error in
+        self.waitForExpectations(timeout: 3) { error in
             if let _ = error { XCTFail() }
         }
     }
@@ -393,21 +394,21 @@ extension CRUDRepositoryTests {
         
         // Simulated completion
         self.backend.completion = { completion in
-            let error = JaymeError.NotFound
-            completion(.Failure(error))
+            let error = JaymeError.notFound
+            completion(.failure(error))
         }
         
-        let expectation = self.expectationWithDescription("Expected to get an error")
+        let expectation = self.expectation(description: "Expected to get an error")
         
         let document = TestDocument(id: "_", name: "_")
         let future = self.repository.delete(document)
         future.start() { result in
-            guard case .Failure = result
+            guard case .failure = result
                 else { XCTFail(); return }
             expectation.fulfill()
         }
         
-        self.waitForExpectationsWithTimeout(3) { error in
+        self.waitForExpectations(timeout: 3) { error in
             if let _ = error { XCTFail() }
         }
     }

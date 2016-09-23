@@ -20,20 +20,20 @@
 
 import Foundation
 
-typealias DataTaskCompletion = ((NSData?, NSURLResponse?, NSError?) -> ())
+typealias DataTaskCompletion = ((Data?, URLResponse?, Error?) -> ())
 
-class FakeURLSession: NSURLSession {
+class FakeURLSession: URLSession {
     
-    var data: NSData?
-    var urlResponse: NSURLResponse?
+    var data: Data?
+    var urlResponse: URLResponse?
     var error: NSError?
-    var request: NSURLRequest?
+    var request: URLRequest?
     
     init(completion: DataTaskCompletion? = nil) {
         self.completion = completion
     }
     
-    override func dataTaskWithRequest(request: NSURLRequest, completionHandler: DataTaskCompletion) -> NSURLSessionDataTask {
+    override func dataTask(with request: URLRequest, completionHandler: @escaping DataTaskCompletion) -> URLSessionDataTask {
         self.request = request
         if self.completion == nil {
             self.completion = completionHandler
@@ -43,16 +43,16 @@ class FakeURLSession: NSURLSession {
     
     // MARK: - Private
     
-    private var completion: DataTaskCompletion?
-    private func executeCompletion() {
+    fileprivate var completion: DataTaskCompletion?
+    fileprivate func executeCompletion() {
         self.completion?(self.data, self.urlResponse, self.error)
     }
     
 }
 
-class FakeURLSessionDataTask: NSURLSessionDataTask {
+class FakeURLSessionDataTask: URLSessionDataTask {
     
-    private let session: FakeURLSession
+    fileprivate let session: FakeURLSession
     
     init(session: FakeURLSession) {
         self.session = session

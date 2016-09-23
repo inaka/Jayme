@@ -4,7 +4,7 @@
 
 ------
 
-[![Build Status](https://api.travis-ci.org/inaka/Jayme.svg)](https://travis-ci.org/inaka/Jayme) [![Codecov](https://codecov.io/gh/inaka/jayme/branch/master/graph/badge.svg)](https://codecov.io/gh/inaka/jayme) [![Cocoapods](https://img.shields.io/cocoapods/v/Jayme.svg)](http://cocoadocs.org/docsets/Jayme) [![Twitter](https://img.shields.io/badge/twitter-@inaka-blue.svg?style=flat)](http://twitter.com/inaka)
+[![Build Status](https://api.travis-ci.org/inaka/Jayme.svg)](https://travis-ci.org/inaka/Jayme) [![Codecov](https://codecov.io/gh/inaka/jayme/branch/master/graph/badge.svg)](https://codecov.io/gh/inaka/jayme) [![Swift](https://img.shields.io/badge/Swift-3.0-orange.svg?style=flat)](https://swift.org/) [![Cocoapods](https://img.shields.io/cocoapods/v/Jayme.svg)](http://cocoadocs.org/docsets/Jayme) [![Twitter](https://img.shields.io/badge/twitter-@inaka-blue.svg?style=flat)](http://twitter.com/inaka)
 
 
 
@@ -16,12 +16,13 @@ The idea behind this library is to **separate concerns**: Your view controllers 
 
 The library provides a neat API to deal with REST communication, as well as default implementations for basic [CRUD functionality](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete) and [pagination](https://github.com/davidcelis/api-pagination).
 
-![Jayme's Architecture In A Nutshell](https://raw.githubusercontent.com/inaka/Jayme/master/Assets/V2/architecture-diagram.png)
+![Jayme's Architecture In A Nutshell](https://raw.githubusercontent.com/inaka/Jayme/master/Assets/V3/architecture-diagram.png)
 
 
 
 ## Migration Guides
 
+- [Jayme 3.0 Migration Guide](https://github.com/inaka/Jayme/blob/master/Documentation/Jayme%203.0%20Migration%20Guide.md)
 - [Jayme 2.0 Migration Guide](https://github.com/inaka/Jayme/blob/master/Documentation/Jayme%202.0%20Migration%20Guide.md)
 
 
@@ -77,7 +78,7 @@ Jayme comes with some protocols and classes containing default implementations f
 
 These default implementations are:
 
-- **[NSURLSessionBackend](Jayme/NSURLSessionBackend.swift)**: A class that connects to a server using `NSURLSession` mechanisms.
+- **[URLSessionBackend](Jayme/URLSessionBackend.swift)**: A class that connects to a server using `URLSession` mechanisms.
 - **[CRUDRepository](Jayme/CRUDRepository.swift)**: A protocol that provides elemental CRUD functionality.
 - **[PagedRepository](Jayme/PagedRepository.swift)**: A protocol that provides read functionality with pagination.
 
@@ -85,7 +86,7 @@ These default implementations are:
 
 You will observe that they conform to `Backend` and `Repository` protocols respectively, which are very abstract. If you need to implement your own conventions, you can skip these default implementations mentioned above and write your own, as long as they conform to the `Backend` and `Repository` protocols.
 
-![Jayme's Customization](https://raw.githubusercontent.com/inaka/Jayme/master/Assets/V2/customization-diagram.png)
+![Jayme's Customization](https://raw.githubusercontent.com/inaka/Jayme/master/Assets/V3/customization-diagram.png)
 
 
 
@@ -95,25 +96,25 @@ In this example, you'll first learn how to setup a repository with basic CRUD fu
 
 #### Before starting: Configure your backend
 
-By default, when you initialize a `NSURLSessionBackend` instance, it's created with a default configuration object, which uses basic HTTP headers for JSON communication, as well as `localhost:8080` as the default base URL path. You will normally change that. You do it just like this:
+By default, when you initialize a `URLSessionBackend` instance, it's created with a default configuration object, which uses basic HTTP headers for JSON communication, as well as `localhost:8080` as the default base URL path. You will normally change that. You do it just like this:
 
 ```swift
-extension NSURLSessionBackend {
-    class func myAppBackend() -> NSURLBackend {
+extension URLSessionBackend {
+    class func myAppBackend() -> URLSessionBackend {
         let basePath = "your base URL path"
         let headers = [HTTPHeader(field: "Accept", value: "application/json"),
                        HTTPHeader(field: "Content-Type", value: "application/json")]
                        // and any header you need to use
-        let configuration = NSURLSessionBackendConfiguration(basePath: basePath, headers: headers)
-        return NSURLSessionBackend(configuration: configuration)
+        let configuration = URLSessionBackendConfiguration(basePath: basePath, headers: headers)
+        return URLSessionBackend(configuration: configuration)
     }
 } 
 ```
 
-Then, whenever you need to instantiate a backend with your configuration, instead of calling the regular `NSURLSessionBackend()`, you would:
+Then, whenever you need to instantiate a backend with your configuration, instead of calling the regular `URLSessionBackend()`, you would:
 
 ```swift
-let backend = NSURLSessionBackend.myAppBackend()
+let backend = URLSessionBackend.myAppBackend()
 ```
 
 #### 1. Create your first entity type
@@ -135,7 +136,7 @@ struct User: Identifiable {
 
 extension User: DictionaryInitializable, DictionaryRepresentable {
     
-    init(dictionary: [String: AnyObject]) throws {
+    init(dictionary: [String: Any]) throws {
         let json = JSON(dictionary)
         guard let
             id = json["id"] as? String,
@@ -147,7 +148,7 @@ extension User: DictionaryInitializable, DictionaryRepresentable {
         self.email = email
     }
     
-    var dictionaryValue: [String: AnyObject] {
+    var dictionaryValue: [String: Any] {
         return [
             "id": self.id,
             "name": self.name,
@@ -170,7 +171,7 @@ import Foundation
 class UserRepository: CRUDRepository {
 
     typealias EntityType = User // 1
-    let backend = NSURLSessionBackend.myAppBackend() // 2 
+    let backend = URLSessionBackend.myAppBackend() // 2 
     let name = "users" // 3
     
 }
@@ -179,7 +180,7 @@ class UserRepository: CRUDRepository {
 Notice these things here:
 
 1. A `typealias` is used in order to tie the generic `EntityType` to a concrete type (your `User`), hence letting the repository know which kind of entity it works with.
-2. `BackendType` is tied to the `NSURLSessionBackend` type in the [CRUDRepository](/Jayme/CRUDRepository.swift#L25) definition. However, since the latter is a protocol, you still need to *instantiate* a `NSURLSessionBackend` in your concrete repository.
+2. `BackendType` is tied to the `URLSessionBackend` type in the [CRUDRepository](/Jayme/CRUDRepository.swift#L25) definition. However, since the latter is a protocol, you still need to *instantiate* a `URLSessionBackend` in your concrete repository.
 3. The `name` that you provide usually represents the name that is given for a group of these kind of entities. That name is what is going to be used for composing a `path` which, at a later stage, the backend is going to hit for basic CRUD operations (for instance: `DELETE localhost:8080/users/123`).
 
 That's it! With this basic configuration you're all set to perform CRUD asynchronous operations with your users from anywhere in your app.
@@ -193,9 +194,9 @@ Here are some examples of functions that you can call from your view controller:
 ```swift
 UserRepository().findAll().start() { result in
     switch result {
-    case .Success(let users):
+    case .success(let users):
         // You've got all your users fetched in this array!
-    case .Failure(let error):
+    case .failure(let error):
         // You've got a discrete JaymeError indicating what happened
     }
 }
@@ -205,9 +206,9 @@ UserRepository().findAll().start() { result in
 let user = User(id: "1", name: "John", email: "john@appleseed.com")
 UserRepository().create(user).start() { result in
     switch result {
-    case .Success(let user):
+    case .success(let user):
         // User created!
-    case .Failure(let error):
+    case .failure(let error):
         // You've got a discrete JaymeError indicating what happened
     }
 }
@@ -224,7 +225,7 @@ You can define your own fetching function in `UserRepository` as follows:
 ```swift
 func findActiveUsers() -> Future<[User], JaymeError> {
     let path = "\(self.name)/active"
-    return self.backend.futureForPath(path, method: .GET, parameters: nil)
+    return self.backend.future(path: path, method: .GET, parameters: nil)
         .andThen { DataParser().dictionariesFromData($0.0) }
         .andThen { EntityParser().entitiesFromDictionaries($0) }
 }
@@ -235,9 +236,9 @@ And easily use it, like this:
 ```swift
 UserRepository().findActiveUsers().start() { result in
     switch result {
-    case .Success(let users):
+    case .success(let users):
         // do your stuff
-    case .Failure(let error):
+    case .failure(let error):
         // show error
     }
 }
@@ -258,7 +259,7 @@ Writing these tests is optional and has a steep learning curve, but once you get
 
 Here's what your repository would usually look like, when connected to a view controller:
 
-![Testing Your Repository 1](https://raw.githubusercontent.com/inaka/Jayme/master/Assets/V2/testability-diagram-1.png)
+![Testing Your Repository 1](https://raw.githubusercontent.com/inaka/Jayme/master/Assets/V3/testability-diagram-1.png)
 
 Here's what your repository would look like, from the testing target perspective:
 
@@ -318,6 +319,15 @@ $ python -m SimpleHTTPServer 8080
     - `pod 'Jayme'`
   - Remember to add an `import Jayme` statement in any source file of your project that needs to make use of the library.
 
+
+
+
+## Older Versions Support
+
+- As of its `3.0.0` release, this library works with **Swift 3.0**
+- If you look for older languages version support, you can check out:
+  - `2.1.0` release for Swift 2.3 support.
+  - `2.0.2` release for Swift 2.2 support.
 
 
 

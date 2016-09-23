@@ -20,7 +20,7 @@
 
 import Foundation
 
-/// Structure for holding HTTP header data
+/// Structure for holding HTTP header data.
 public struct HTTPHeader {
     public let field: String
     public let value: String

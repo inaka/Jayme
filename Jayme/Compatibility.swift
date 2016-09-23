@@ -22,30 +22,34 @@ import Foundation
 
 /// This file is provided with the aim of providing compatibility between library versions.
 
-/// ServerBackend -> NSURLSessionBackend
-@available(*, unavailable, renamed = "NSURLSessionBackend")
-public typealias ServerBackend = NSURLSessionBackend
+/// ServerBackend -> URLSessionBackend
+@available(*, unavailable, renamed : "URLSessionBackend")
+public typealias ServerBackend = URLSessionBackend
 
-/// ServerBackendConfiguration -> NSURLSessionBackendConfiguration
-@available(*, unavailable, renamed = "NSURLSessionBackendConfiguration")
-public typealias ServerBackendConfiguration = NSURLSessionBackendConfiguration
+/// NSURLSessionBackend -> URLSessionBackend
+@available(*, unavailable, renamed : "URLSessionBackend")
+public typealias NSURLSessionBackend = URLSessionBackend
+
+/// ServerBackendConfiguration -> URLSessionBackendConfiguration
+@available(*, unavailable, renamed : "URLSessionBackendConfiguration")
+public typealias ServerBackendConfiguration = URLSessionBackendConfiguration
+
+/// NSURLSessionBackendConfiguration -> URLSessionBackendConfiguration
+@available(*, unavailable, renamed : "URLSessionBackendConfiguration")
+public typealias NSURLSessionBackendConfiguration = URLSessionBackendConfiguration
 
 /// ServerBackendError -> JaymeError
-@available(*, unavailable, renamed = "JaymeError")
+@available(*, unavailable, renamed : "JaymeError")
 public typealias ServerBackendError = JaymeError
 
 /// ServerRepository -> CRUDRepository
-@available(*, unavailable, renamed = "CRUDRepository")
+@available(*, unavailable, renamed : "CRUDRepository")
 public typealias ServerRepository = CRUDRepository
 
-/// StringDictionary -> [String: AnyObject]
-@available(*, unavailable, renamed = "[String: AnyObject]")
-public typealias StringDictionary = [String: AnyObject]
-
 /// ServerPagedRepository -> PagedRepository
-@available(*, unavailable, renamed = "PagedRepository")
+@available(*, unavailable, renamed : "PagedRepository")
 public typealias ServerPagedRepository = PagedRepository
 
 /// Identifier -> IdentifierType: CustomStringConvertible
-@available(*, unavailable, message = "Replace `Identifier` with any type that conforms to `CustomStringConvertible`.")
+@available(*, unavailable, message : "Replace `Identifier` with any type that conforms to `CustomStringConvertible`.")
 public typealias Identifier = String

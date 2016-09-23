@@ -20,26 +20,26 @@
 
 import Foundation
 
-/// Provides a Repository with read functionality with pagination, based on Grape conventions (https://github.com/davidcelis/api-pagination)
+/// Provides a `Repository` serving read functionality with pagination, based on Grape conventions (https://github.com/davidcelis/api-pagination)
 public protocol PagedRepository: Repository {
-    /// Indicates the number of entities to be fetched per page
+    /// Indicates the number of entities to be fetched per page.
     var pageSize: Int { get }
-    var backend: NSURLSessionBackend { get }
+    var backend: URLSessionBackend { get }
 }
 
 public extension PagedRepository {
     
-    /// Returns a `Future` containing a tuple with an array of all the `Entity` objects in the repository and a PageInfo object with pagination-related data
-    public func findByPage(pageNumber pageNumber: Int) -> Future<([EntityType], PageInfo), JaymeError> {
+    /// Returns a `Future` containing a tuple with an array of all the entities in the repository and a `PageInfo` object containing pagination-related data.
+    public func findByPage(pageNumber: Int) -> Future<([EntityType], PageInfo), JaymeError> {
         let path = self.name + "?page=\(pageNumber)&per_page=\(self.pageSize)"
         var pageInfo: PageInfo?
-        let future = self.backend.futureForPath(path, method: .GET, parameters: nil)
+        let future = self.backend.future(path: path, method: .GET, parameters: nil)
             .andThen {
                 pageInfo = $0.1
-                return DataParser().dictionariesFromData($0.0)
+                return DataParser().dictionaries(from: $0.0)
             }
             .andThen {
-                EntityParser<EntityType>().entitiesFromDictionaries($0)
+                EntityParser<EntityType>().entities(from: $0)
             }
             .map {
                 return ($0, pageInfo!)

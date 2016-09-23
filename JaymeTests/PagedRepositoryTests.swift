@@ -41,7 +41,7 @@ class PagedRepositoryTests: XCTestCase {
 extension PagedRepositoryTests {
     
     func testFindAllCall() {
-        self.repository.findByPage(pageNumber: 1)
+        let _ = self.repository.findByPage(pageNumber: 1)
         XCTAssertEqual(self.backend.path, "documents?page=1&per_page=2")
     }
     
@@ -58,16 +58,16 @@ extension PagedRepositoryTests {
         self.backend.completion = { completion in
             let json = [["id": "1", "name": "a"],
                         ["id": "2", "name": "b"]]
-            let data = try! NSJSONSerialization.dataWithJSONObject(json, options: .PrettyPrinted)
+            let data = try! JSONSerialization.data(withJSONObject: json, options: .prettyPrinted)
             let pageInfo = PageInfo(number: 1, size: 2, total: 10)
-            completion(.Success((data, pageInfo)))
+            completion(.success((data, pageInfo)))
         }
         
-        let expectation = self.expectationWithDescription("Expected 2 documents to be parsed with proper PageInfo")
+        let expectation = self.expectation(description: "Expected 2 documents to be parsed with proper PageInfo")
         
         let future = self.repository.findByPage(pageNumber: 1)
         future.start() { result in
-            guard case .Success(let documents, let pageInfo) = result else {
+            guard case .success(let documents, let pageInfo) = result else {
                 XCTFail()
                 return
             }
@@ -82,7 +82,7 @@ extension PagedRepositoryTests {
             expectation.fulfill()
         }
         
-        self.waitForExpectationsWithTimeout(3) { error in
+        self.waitForExpectations(timeout: 3) { error in
             if let _ = error {
                 XCTFail()
                 return
@@ -94,22 +94,22 @@ extension PagedRepositoryTests {
         
         // Simulated completion
         self.backend.completion = { completion in
-            let error = JaymeError.NotFound
-            completion(.Failure(error))
+            let error = JaymeError.notFound
+            completion(.failure(error))
         }
         
-        let expectation = self.expectationWithDescription("Expected JaymeError.NotFound")
+        let expectation = self.expectation(description: "Expected JaymeError.NotFound")
         
         let future = self.repository.findByPage(pageNumber: 1)
         future.start() { result in
-            guard case .Failure = result else {
+            guard case .failure = result else {
                 XCTFail()
                 return
             }
             expectation.fulfill()
         }
         
-        self.waitForExpectationsWithTimeout(3) { error in
+        self.waitForExpectations(timeout: 3) { error in
             if let _ = error {
                 XCTFail()
                 return

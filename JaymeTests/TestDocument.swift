@@ -28,16 +28,16 @@ struct TestDocument: Identifiable {
 
 extension TestDocument: DictionaryInitializable, DictionaryRepresentable {
     
-    init(dictionary: [String: AnyObject]) throws {
+    init(dictionary: [String: Any]) throws {
         guard let
             id = dictionary["id"] as? String,
-            name = dictionary["name"] as? String
-            else { throw JaymeError.ParsingError }
+            let name = dictionary["name"] as? String
+            else { throw JaymeError.parsingError }
         self.id = id
         self.name = name
     }
     
-    var dictionaryValue: [String : AnyObject] {
+    var dictionaryValue: [String : Any] {
         return ["id": self.id, "name": self.name]
     }
     

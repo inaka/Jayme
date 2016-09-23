@@ -42,7 +42,7 @@ extension UserRepositoryTests {
     // Test path and method
     
     func testFindActiveUsersCall() {
-        self.repository.findActiveUsers()
+        let _ = self.repository.findActiveUsers()
         XCTAssertEqual(self.backend.path, "users/active")
         XCTAssertEqual(self.backend.method, .GET)
     }
@@ -55,15 +55,15 @@ extension UserRepositoryTests {
         self.backend.completion = { completion in
             let json = [["id": "1", "name": "a", "email": "a@a.com"],
                         ["id": "2", "name": "b", "email": "b@b.com"]]
-            let data = try! NSJSONSerialization.dataWithJSONObject(json, options: .PrettyPrinted)
-            completion(.Success((data, nil)))
+            let data = try! JSONSerialization.data(withJSONObject: json, options: .prettyPrinted)
+            completion(.success((data, nil)))
         }
         
-        let expectation = self.expectationWithDescription("Expected 2 users to be parsed")
+        let expectation = self.expectation(description: "Expected 2 users to be parsed")
         
         let future = self.repository.findActiveUsers()
         future.start() { result in
-            guard case .Success(let documents) = result
+            guard case .success(let documents) = result
                 else { XCTFail(); return }
             XCTAssertEqual(documents.count, 2)
             XCTAssertEqual(documents[0].id, "1")
@@ -77,7 +77,7 @@ extension UserRepositoryTests {
             expectation.fulfill()
         }
         
-        self.waitForExpectationsWithTimeout(3) { error in
+        self.waitForExpectations(timeout: 3) { error in
             if let _ = error { XCTFail() }
         }
     }
@@ -87,21 +87,21 @@ extension UserRepositoryTests {
         // Simulated completion
         self.backend.completion = { completion in
             let wrongResponse = [["id": "1", "name": "_"]] // lacks 'email' field
-            let data = try! NSJSONSerialization.dataWithJSONObject(wrongResponse, options: .PrettyPrinted)
-            completion(.Success((data, nil)))
+            let data = try! JSONSerialization.data(withJSONObject: wrongResponse, options: .prettyPrinted)
+            completion(.success((data, nil)))
         }
         
-        let expectation = self.expectationWithDescription("Expected to get JaymeError.ParsingError")
+        let expectation = self.expectation(description: "Expected to get JaymeError.ParsingError")
         
         let future = self.repository.findActiveUsers()
         future.start() { result in
-            guard case .Success(let users) = result
+            guard case .success(let users) = result
                 else { XCTFail(); return }
             XCTAssertEqual(users.count, 0)
             expectation.fulfill()
         }
         
-        self.waitForExpectationsWithTimeout(3) { error in
+        self.waitForExpectations(timeout: 3) { error in
             if let _ = error { XCTFail() }
         }
     }
@@ -111,22 +111,22 @@ extension UserRepositoryTests {
     func testFindActiveUsersFailureBadResponseCallback() {
         // Simulated completion
         self.backend.completion = { completion in
-            let corruptedData = NSData()
-            completion(.Success((corruptedData, nil)))
+            let corruptedData = Data()
+            completion(.success((corruptedData, nil)))
         }
         
-        let expectation = self.expectationWithDescription("Expected to get JaymeError.BadResponse")
+        let expectation = self.expectation(description: "Expected to get JaymeError.BadResponse")
         
         let future = self.repository.findActiveUsers()
         future.start() { result in
-            guard case
-                .Failure(let error) = result,
-                .BadResponse = error
+            guard
+                case .failure(let error) = result,
+                case .badResponse = error
                 else { XCTFail(); return }
             expectation.fulfill()
         }
         
-        self.waitForExpectationsWithTimeout(3) { error in
+        self.waitForExpectations(timeout: 3) { error in
             if let _ = error { XCTFail() }
         }
     }
