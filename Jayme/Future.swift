@@ -21,7 +21,8 @@
 import Foundation
 
 /// Structure representing the future value of an asynchronous computation.
-public struct Future<T, E: Error> {
+public struct Future <T, E : Error>
+{
     
     public typealias FutureResultType = Result<T, E>
     public typealias FutureCompletion = (FutureResultType) -> ()
@@ -29,7 +30,7 @@ public struct Future<T, E: Error> {
     
     /// Parameters:
     /// - `operation`: The asynchronous operation going to be performed.
-    public init(operation: @escaping FutureAsyncOperation) {
+    public init(  operation : @escaping FutureAsyncOperation) {
         self.operation = operation
     }
     
@@ -42,7 +43,7 @@ public struct Future<T, E: Error> {
     
     // MARK: - Private
     
-    fileprivate let operation: FutureAsyncOperation
+    fileprivate let operation : FutureAsyncOperation
     
 }
 
