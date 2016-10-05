@@ -327,7 +327,7 @@ $ python -m SimpleHTTPServer 8080
 - As of its `3.0.0` release, this library works with **Swift 3.0**
 - If you look for older languages version support, you can check out:
   - `2.1.0` release for Swift 2.3 support.
-  - `2.0.2` release for Swift 2.2 support.
+  - `2.0.2` release for Swift 2.2 support. 
 
 
 
