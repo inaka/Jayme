@@ -7,4 +7,4 @@ disabled_rules:
   - statement_position
   - type_name
   - valid_docs
-  - variable_name_min_length
+  - variable_name
