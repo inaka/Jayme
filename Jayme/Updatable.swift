@@ -1,5 +1,5 @@
-// JaymeExample
-// PostRepository.swift
+// Jayme
+// Updatable.swift
 //
 // Copyright (c) 2016 Inaka - http://inaka.net/
 //
@@ -20,16 +20,19 @@
 
 import Foundation
 
-class PostRepository: Readable {
+public protocol Updatable: Repository {
+    associatedtype EntityType: Identifiable, DictionaryInitializable, DictionaryRepresentable
+    var backend: URLSessionBackend { get }
+}
+
+public extension Updatable {
     
-    typealias EntityType = Post
-    let backend = URLSessionBackend()
-    let name = "posts"
-    
-    func findPosts(for user: User) -> Future<[Post], JaymeError> {
-        return self.findAll().map {
-            $0.filter { $0.authorId == user.id }
-        }
+    /// Updates the entity in the repository. Returns a `Future` with the updated entity or a `JaymeError`.
+    public func update(_ entity: EntityType) -> Future<EntityType, JaymeError> {
+        let path = "\(self.name)/\(entity.id)"
+        return self.backend.future(path: path, method: .PUT, parameters: entity.dictionaryValue)
+            .andThen { DataParser().dictionary(from: $0.0) }
+            .andThen { EntityParser().entity(from: $0) }
     }
     
 }

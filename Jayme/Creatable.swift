@@ -1,5 +1,5 @@
-// JaymeExample
-// PostRepository.swift
+// Jayme
+// Creatable.swift
 //
 // Copyright (c) 2016 Inaka - http://inaka.net/
 //
@@ -20,16 +20,19 @@
 
 import Foundation
 
-class PostRepository: Readable {
+public protocol Creatable: Repository {
+    associatedtype EntityType: DictionaryInitializable, DictionaryRepresentable
+    var backend: URLSessionBackend { get }
+}
+
+public extension Creatable {
     
-    typealias EntityType = Post
-    let backend = URLSessionBackend()
-    let name = "posts"
-    
-    func findPosts(for user: User) -> Future<[Post], JaymeError> {
-        return self.findAll().map {
-            $0.filter { $0.authorId == user.id }
-        }
+    /// Creates the entity in the repository. Returns a `Future` with the created entity or a `JaymeError`.
+    public func create(_ entity: EntityType) -> Future<EntityType, JaymeError> {
+        let path = self.name
+        return self.backend.future(path: path, method: .POST, parameters: entity.dictionaryValue)
+            .andThen { DataParser().dictionary(from: $0.0) }
+            .andThen { EntityParser().entity(from: $0) }
     }
     
 }

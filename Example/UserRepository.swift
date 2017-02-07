@@ -20,7 +20,7 @@
 
 import Foundation
 
-class UserRepository: CRUDRepository {
+class UserRepository: Readable {
     
     typealias EntityType = User
     let backend: URLSessionBackend

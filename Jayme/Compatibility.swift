@@ -42,10 +42,6 @@ public typealias NSURLSessionBackendConfiguration = URLSessionBackendConfigurati
 @available(*, unavailable, renamed : "JaymeError")
 public typealias ServerBackendError = JaymeError
 
-/// ServerRepository -> CRUDRepository
-@available(*, unavailable, renamed : "CRUDRepository")
-public typealias ServerRepository = CRUDRepository
-
 /// ServerPagedRepository -> PagedRepository
 @available(*, unavailable, renamed : "PagedRepository")
 public typealias ServerPagedRepository = PagedRepository

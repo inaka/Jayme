@@ -20,13 +20,8 @@
 
 import Foundation
 
-
 /// Abstraction that represents a repository of a certain kind of entities.
 public protocol Repository {
-        
-    /// The entity type that the repository works with (e.g. `User`).
-    /// Classes conforming to `Repository` must tie this associated type to a concrete type.
-    associatedtype EntityType: Identifiable, DictionaryInitializable, DictionaryRepresentable
     
     /// The backend type going to be used in the repository.
     associatedtype BackendType: Backend
