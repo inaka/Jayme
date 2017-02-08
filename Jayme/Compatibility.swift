@@ -42,6 +42,16 @@ public typealias NSURLSessionBackendConfiguration = URLSessionBackendConfigurati
 @available(*, unavailable, renamed : "JaymeError")
 public typealias ServerBackendError = JaymeError
 
+/// ServerRepository -> CRUDRepository
+@available(*, unavailable, renamed : "CRUDRepository")
+public typealias ServerRepository = CRUDRepository
+
+/// CRUDRepository -> Creatable, Readable, Updatable, Deletable
+@available(*, deprecated: 2.0, message: "Use Creatable, Readable, Updatable and Deletable protocols instead")
+public protocol CRUDRepository: Creatable, Readable, Updatable, Deletable {
+    
+}
+
 /// ServerPagedRepository -> PagedRepository
 @available(*, unavailable, renamed : "PagedRepository")
 public typealias ServerPagedRepository = PagedRepository
