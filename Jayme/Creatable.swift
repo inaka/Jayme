@@ -20,6 +20,7 @@
 
 import Foundation
 
+/// A repository that is capable of creating entities
 public protocol Creatable: Repository {
     associatedtype EntityType: DictionaryInitializable, DictionaryRepresentable
     var backend: URLSessionBackend { get }

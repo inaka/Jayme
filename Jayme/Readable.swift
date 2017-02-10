@@ -20,6 +20,7 @@
 
 import Foundation
 
+/// A repository that is capable of reading entities
 public protocol Readable: Repository {
     associatedtype EntityType: Identifiable, DictionaryInitializable
     var backend: URLSessionBackend { get }

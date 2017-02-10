@@ -20,6 +20,7 @@
 
 import Foundation
 
+/// A repository that is capable of deleting entities
 public protocol Deletable: Repository {
     associatedtype EntityType: Identifiable
     var backend: URLSessionBackend { get }

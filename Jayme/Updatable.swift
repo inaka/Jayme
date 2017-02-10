@@ -20,6 +20,7 @@
 
 import Foundation
 
+/// A repository that is capable of updating entities
 public protocol Updatable: Repository {
     associatedtype EntityType: Identifiable, DictionaryInitializable, DictionaryRepresentable
     var backend: URLSessionBackend { get }
