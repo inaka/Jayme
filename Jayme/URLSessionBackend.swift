@@ -26,6 +26,10 @@ open class URLSessionBackend: Backend {
     public typealias BackendReturnType = (Data?, PageInfo?)
     public typealias BackendErrorType = JaymeError
     
+    public let configuration: URLSessionBackendConfiguration
+    public let session: URLSession
+    public let responseParser: HTTPResponseParser
+    
     public init(configuration: URLSessionBackendConfiguration = URLSessionBackendConfiguration.defaultConfiguration,
          session: URLSession = URLSession.shared,
          responseParser: HTTPResponseParser = HTTPResponseParser()) {
@@ -65,10 +69,6 @@ open class URLSessionBackend: Backend {
     }
     
     // MARK: - Private
-    
-    fileprivate let configuration: URLSessionBackendConfiguration
-    fileprivate let session: URLSession
-    fileprivate let responseParser: HTTPResponseParser
     
     fileprivate var baseURL: URL? {
         return URL(string: self.configuration.basePath)
