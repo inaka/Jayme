@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file. `Jayme` a
 
 ### 3.x Releases
 
-- `3.0.x` releases - [3.0.0](#300)
+- `3.0.x` releases - [3.0.0](#300) - [3.1.0](#310)
 
 ### 2.x Releases
 
@@ -17,6 +17,10 @@ All notable changes to this project will be documented in this file. `Jayme` a
 - `1.0.x` Releases - [1.0.1](#101) | [1.0.2](#102) | [1.0.3](#103) | [1.0.4](#104) 
 
 ---
+
+## 3.1.0
+
+- `CRUDRepository` protocol no longer exists. Its functionalities have now been divided into four separate protocols: `Creatable`, `Readable`, `Updatable` and `Deletable`. (Issue [#84](https://github.com/inaka/Jayme/issues/84))
 
 ## 3.0.0
 
