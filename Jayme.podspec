@@ -1,7 +1,7 @@
 
 Pod::Spec.new do |s|
   s.name         = "Jayme"
-  s.version      = "3.0.0"
+  s.version      = "3.1.0"
   s.summary      = "An abstraction layer that eases RESTful interconnections in Swift"
   s.description  = <<-DESC
                    Jayme defines a neat architecture for REST management in your Swift code. The idea behind this library is to separate concerns: Your view controllers should handle neither networking code nor heavy business logic code, in order to stay lightweight. The library provides a neat API to deal with REST communication, as well as default implementations for basic CRUD functionality and pagination.

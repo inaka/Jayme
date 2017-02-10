@@ -1,5 +1,5 @@
 // Jayme
-// CRUDRepositoryTests.swift
+// ReadableTests.swift
 //
 // Copyright (c) 2016 Inaka - http://inaka.net/
 //
@@ -18,12 +18,10 @@
 // specific language governing permissions and limitations
 // under the License.
 
-// swiftlint:disable file_length
-
 import XCTest
 @testable import Jayme
 
-class CRUDRepositoryTests: XCTestCase {
+class ReadableTests: XCTestCase {
     
     var backend: TestingBackend!
     var repository: TestDocumentRepository!
@@ -34,14 +32,16 @@ class CRUDRepositoryTests: XCTestCase {
         
         let backend = TestingBackend()
         self.backend = backend
-        self.repository = TestDocumentRepository(backend: backend)
+        self.repository = TestDocumentRepository(backend: self.backend)
     }
     
 }
 
-// MARK: - Calls To Backend Tests
+// MARK: - Find All
 
-extension CRUDRepositoryTests {
+extension ReadableTests {
+    
+    // MARK: - Call To Backend
     
     func testFindAllCall() {
         let _ = self.repository.findAll()
@@ -49,53 +49,7 @@ extension CRUDRepositoryTests {
         XCTAssertEqual(self.backend.method, .GET)
     }
     
-    func testFindByIdCall() {
-        let _ = self.repository.find(byId: "123")
-        XCTAssertEqual(self.backend.path, "documents/123")
-        XCTAssertEqual(self.backend.method, .GET)
-    }
-    
-    func testCreateCall() {
-        let document = TestDocument(id: "123", name: "a")
-        let _ = self.repository.create(document)
-        XCTAssertEqual(self.backend.path, "documents")
-        XCTAssertEqual(self.backend.method, .POST)
-        guard
-            let id = self.backend.parameters?["id"] as? String,
-            let name = self.backend.parameters?["name"] as? String
-            else {
-                XCTFail("Wrong parameters"); return
-        }
-        XCTAssertEqual(id, "123")
-        XCTAssertEqual(name, "a")
-    }
-    
-    func testUpdateCall() {
-        let document = TestDocument(id: "123", name: "b")
-        let _ = self.repository.update(document)
-        XCTAssertEqual(self.backend.path, "documents/123")
-        XCTAssertEqual(self.backend.method, .PUT)
-        guard let
-            id = self.backend.parameters?["id"] as? String,
-            let name = self.backend.parameters?["name"] as? String else {
-                XCTFail("Wrong parameters"); return
-        }
-        XCTAssertEqual(id, "123")
-        XCTAssertEqual(name, "b")
-    }
-    
-    func testDeleteCall() {
-        let document = TestDocument(id: "123", name: "a")
-        let _ = self.repository.delete(document)
-        XCTAssertEqual(self.backend.path, "documents/123")
-        XCTAssertEqual(self.backend.method, .DELETE)
-    }
-    
-}
-
-// MARK: - Response Callbacks Tests
-
-extension CRUDRepositoryTests {
+    // MARK: - Success Response
     
     func testFindAllSuccessCallback() {
         
@@ -125,6 +79,8 @@ extension CRUDRepositoryTests {
             if let _ = error { XCTFail() }
         }
     }
+    
+    // MARK: - Failure Response
     
     func testFindAllFailureNotFoundCallback() {
         
@@ -170,6 +126,21 @@ extension CRUDRepositoryTests {
             if let _ = error { XCTFail() }
         }
     }
+}
+
+// MARK: - Find By ID
+
+extension ReadableTests {
+    
+    // MARK: - Call To Backend
+    
+    func testFindByIdCall() {
+        let _ = self.repository.find(byId: "123")
+        XCTAssertEqual(self.backend.path, "documents/123")
+        XCTAssertEqual(self.backend.method, .GET)
+    }
+    
+    // MARK: - Success Response
     
     func testFindByIdSuccessCallback() {
         
@@ -195,6 +166,8 @@ extension CRUDRepositoryTests {
             if let _ = error { XCTFail() }
         }
     }
+    
+    // MARK: - Failure Response
     
     func testFindByIdFailureNotFoundCallback() {
         
@@ -268,149 +241,4 @@ extension CRUDRepositoryTests {
             if let _ = error { XCTFail() }
         }
     }
-    
-    func testCreateSuccessCallback() {
-        
-        // Simulated completion
-        self.backend.completion = { completion in
-            let json = ["id": "1", "name": "a"]
-            let data = try! JSONSerialization.data(withJSONObject: json, options: .prettyPrinted)
-            completion(.success((data, nil)))
-        }
-        
-        let expectation = self.expectation(description: "Expected to get a success")
-        
-        let document = TestDocument(id: "_", name: "_")
-        let future = self.repository.create(document)
-        future.start() { result in
-            guard case .success(let document) = result
-                else { XCTFail(); return }
-            XCTAssertEqual(document.id, "1")
-            XCTAssertEqual(document.name, "a")
-            expectation.fulfill()
-        }
-        
-        self.waitForExpectations(timeout: 3) { error in
-            if let _ = error { XCTFail() }
-        }
-    }
-    
-    func testCreateFailureCallback() {
-        
-        // Simulated completion
-        self.backend.completion = { completion in
-            let error = JaymeError.notFound
-            completion(.failure(error))
-        }
-        
-        let expectation = self.expectation(description: "Expected to get an error")
-        
-        let document = TestDocument(id: "_", name: "_")
-        let future = self.repository.create(document)
-        future.start() { result in
-            guard case .failure = result
-                else { XCTFail(); return }
-            expectation.fulfill()
-        }
-        
-        self.waitForExpectations(timeout: 3) { error in
-            if let _ = error { XCTFail() }
-        }
-    }
-    
-    
-    func testUpdateSuccessCallback() {
-        
-        // Simulated completion
-        self.backend.completion = { completion in
-            let json = ["id": "1", "name": "a"]
-            let data = try! JSONSerialization.data(withJSONObject: json, options: .prettyPrinted)
-            completion(.success((data, nil)))
-        }
-        
-        let expectation = self.expectation(description: "Expected to get a success")
-        
-        let document = TestDocument(id: "_", name: "_")
-        let future = self.repository.update(document)
-        future.start() { result in
-            guard case .success(let document) = result
-                else { XCTFail(); return }
-            XCTAssertEqual(document.id, "1")
-            XCTAssertEqual(document.name, "a")
-            expectation.fulfill()
-        }
-        
-        self.waitForExpectations(timeout: 3) { error in
-            if let _ = error { XCTFail() }
-        }
-    }
-    
-    func testUpdateFailureCallback() {
-        
-        // Simulated completion
-        self.backend.completion = { completion in
-            let error = JaymeError.notFound
-            completion(.failure(error))
-        }
-        
-        let expectation = self.expectation(description: "Expected to get an error")
-        
-        let document = TestDocument(id: "_", name: "_")
-        let future = self.repository.update(document)
-        future.start() { result in
-            guard case .failure = result
-                else { XCTFail(); return }
-            expectation.fulfill()
-        }
-        
-        self.waitForExpectations(timeout: 3) { error in
-            if let _ = error { XCTFail() }
-        }
-    }
-    
-    func testDeleteSuccessCallback() {
-        
-        // Simulated completion
-        self.backend.completion = { completion in
-            completion(.success((nil, nil)))
-        }
-        
-        let expectation = self.expectation(description: "Expected to get a success")
-        
-        let document = TestDocument(id: "_", name: "_")
-        let future = self.repository.delete(document)
-        future.start() { result in
-            guard case .success = result
-                else { XCTFail(); return }
-            expectation.fulfill()
-        }
-        
-        self.waitForExpectations(timeout: 3) { error in
-            if let _ = error { XCTFail() }
-        }
-    }
-    
-    func testDeleteFailureCallback() {
-        
-        // Simulated completion
-        self.backend.completion = { completion in
-            let error = JaymeError.notFound
-            completion(.failure(error))
-        }
-        
-        let expectation = self.expectation(description: "Expected to get an error")
-        
-        let document = TestDocument(id: "_", name: "_")
-        let future = self.repository.delete(document)
-        future.start() { result in
-            guard case .failure = result
-                else { XCTFail(); return }
-            expectation.fulfill()
-        }
-        
-        self.waitForExpectations(timeout: 3) { error in
-            if let _ = error { XCTFail() }
-        }
-    }
-    
 }

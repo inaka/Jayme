@@ -1,5 +1,5 @@
-// JaymeExample
-// PostRepository.swift
+// Jayme
+// Deletable.swift
 //
 // Copyright (c) 2016 Inaka - http://inaka.net/
 //
@@ -20,16 +20,19 @@
 
 import Foundation
 
-class PostRepository: Readable {
+/// A repository that is capable of deleting entities
+public protocol Deletable: Repository {
+    associatedtype EntityType: Identifiable
+    var backend: URLSessionBackend { get }
+}
+
+public extension Deletable {
     
-    typealias EntityType = Post
-    let backend = URLSessionBackend()
-    let name = "posts"
-    
-    func findPosts(for user: User) -> Future<[Post], JaymeError> {
-        return self.findAll().map {
-            $0.filter { $0.authorId == user.id }
-        }
+    /// Deletes the entity from the repository. Returns a `Future` with a `Void` result or a `JaymeError`.
+    public func delete(_ entity: EntityType) -> Future<Void, JaymeError> {
+        let path = "\(self.name)/\(entity.id)"
+        return self.backend.future(path: path, method: .DELETE, parameters: nil)
+            .map { _ in return }
     }
     
 }

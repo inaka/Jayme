@@ -22,6 +22,7 @@ import Foundation
 
 /// Provides a `Repository` serving read functionality with pagination, based on Grape conventions (https://github.com/davidcelis/api-pagination)
 public protocol PagedRepository: Repository {
+    associatedtype EntityType: DictionaryInitializable
     /// Indicates the number of entities to be fetched per page.
     var pageSize: Int { get }
     var backend: URLSessionBackend { get }
