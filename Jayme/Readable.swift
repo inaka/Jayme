@@ -30,6 +30,7 @@ public extension Readable {
     
     /// Fetches the only entity from this repository
     /// Returns a `Future` containing the only entity in the repository, or the relevant `JaymeError` that could occur.
+    /// Watch out for a `.failure` case with `JaymeError.entityNotFound`.
     public func read() -> Future<EntityType, JaymeError> {
         let path = self.name
         return self.backend.future(path: path, method: .GET, parameters: nil)

@@ -37,6 +37,122 @@ class ReadableTests: XCTestCase {
     
 }
 
+// MARK: - Read Single Entity
+
+extension ReadableTests {
+    
+    // MARK: - Call To Backend
+    
+    func testReadSingleEntityCall() {
+        let _ = self.repository.read()
+        XCTAssertEqual(self.backend.path, "documents")
+        XCTAssertEqual(self.backend.method, .GET)
+    }
+    
+    // MARK: - Success Response
+    
+    func testReadSingleEntitySuccessCallback() {
+        
+        // Simulated completion
+        self.backend.completion = { completion in
+            let json = ["id": "1", "name": "a"]
+            let data = try! JSONSerialization.data(withJSONObject: json, options: .prettyPrinted)
+            completion(.success((data, nil)))
+        }
+        
+        let expectation = self.expectation(description: "Expected to find a document")
+        
+        let future = self.repository.read()
+        future.start() { result in
+            guard case .success(let document) = result
+                else { XCTFail(); return }
+            XCTAssertEqual(document.id, "1")
+            XCTAssertEqual(document.name, "a")
+            expectation.fulfill()
+        }
+        
+        self.waitForExpectations(timeout: 3) { error in
+            if let _ = error { XCTFail() }
+        }
+    }
+    
+    // MARK: - Failure Response
+    
+    func testReadSingleEntityFailureBadResponseCallback() {
+        
+        // Simulated completion
+        self.backend.completion = { completion in
+            let corruptedData = Data()
+            completion(.success((corruptedData, nil)))
+        }
+        
+        let expectation = self.expectation(description: "Expected to get JaymeError.BadResponse")
+        
+        let future = self.repository.read()
+        future.start() { result in
+            guard
+                case .failure(let error) = result,
+                case .badResponse = error
+                else { XCTFail(); return }
+            expectation.fulfill()
+        }
+        
+        self.waitForExpectations(timeout: 3) { error in
+            if let _ = error { XCTFail() }
+        }
+    }
+    
+    func testReadByIdFailureNotFoundCallback() {
+        
+        // Simulated completion
+        self.backend.completion = { completion in
+            let error = JaymeError.notFound
+            completion(.failure(error))
+        }
+        
+        let expectation = self.expectation(description: "Expected to get JaymeError.NotFound")
+        
+        let future = self.repository.read()
+        future.start() { result in
+            guard
+                case .failure(let error) = result,
+                case .notFound = error
+                else { XCTFail(); return }
+            expectation.fulfill()
+        }
+        
+        self.waitForExpectations(timeout: 3) { error in
+            if let _ = error { XCTFail() }
+        }
+    }
+    
+    func testReadSingleEntityFailureParsingErrorCallback() {
+        
+        // Simulated completion
+        self.backend.completion = { completion in
+            let wrongDictionary = ["id": "_"] // lacks 'name' field
+            let data = try! JSONSerialization.data(withJSONObject: wrongDictionary, options: .prettyPrinted)
+            completion(.success((data, nil)))
+        }
+        
+        let expectation = self.expectation(description: "Expected to get JaymeError.ParsingError")
+        
+        let future = self.repository.read()
+        future.start() { result in
+            guard
+                case .failure(let error) = result,
+                case .parsingError = error
+                else { XCTFail(); return }
+            expectation.fulfill()
+        }
+        
+        self.waitForExpectations(timeout: 3) { error in
+            if let _ = error { XCTFail() }
+        }
+    }
+}
+
+
 // MARK: - Read All
 
 extension ReadableTests {
@@ -169,7 +285,7 @@ extension ReadableTests {
     
     // MARK: - Failure Response
     
-    func testReadByIdFailureNotFoundCallback() {
+    func testReadSingleEntityFailureNotFoundCallback() {
         
         // Simulated completion
         self.backend.completion = { completion in
@@ -229,97 +345,6 @@ extension ReadableTests {
         let expectation = self.expectation(description: "Expected to get JaymeError.ParsingError")
         
         let future = self.repository.read(id: "_")
-        future.start() { result in
-            guard
-                case .failure(let error) = result,
-                case .parsingError = error
-                else { XCTFail(); return }
-            expectation.fulfill()
-        }
-        
-        self.waitForExpectations(timeout: 3) { error in
-            if let _ = error { XCTFail() }
-        }
-    }
-}
-
-// MARK: - Read (Single Entity)
-
-extension ReadableTests {
-    
-    // MARK: - Call To Backend
-    
-    func testReadSingleEntityCall() {
-        let _ = self.repository.read()
-        XCTAssertEqual(self.backend.path, "documents")
-        XCTAssertEqual(self.backend.method, .GET)
-    }
-    
-    // MARK: - Success Response
-    
-    func testReadSingleEntitySuccessCallback() {
-        
-        // Simulated completion
-        self.backend.completion = { completion in
-            let json = ["id": "1", "name": "a"]
-            let data = try! JSONSerialization.data(withJSONObject: json, options: .prettyPrinted)
-            completion(.success((data, nil)))
-        }
-        
-        let expectation = self.expectation(description: "Expected to find a document")
-        
-        let future = self.repository.read()
-        future.start() { result in
-            guard case .success(let document) = result
-                else { XCTFail(); return }
-            XCTAssertEqual(document.id, "1")
-            XCTAssertEqual(document.name, "a")
-            expectation.fulfill()
-        }
-        
-        self.waitForExpectations(timeout: 3) { error in
-            if let _ = error { XCTFail() }
-        }
-    }
-    
-    // MARK: - Failure Response
-    
-    func testReadSingleEntityFailureBadResponseCallback() {
-        
-        // Simulated completion
-        self.backend.completion = { completion in
-            let corruptedData = Data()
-            completion(.success((corruptedData, nil)))
-        }
-        
-        let expectation = self.expectation(description: "Expected to get JaymeError.BadResponse")
-        
-        let future = self.repository.read()
-        future.start() { result in
-            guard
-                case .failure(let error) = result,
-                case .badResponse = error
-                else { XCTFail(); return }
-            expectation.fulfill()
-        }
-        
-        self.waitForExpectations(timeout: 3) { error in
-            if let _ = error { XCTFail() }
-        }
-    }
-    
-    func testReadSingleEntityFailureParsingErrorCallback() {
-        
-        // Simulated completion
-        self.backend.completion = { completion in
-            let wrongDictionary = ["id": "_"] // lacks 'name' field
-            let data = try! JSONSerialization.data(withJSONObject: wrongDictionary, options: .prettyPrinted)
-            completion(.success((data, nil)))
-        }
-        
-        let expectation = self.expectation(description: "Expected to get JaymeError.ParsingError")
-        
-        let future = self.repository.read()
         future.start() { result in
             guard
                 case .failure(let error) = result,
