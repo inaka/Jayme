@@ -28,6 +28,7 @@ public protocol Readable: Repository {
 
 public extension Readable {
     
+    /// Fetches the only entity from this repository
     /// Returns a `Future` containing the only entity in the repository, or the relevant `JaymeError` that could occur.
     public func read() -> Future<EntityType, JaymeError> {
         let path = self.name
@@ -36,6 +37,7 @@ public extension Readable {
             .andThen { EntityParser().entity(from: $0) }
     }
     
+    /// Fetches all the entities from this repository
     /// Returns a `Future` containing an array with all the entities in the repository, or the relevant `JaymeError` that could occur.
     public func readAll() -> Future<[EntityType], JaymeError> {
         let path = self.name
@@ -44,6 +46,7 @@ public extension Readable {
             .andThen { EntityParser().entities(from: $0) }
     }
     
+    /// Fetches only the entity from this repository that matches the given `id`
     /// Returns a `Future` containing the entity matching the `id`, or the relevant `JaymeError` that could occur.
     /// Watch out for a `.failure` case with `JaymeError.entityNotFound`.
     public func read(id: EntityType.IdentifierType) -> Future<EntityType, JaymeError> {

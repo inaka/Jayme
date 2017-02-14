@@ -28,7 +28,7 @@ public protocol Updatable: Repository {
 
 public extension Updatable {
     
-    /// Updates the only entity in the repository. Returns a `Future` with the updated entity or a `JaymeError`.
+    /// Requests the only entity in the repository to be updated in the backend. Returns a `Future` with the updated entity or a `JaymeError`.
     public func update(_ entity: EntityType) -> Future<EntityType, JaymeError> {
         let path = "\(self.name)"
         return self.backend.future(path: path, method: .PUT, parameters: entity.dictionaryValue)
@@ -36,7 +36,7 @@ public extension Updatable {
             .andThen { EntityParser().entity(from: $0) }
     }
     
-    /// Updates the entity with the given id in the repository. Returns a `Future` with the updated entity or a `JaymeError`.
+    /// Requests the entity with the given `id` to be updated in the backend. Returns a `Future` with the updated entity or a `JaymeError`.
     public func update(_ entity: EntityType, id: EntityType.IdentifierType) -> Future<EntityType, JaymeError> {
         let path = "\(self.name)/\(entity.id)"
         return self.backend.future(path: path, method: .PUT, parameters: entity.dictionaryValue)
