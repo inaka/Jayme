@@ -73,3 +73,12 @@ extension Readable {
     }
     
 }
+
+extension Deletable {
+    
+    @available(*, unavailable, renamed : "delete(id:)")
+    public func delete(_ entity: EntityType) -> Future<Void, JaymeError> {
+        return self.delete(id: entity.id)
+    }
+    
+}

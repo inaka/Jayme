@@ -201,7 +201,7 @@ extension UpdatableTests {
         let _ = self.repository.update(documents)
         XCTAssertEqual(self.backend.path, "documents")
         XCTAssertEqual(self.backend.method, .PATCH)
-        XCTAssertEqual(self.backend.parametersAsArray.count, 2)
+        XCTAssertEqual(self.backend.parametersAsArray?.count, 2)
         guard
             let id1 = self.backend.parametersAsArray?[0]["id"] as? String,
             let name1 = self.backend.parametersAsArray?[0]["name"] as? String,

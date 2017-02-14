@@ -28,9 +28,18 @@ public protocol Deletable: Repository {
 
 public extension Deletable {
     
-    /// Deletes the entity from the repository. Returns a `Future` with a `Void` result or a `JaymeError`.
-    public func delete(_ entity: EntityType) -> Future<Void, JaymeError> {
-        let path = "\(self.name)/\(entity.id)"
+    /// Requests the only entity to be deleted from the repository.
+    /// Returns a `Future` with a `Void` result or a `JaymeError`.
+    public func delete() -> Future<Void, JaymeError> {
+        let path = "\(self.name)"
+        return self.backend.future(path: path, method: .DELETE, parameters: nil)
+            .map { _ in return }
+    }
+    
+    /// Requests the entity matching the given `id` to be deleted from the repository.
+    /// Returns a `Future` with a `Void` result or a `JaymeError`.
+    public func delete(id: EntityType.IdentifierType) -> Future<Void, JaymeError> {
+        let path = "\(self.name)/\(id)"
         return self.backend.future(path: path, method: .DELETE, parameters: nil)
             .map { _ in return }
     }
