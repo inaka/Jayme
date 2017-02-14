@@ -46,7 +46,7 @@ public extension Readable {
     
     /// Returns a `Future` containing the entity matching the `id`, or the relevant `JaymeError` that could occur.
     /// Watch out for a `.failure` case with `JaymeError.entityNotFound`.
-    public func read(byId id: EntityType.IdentifierType) -> Future<EntityType, JaymeError> {
+    public func read(id: EntityType.IdentifierType) -> Future<EntityType, JaymeError> {
         let path = "\(self.name)/\(id)"
         return self.backend.future(path: path, method: .GET, parameters: nil)
             .andThen { DataParser().dictionary(from: $0.0) }

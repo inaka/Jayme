@@ -67,9 +67,9 @@ extension Readable {
         return self.readAll()
     }
     
-    @available(*, unavailable, renamed : "read(byId:)")
+    @available(*, unavailable, renamed : "read(id:)")
     public func find(byId id: EntityType.IdentifierType) -> Future<EntityType, JaymeError> {
-        return self.read(byId: id)
+        return self.read(id: id)
     }
     
 }

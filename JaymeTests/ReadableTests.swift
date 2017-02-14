@@ -135,7 +135,7 @@ extension ReadableTests {
     // MARK: - Call To Backend
     
     func testReadByIdCall() {
-        let _ = self.repository.read(byId: "123")
+        let _ = self.repository.read(id: "123")
         XCTAssertEqual(self.backend.path, "documents/123")
         XCTAssertEqual(self.backend.method, .GET)
     }
@@ -153,7 +153,7 @@ extension ReadableTests {
         
         let expectation = self.expectation(description: "Expected to find a document")
         
-        let future = self.repository.read(byId: "1")
+        let future = self.repository.read(id: "1")
         future.start() { result in
             guard case .success(let document) = result
                 else { XCTFail(); return }
@@ -179,7 +179,7 @@ extension ReadableTests {
         
         let expectation = self.expectation(description: "Expected to get JaymeError.NotFound")
         
-        let future = self.repository.read(byId: "_")
+        let future = self.repository.read(id: "_")
         future.start() { result in
             guard
                 case .failure(let error) = result,
@@ -203,7 +203,7 @@ extension ReadableTests {
         
         let expectation = self.expectation(description: "Expected to get JaymeError.BadResponse")
         
-        let future = self.repository.read(byId: "_")
+        let future = self.repository.read(id: "_")
         future.start() { result in
             guard
                 case .failure(let error) = result,
@@ -228,7 +228,7 @@ extension ReadableTests {
         
         let expectation = self.expectation(description: "Expected to get JaymeError.ParsingError")
         
-        let future = self.repository.read(byId: "_")
+        let future = self.repository.read(id: "_")
         future.start() { result in
             guard
                 case .failure(let error) = result,
