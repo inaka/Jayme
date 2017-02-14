@@ -37,6 +37,8 @@ class CreatableTests: XCTestCase {
     
 }
 
+// MARK: - Create Single Entity
+
 extension CreatableTests {
     
     // MARK: - Call To backend
@@ -54,25 +56,6 @@ extension CreatableTests {
         }
         XCTAssertEqual(id, "123")
         XCTAssertEqual(name, "a")
-    }
-    
-    func testCreateEntitiesCall() {
-        let doc1 = TestDocument(id: "1", name: "doc1")
-        let doc2 = TestDocument(id: "2", name: "doc2")
-        let _ = self.repository.create([doc1, doc2])
-        XCTAssertEqual(self.backend.path, "documents")
-        XCTAssertEqual(self.backend.method, .POST)
-        XCTAssertEqual(self.backend.parametersAsArray?.count, 2)
-        guard
-            let id1 = self.backend.parametersAsArray?[0]["id"] as? String,
-            let name1 = self.backend.parametersAsArray?[0]["name"] as? String,
-            let id2 = self.backend.parametersAsArray?[1]["id"] as? String,
-            let name2 = self.backend.parametersAsArray?[1]["name"] as? String
-            else { XCTFail("Wrong parameters"); return }
-        XCTAssertEqual(id1, "1")
-        XCTAssertEqual(name1, "doc1")
-        XCTAssertEqual(id2, "2")
-        XCTAssertEqual(name2, "doc2")
     }
     
     // MARK: - Success Response
@@ -103,6 +86,60 @@ extension CreatableTests {
         }
     }
     
+    // MARK: - Failure Response
+    
+    func testCreateEntityFailureCallback() {
+        
+        // Simulated completion
+        self.backend.completion = { completion in
+            let error = JaymeError.notFound
+            completion(.failure(error))
+        }
+        
+        let expectation = self.expectation(description: "Expected to get an error")
+        
+        let document = TestDocument(id: "_", name: "_")
+        let future = self.repository.create(document)
+        future.start() { result in
+            guard case .failure = result
+                else { XCTFail(); return }
+            expectation.fulfill()
+        }
+        
+        self.waitForExpectations(timeout: 3) { error in
+            if let _ = error { XCTFail() }
+        }
+    }
+
+}
+
+// MARK: - Create Multiple Entities
+
+extension CreatableTests {
+    
+    // MARK: - Call To backend
+    
+    func testCreateEntitiesCall() {
+        let doc1 = TestDocument(id: "1", name: "doc1")
+        let doc2 = TestDocument(id: "2", name: "doc2")
+        let _ = self.repository.create([doc1, doc2])
+        XCTAssertEqual(self.backend.path, "documents")
+        XCTAssertEqual(self.backend.method, .POST)
+        XCTAssertEqual(self.backend.parametersAsArray?.count, 2)
+        guard
+            let id1 = self.backend.parametersAsArray?[0]["id"] as? String,
+            let name1 = self.backend.parametersAsArray?[0]["name"] as? String,
+            let id2 = self.backend.parametersAsArray?[1]["id"] as? String,
+            let name2 = self.backend.parametersAsArray?[1]["name"] as? String
+            else { XCTFail("Wrong parameters"); return }
+        XCTAssertEqual(id1, "1")
+        XCTAssertEqual(name1, "doc1")
+        XCTAssertEqual(id2, "2")
+        XCTAssertEqual(name2, "doc2")
+    }
+    
+    // MARK: - Success Response
+    
     func testCreateEntitiesSuccessCallback() {
         
         // Simulated completion
@@ -131,31 +168,8 @@ extension CreatableTests {
             if let _ = error { XCTFail() }
         }
     }
-
-    // MARK: - Failure Response
     
-    func testCreateEntityFailureCallback() {
-        
-        // Simulated completion
-        self.backend.completion = { completion in
-            let error = JaymeError.notFound
-            completion(.failure(error))
-        }
-        
-        let expectation = self.expectation(description: "Expected to get an error")
-        
-        let document = TestDocument(id: "_", name: "_")
-        let future = self.repository.create(document)
-        future.start() { result in
-            guard case .failure = result
-                else { XCTFail(); return }
-            expectation.fulfill()
-        }
-        
-        self.waitForExpectations(timeout: 3) { error in
-            if let _ = error { XCTFail() }
-        }
-    }
+    // MARK: - Failure Response
     
     func testCreateEntitiesFailureCallback() {
         
@@ -179,5 +193,5 @@ extension CreatableTests {
             if let _ = error { XCTFail() }
         }
     }
-
+    
 }
