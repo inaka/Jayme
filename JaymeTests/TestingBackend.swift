@@ -25,11 +25,11 @@ class TestingBackend: URLSessionBackend {
     
     var path: Path?
     var method: HTTPMethodName?
-    var parameters: [String: Any]?
+    var parameters: [AnyHashable: Any]?
     
     var completion: Future<(Data?, PageInfo?), JaymeError>.FutureAsyncOperation = { completion in }
     
-    override func future(path: String, method: HTTPMethodName, parameters: [String: Any]? = nil) -> Future <(Data?, PageInfo?), JaymeError> {
+    override func future(path: String, method: HTTPMethodName, parameters: [AnyHashable: Any]? = nil) -> Future <(Data?, PageInfo?), JaymeError> {
         self.path = path
         self.method = method
         self.parameters = parameters

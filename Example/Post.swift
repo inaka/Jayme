@@ -30,7 +30,7 @@ struct Post: Identifiable {
 
 extension Post: DictionaryInitializable {
     
-    init(dictionary: [String: Any]) throws {
+    init(dictionary: [AnyHashable: Any]) throws {
         guard
             let id = dictionary["id"] as? String,
             let authorId = dictionary["author_id"] as? String,

@@ -28,7 +28,7 @@ struct User: Identifiable {
 
 extension User: DictionaryInitializable {
     
-    init(dictionary: [String: Any]) throws {
+    init(dictionary: [AnyHashable: Any]) throws {
         guard let
             id = dictionary["id"] as? String,
             let name = dictionary["name"] as? String,

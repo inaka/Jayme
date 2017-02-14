@@ -27,12 +27,12 @@ open class DataParser {
     public init() { }
     
     /// Returns a `Future` containing a dictionary initialized with the optional data passed by parameter, or `JaymeError.badResponse` if the dictionary can't be initialized from that data.
-    open func dictionary(from possibleData: Data?) -> Future<[String: Any], JaymeError> {
+    open func dictionary(from possibleData: Data?) -> Future<[AnyHashable: Any], JaymeError> {
         return Future() { completion in
             guard let
                 data = possibleData,
                 let result = try? JSONSerialization.jsonObject(with: data, options: .allowFragments),
-                let dictionary = result as? [String: Any]
+                let dictionary = result as? [AnyHashable: Any]
                 else {
                     completion(.failure(.badResponse))
                     return
@@ -42,12 +42,12 @@ open class DataParser {
     }
     
      /// Returns a `Future` containing an array of dictionaries initialized with the optional data passed by parameter, or `JaymeError.badResponse` if the array can't be initialized from that data.
-    open func dictionaries(from possibleData: Data?) -> Future<[[String: Any]], JaymeError> {
+    open func dictionaries(from possibleData: Data?) -> Future<[[AnyHashable: Any]], JaymeError> {
         return Future() { completion in
             guard
                 let data = possibleData,
                 let result = try? JSONSerialization.jsonObject(with: data, options: .allowFragments),
-                let array = result as? [[String: Any]]
+                let array = result as? [[AnyHashable: Any]]
                 else {
                     completion(.failure(.badResponse))
                     return

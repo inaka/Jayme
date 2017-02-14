@@ -35,6 +35,6 @@ public protocol Backend {
     
     /// Returns a `Future` for a given path with a specific HTTPMethod, optionally passing a parameters dictionary.
     /// The returned `Future` represents the result obtained after performing any needed asynchronous operation given the parameters that are passed in this function.
-    func future(path: Path, method: HTTPMethodName, parameters: [String: Any]?) -> Future<BackendReturnType, BackendErrorType>
+    func future(path: Path, method: HTTPMethodName, parameters: [AnyHashable: Any]?) -> Future<BackendReturnType, BackendErrorType>
     
 }
