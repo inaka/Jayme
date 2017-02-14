@@ -28,12 +28,23 @@ public protocol Creatable: Repository {
 
 public extension Creatable {
     
-    /// Creates the entity in the repository. Returns a `Future` with the created entity or a `JaymeError`.
+    /// Requests an entity to be created in the backend.
+    /// Returns a `Future` with the created entity or a `JaymeError`.
     public func create(_ entity: EntityType) -> Future<EntityType, JaymeError> {
         let path = self.name
         return self.backend.future(path: path, method: .POST, parameters: entity.dictionaryValue)
             .andThen { DataParser().dictionary(from: $0.0) }
             .andThen { EntityParser().entity(from: $0) }
+    }
+    
+    /// Requests entities to be created in the backend.
+    /// Returns a `Future` with the created entities or a `JaymeError`.
+    public func create(_ entities: [EntityType]) -> Future<[EntityType], JaymeError> {
+        let path = self.name
+        let parameters = entities.map { $0.dictionaryValue }
+        return self.backend.future(path: path, method: .POST, parameters: parameters)
+            .andThen { DataParser().dictionaries(from: $0.0) }
+            .andThen { EntityParser().entities(from: $0) }
     }
     
 }
