@@ -59,3 +59,17 @@ public typealias ServerPagedRepository = PagedRepository
 /// Identifier -> IdentifierType: CustomStringConvertible
 @available(*, unavailable, message : "Replace `Identifier` with any type that conforms to `CustomStringConvertible`.")
 public typealias Identifier = String
+
+extension Readable {
+    
+    @available(*, unavailable, renamed : "readAll")
+    public func findAll() -> Future<[EntityType], JaymeError> {
+        return self.readAll()
+    }
+    
+    @available(*, unavailable, renamed : "read(byId:)")
+    public func find(byId id: EntityType.IdentifierType) -> Future<EntityType, JaymeError> {
+        return self.read(byId: id)
+    }
+    
+}

@@ -28,8 +28,16 @@ public protocol Readable: Repository {
 
 public extension Readable {
     
-    /// Returns a `Future` containing an array of all the entities in the repository, or the relevant `JaymeError` that could occur.
-    public func findAll() -> Future<[EntityType], JaymeError> {
+    /// Returns a `Future` containing the only entity in the repository, or the relevant `JaymeError` that could occur.
+    public func read() -> Future<EntityType, JaymeError> {
+        let path = self.name
+        return self.backend.future(path: path, method: .GET, parameters: nil)
+            .andThen { DataParser().dictionary(from: $0.0) }
+            .andThen { EntityParser().entity(from: $0) }
+    }
+    
+    /// Returns a `Future` containing an array with all the entities in the repository, or the relevant `JaymeError` that could occur.
+    public func readAll() -> Future<[EntityType], JaymeError> {
         let path = self.name
         return self.backend.future(path: path, method: .GET, parameters: nil)
             .andThen { DataParser().dictionaries(from: $0.0) }
@@ -38,7 +46,7 @@ public extension Readable {
     
     /// Returns a `Future` containing the entity matching the `id`, or the relevant `JaymeError` that could occur.
     /// Watch out for a `.failure` case with `JaymeError.entityNotFound`.
-    public func find(byId id: EntityType.IdentifierType) -> Future<EntityType, JaymeError> {
+    public func read(byId id: EntityType.IdentifierType) -> Future<EntityType, JaymeError> {
         let path = "\(self.name)/\(id)"
         return self.backend.future(path: path, method: .GET, parameters: nil)
             .andThen { DataParser().dictionary(from: $0.0) }

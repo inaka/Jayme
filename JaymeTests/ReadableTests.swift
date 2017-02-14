@@ -37,21 +37,21 @@ class ReadableTests: XCTestCase {
     
 }
 
-// MARK: - Find All
+// MARK: - Read All
 
 extension ReadableTests {
     
     // MARK: - Call To Backend
     
-    func testFindAllCall() {
-        let _ = self.repository.findAll()
+    func testReadAllCall() {
+        let _ = self.repository.readAll()
         XCTAssertEqual(self.backend.path, "documents")
         XCTAssertEqual(self.backend.method, .GET)
     }
     
     // MARK: - Success Response
     
-    func testFindAllSuccessCallback() {
+    func testReadAllSuccessCallback() {
         
         // Simulated completion
         self.backend.completion = { completion in
@@ -63,7 +63,7 @@ extension ReadableTests {
         
         let expectation = self.expectation(description: "Expected 2 documents to be parsed")
         
-        let future = self.repository.findAll()
+        let future = self.repository.readAll()
         future.start() { result in
             guard case .success(let documents) = result
                 else { XCTFail(); return }
@@ -82,7 +82,7 @@ extension ReadableTests {
     
     // MARK: - Failure Response
     
-    func testFindAllFailureNotFoundCallback() {
+    func testReadAllFailureNotFoundCallback() {
         
         // Simulated completion
         self.backend.completion = { completion in
@@ -92,7 +92,7 @@ extension ReadableTests {
         
         let expectation = self.expectation(description: "Expected JaymeError.NotFound")
         
-        let future = self.repository.findAll()
+        let future = self.repository.readAll()
         future.start() { result in
             guard case .failure = result
                 else { XCTFail(); return }
@@ -104,7 +104,7 @@ extension ReadableTests {
         }
     }
     
-    func testFindAllFailureBadResponseCallback() {
+    func testReadAllFailureBadResponseCallback() {
         // Simulated completion
         self.backend.completion = { completion in
             let corruptedData = Data()
@@ -113,7 +113,7 @@ extension ReadableTests {
         
         let expectation = self.expectation(description: "Expected to get a JaymeError.BadResponse")
         
-        let future = self.repository.findAll()
+        let future = self.repository.readAll()
         future.start() { result in
             guard
                 case .failure(let error) = result,
@@ -128,21 +128,21 @@ extension ReadableTests {
     }
 }
 
-// MARK: - Find By ID
+// MARK: - Read By ID
 
 extension ReadableTests {
     
     // MARK: - Call To Backend
     
-    func testFindByIdCall() {
-        let _ = self.repository.find(byId: "123")
+    func testReadByIdCall() {
+        let _ = self.repository.read(byId: "123")
         XCTAssertEqual(self.backend.path, "documents/123")
         XCTAssertEqual(self.backend.method, .GET)
     }
     
     // MARK: - Success Response
     
-    func testFindByIdSuccessCallback() {
+    func testReadByIdSuccessCallback() {
         
         // Simulated completion
         self.backend.completion = { completion in
@@ -153,7 +153,7 @@ extension ReadableTests {
         
         let expectation = self.expectation(description: "Expected to find a document")
         
-        let future = self.repository.find(byId: "1")
+        let future = self.repository.read(byId: "1")
         future.start() { result in
             guard case .success(let document) = result
                 else { XCTFail(); return }
@@ -169,7 +169,7 @@ extension ReadableTests {
     
     // MARK: - Failure Response
     
-    func testFindByIdFailureNotFoundCallback() {
+    func testReadByIdFailureNotFoundCallback() {
         
         // Simulated completion
         self.backend.completion = { completion in
@@ -179,7 +179,7 @@ extension ReadableTests {
         
         let expectation = self.expectation(description: "Expected to get JaymeError.NotFound")
         
-        let future = self.repository.find(byId: "_")
+        let future = self.repository.read(byId: "_")
         future.start() { result in
             guard
                 case .failure(let error) = result,
@@ -193,7 +193,7 @@ extension ReadableTests {
         }
     }
     
-    func testFindByIdFailureBadResponseCallback() {
+    func testReadByIdFailureBadResponseCallback() {
         
         // Simulated completion
         self.backend.completion = { completion in
@@ -203,7 +203,7 @@ extension ReadableTests {
         
         let expectation = self.expectation(description: "Expected to get JaymeError.BadResponse")
         
-        let future = self.repository.find(byId: "_")
+        let future = self.repository.read(byId: "_")
         future.start() { result in
             guard
                 case .failure(let error) = result,
@@ -217,7 +217,7 @@ extension ReadableTests {
         }
     }
     
-    func testFindByIdFailureParsingErrorCallback() {
+    func testReadByIdFailureParsingErrorCallback() {
         
         // Simulated completion
         self.backend.completion = { completion in
@@ -228,7 +228,98 @@ extension ReadableTests {
         
         let expectation = self.expectation(description: "Expected to get JaymeError.ParsingError")
         
-        let future = self.repository.find(byId: "_")
+        let future = self.repository.read(byId: "_")
+        future.start() { result in
+            guard
+                case .failure(let error) = result,
+                case .parsingError = error
+                else { XCTFail(); return }
+            expectation.fulfill()
+        }
+        
+        self.waitForExpectations(timeout: 3) { error in
+            if let _ = error { XCTFail() }
+        }
+    }
+}
+
+// MARK: - Read (Single Entity)
+
+extension ReadableTests {
+    
+    // MARK: - Call To Backend
+    
+    func testReadSingleEntityCall() {
+        let _ = self.repository.read()
+        XCTAssertEqual(self.backend.path, "documents")
+        XCTAssertEqual(self.backend.method, .GET)
+    }
+    
+    // MARK: - Success Response
+    
+    func testReadSingleEntitySuccessCallback() {
+        
+        // Simulated completion
+        self.backend.completion = { completion in
+            let json = ["id": "1", "name": "a"]
+            let data = try! JSONSerialization.data(withJSONObject: json, options: .prettyPrinted)
+            completion(.success((data, nil)))
+        }
+        
+        let expectation = self.expectation(description: "Expected to find a document")
+        
+        let future = self.repository.read()
+        future.start() { result in
+            guard case .success(let document) = result
+                else { XCTFail(); return }
+            XCTAssertEqual(document.id, "1")
+            XCTAssertEqual(document.name, "a")
+            expectation.fulfill()
+        }
+        
+        self.waitForExpectations(timeout: 3) { error in
+            if let _ = error { XCTFail() }
+        }
+    }
+    
+    // MARK: - Failure Response
+    
+    func testReadSingleEntityFailureBadResponseCallback() {
+        
+        // Simulated completion
+        self.backend.completion = { completion in
+            let corruptedData = Data()
+            completion(.success((corruptedData, nil)))
+        }
+        
+        let expectation = self.expectation(description: "Expected to get JaymeError.BadResponse")
+        
+        let future = self.repository.read()
+        future.start() { result in
+            guard
+                case .failure(let error) = result,
+                case .badResponse = error
+                else { XCTFail(); return }
+            expectation.fulfill()
+        }
+        
+        self.waitForExpectations(timeout: 3) { error in
+            if let _ = error { XCTFail() }
+        }
+    }
+    
+    func testReadSingleEntityFailureParsingErrorCallback() {
+        
+        // Simulated completion
+        self.backend.completion = { completion in
+            let wrongDictionary = ["id": "_"] // lacks 'name' field
+            let data = try! JSONSerialization.data(withJSONObject: wrongDictionary, options: .prettyPrinted)
+            completion(.success((data, nil)))
+        }
+        
+        let expectation = self.expectation(description: "Expected to get JaymeError.ParsingError")
+        
+        let future = self.repository.read()
         future.start() { result in
             guard
                 case .failure(let error) = result,
