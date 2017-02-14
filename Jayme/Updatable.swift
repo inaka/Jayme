@@ -44,4 +44,13 @@ public extension Updatable {
             .andThen { EntityParser().entity(from: $0) }
     }
     
+    /// Requests the given entities to be updated in the backend. Returns a `Future` with the updated entities or a `JaymeError`.
+    public func update(_ entities: [EntityType]) -> Future<[EntityType], JaymeError> {
+        let path = self.name
+        let parameters = entities.map { $0.dictionaryValue }
+        return self.backend.future(path: path, method: .PATCH, parameters: parameters)
+            .andThen { DataParser().dictionaries(from: $0.0) }
+            .andThen { EntityParser().entities(from: $0) }
+    }
+    
 }
