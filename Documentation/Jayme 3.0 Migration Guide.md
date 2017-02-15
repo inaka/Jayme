@@ -12,7 +12,7 @@ This guide is provided in order to ease the transition of existing applications 
 
 ### Automatically Suggested Changes
 
-There are some compiler migration mechanisms that have been implemented in Jayme 2.0 by leveraging the `@unavailable` attribute in a `Compatibility.swift` file.
+There are some compiler migration mechanisms that have been implemented in Jayme 3.0 by leveraging the `@unavailable` attribute in a `Compatibility.swift` file.
 
 ***For these changes you only have to follow the compiler suggestions and they should be applied automatically.***
 

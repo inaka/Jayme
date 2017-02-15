@@ -2,7 +2,7 @@
 
 **Jayme 4.0** is the latest major release of Jayme. As a major release, following Semantic Versioning conventions, 4.0 introduces several API-breaking changes that one should be aware of.
 
-This guide is provided in order to ease the transition of existing applications using Jayme 4.x to the latest APIs, as well as explain the design and structure of new and changed functionality.
+This guide is provided in order to ease the transition of existing applications using Jayme 3.x to the latest APIs, as well as explain the design and structure of new and changed functionality.
 
 ---
 
