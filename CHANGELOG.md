@@ -26,7 +26,7 @@ All notable changes to this project will be documented in this file. `Jayme` a
 
 - `CRUDRepository` protocol no longer exists. Its functionalities have now been divided into four separate protocols: `Creatable`, `Readable`, `Updatable` and `Deletable`. (Issue [#84](https://github.com/inaka/Jayme/issues/84))
 - `findAll()` has been renamed to `readAll()` in the `Readable` protocol (Issue [#87](https://github.com/inaka/Jayme/issues/87]))
-- `find(byId:)` has been renamed to `read(id:)` in the `Readable`protocol (Issue [#87](https://github.com/inaka/Jayme/issues/87]))
+- `find(byId:)` has been renamed to `read(id:)` in the `Readable` protocol (Issue [#87](https://github.com/inaka/Jayme/issues/87]))
 - `update(_)` has been renamed to `update(_, id:)` in the `Updatable` protocol; a new `update(_)` function has been added (Issue [#87](https://github.com/inaka/Jayme/issues/87]))
 - `delete(_)` has been renamed to `delete(id:)` in the `Deletable` protocol (Issue [#87](https://github.com/inaka/Jayme/issues/87]))
 - Added `create([entity1, entity2, …])` function in the `Creatable` protocol (Issue [#87](https://github.com/inaka/Jayme/issues/87]))
