@@ -61,6 +61,7 @@ However, there are some other changes that would have required overwhelming (if 
 
 - **CRUDRepository** no longer exists. The compiler will suggest you to use the `Creatable`, `Readable`, `Updatable` and `Deletable` protocols instead, but it's up to you to write which ones each of your repository needs to conform to.
 - **Watch out the `update(_)` method**. In Jayme 3.x, this method appends the entity's `id` to the URL path. In Jayme 4.x, this method does not append the `id`, there is the `update(_, id:)` method for doing so. Therefore, anywhere you were calling `update(entity)`, you have to change it by `update(entity, id: entity.id)`. You have to do it manually, because `update(entity)` still compiles, but has a different behavior as of Jayme 4.0.
+- **Dictionaries** are now represented as `[AnyHashable: Any]` instead of `[String: Any]`. You have to manually change these appearances in your `DictionaryInitializable` and `DictionaryRepresentable` methods of your entities.
 
 ---
 
