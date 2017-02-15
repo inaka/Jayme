@@ -12,7 +12,7 @@ Based in our experiences by using Jayme in production projects, **we've decided 
 
 #### Better organized CRUD API
 
-The main change that you need to be aware of is that **your repositories will no longer conform to a `CRUDRepository` protocol**. Instead, they can conform to `Creatable`, `Readable`, `Updatable` and `Designable` protocols, depending on what each repository needs.
+The main change that you need to be aware of is that **your repositories will no longer conform to a `CRUDRepository` protocol**. Instead, they can conform to `Creatable`, `Readable`, `Updatable` and `Deletable` protocols, depending on what each repository needs.
 
 By organizing the CRUD API this way, your code will follow the [YAGNI principle](https://en.wikipedia.org/wiki/You_aren't_gonna_need_it) better than before. For instance: If you have a repository whose entities only need to be _read_, but not _created_, _updated_ or _deleted_, then you shouldn't need to write a `dictionaryValue` method for that entity type at all. You were forced to do so when conforming to `CRUDRepository`, but now, by only conforming to the `Readable` protocol, you don't have to.
 
