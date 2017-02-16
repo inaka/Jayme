@@ -26,6 +26,7 @@ class UsersViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        guard NSClassFromString("XCTestCase") == nil else { return }
         self.loadUsers()
     }
     
@@ -39,7 +40,7 @@ class UsersViewController: UIViewController {
     fileprivate var selectedUser: User?
     
     fileprivate func loadUsers() {
-        UserRepository().findAll().start { result in
+        UserRepository().readAll().start { result in
             switch result {
             case .success(let users):
                 self.users = users

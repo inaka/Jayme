@@ -28,12 +28,29 @@ public protocol Updatable: Repository {
 
 public extension Updatable {
     
-    /// Updates the entity in the repository. Returns a `Future` with the updated entity or a `JaymeError`.
+    /// Requests the only entity in the repository to be updated in the backend. Returns a `Future` with the updated entity or a `JaymeError`.
     public func update(_ entity: EntityType) -> Future<EntityType, JaymeError> {
+        let path = "\(self.name)"
+        return self.backend.future(path: path, method: .PUT, parameters: entity.dictionaryValue)
+            .andThen { DataParser().dictionary(from: $0.0) }
+            .andThen { EntityParser().entity(from: $0) }
+    }
+    
+    /// Requests the entity with the given `id` to be updated in the backend. Returns a `Future` with the updated entity or a `JaymeError`.
+    public func update(_ entity: EntityType, id: EntityType.IdentifierType) -> Future<EntityType, JaymeError> {
         let path = "\(self.name)/\(entity.id)"
         return self.backend.future(path: path, method: .PUT, parameters: entity.dictionaryValue)
             .andThen { DataParser().dictionary(from: $0.0) }
             .andThen { EntityParser().entity(from: $0) }
+    }
+    
+    /// Requests the given entities to be updated in the backend. Returns a `Future` with the updated entities or a `JaymeError`.
+    public func update(_ entities: [EntityType]) -> Future<[EntityType], JaymeError> {
+        let path = self.name
+        let parameters = entities.map { $0.dictionaryValue }
+        return self.backend.future(path: path, method: .PATCH, parameters: parameters)
+            .andThen { DataParser().dictionaries(from: $0.0) }
+            .andThen { EntityParser().entities(from: $0) }
     }
     
 }

@@ -54,8 +54,8 @@ extension URLSessionBackendTests {
     func testBadParameters() {
         let backend = URLSessionBackend()
         let problematicString = String(bytes: [0xD8, 0x00] as [UInt8], encoding: String.Encoding.utf16BigEndian)!
-        let problematicParams = ["foo": problematicString]
-        let future = backend.future(path: "_", method: .GET, parameters: problematicParams as [String : AnyObject]?)
+        let problematicParams: [[AnyHashable: Any]] = [["foo": problematicString]]
+        let future = backend.future(path: "_", method: .GET, parameters: problematicParams)
         let expectation = self.expectation(description: "Expected .Failure with .BadRequest error")
         future.start { result in
             guard

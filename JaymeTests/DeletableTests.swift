@@ -37,20 +37,21 @@ class DeletableTests: XCTestCase {
     
 }
 
+// MARK: - Delete Single Entity
+
 extension DeletableTests {
     
-    // MARK: - Call To backend
+    // MARK: - Call To Backend
     
-    func testDeleteCall() {
-        let document = TestDocument(id: "123", name: "a")
-        let _ = self.repository.delete(document)
-        XCTAssertEqual(self.backend.path, "documents/123")
+    func testDeleteSingleEntityCall() {
+        let _ = self.repository.delete()
+        XCTAssertEqual(self.backend.path, "documents")
         XCTAssertEqual(self.backend.method, .DELETE)
     }
     
     // MARK: - Success Response
     
-    func testDeleteSuccessCallback() {
+    func testDeleteSingleEntitySuccessCallback() {
         
         // Simulated completion
         self.backend.completion = { completion in
@@ -59,8 +60,7 @@ extension DeletableTests {
         
         let expectation = self.expectation(description: "Expected to get a success")
         
-        let document = TestDocument(id: "_", name: "_")
-        let future = self.repository.delete(document)
+        let future = self.repository.delete()
         future.start() { result in
             guard case .success = result
                 else { XCTFail(); return }
@@ -74,7 +74,7 @@ extension DeletableTests {
     
     // MARK: - Failure Response
     
-    func testDeleteFailureCallback() {
+    func testDeleteSingleEntityFailureCallback() {
         
         // Simulated completion
         self.backend.completion = { completion in
@@ -84,8 +84,68 @@ extension DeletableTests {
         
         let expectation = self.expectation(description: "Expected to get an error")
         
-        let document = TestDocument(id: "_", name: "_")
-        let future = self.repository.delete(document)
+        let future = self.repository.delete()
+        future.start() { result in
+            guard case .failure = result
+                else { XCTFail(); return }
+            expectation.fulfill()
+        }
+        
+        self.waitForExpectations(timeout: 3) { error in
+            if let _ = error { XCTFail() }
+        }
+    }
+    
+}
+
+// MARK: - Delete By Id
+
+extension DeletableTests {
+    
+    // MARK: - Call To Backend
+    
+    func testDeleteByIdCall() {
+        let _ = self.repository.delete(id: "123")
+        XCTAssertEqual(self.backend.path, "documents/123")
+        XCTAssertEqual(self.backend.method, .DELETE)
+    }
+    
+    // MARK: - Success Response
+    
+    func testDeleteByIdSuccessCallback() {
+        
+        // Simulated completion
+        self.backend.completion = { completion in
+            completion(.success((nil, nil)))
+        }
+        
+        let expectation = self.expectation(description: "Expected to get a success")
+        
+        let future = self.repository.delete(id: "_")
+        future.start() { result in
+            guard case .success = result
+                else { XCTFail(); return }
+            expectation.fulfill()
+        }
+        
+        self.waitForExpectations(timeout: 3) { error in
+            if let _ = error { XCTFail() }
+        }
+    }
+    
+    // MARK: - Failure Response
+    
+    func testDeleteByIdFailureCallback() {
+        
+        // Simulated completion
+        self.backend.completion = { completion in
+            let error = JaymeError.notFound
+            completion(.failure(error))
+        }
+        
+        let expectation = self.expectation(description: "Expected to get an error")
+        
+        let future = self.repository.delete(id: "_")
         future.start() { result in
             guard case .failure = result
                 else { XCTFail(); return }

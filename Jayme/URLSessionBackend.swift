@@ -42,6 +42,27 @@ open class URLSessionBackend: Backend {
     /// - A tuple with possible `NSData` relevant to the HTTP response and a possible `PageInfo` object if there is pagination-related info associated to it.
     /// - A `JaymeError` holding the error that occurred.
     open func future(path: Path, method: HTTPMethodName, parameters: [AnyHashable: Any]? = nil) -> Future<(Data?, PageInfo?), JaymeError> {
+        return self.createFuture(path: path, method: method, parameters: parameters)
+    }
+    
+    /// Returns a `Future` containing either:
+    /// - A tuple with possible `NSData` relevant to the HTTP response and a possible `PageInfo` object if there is pagination-related info associated to it.
+    /// - A `JaymeError` holding the error that occurred.
+    open func future(path: Path, method: HTTPMethodName, parameters: [[AnyHashable: Any]]) -> Future<(Data?, PageInfo?), JaymeError> {
+        return self.createFuture(path: path, method: method, parameters: parameters)
+    }
+    
+    // MARK: - Private
+    
+    fileprivate var baseURL: URL? {
+        return URL(string: self.configuration.basePath)
+    }
+    
+    fileprivate func url(for path: Path) -> URL? {
+        return self.baseURL?.appendingPathComponent(path)
+    }
+    
+    fileprivate func createFuture(path: Path, method: HTTPMethodName, parameters: Any? = nil) -> Future<(Data?, PageInfo?), JaymeError> {
         return Future() { completion in
             guard let request = try? self.request(path: path, method: method, parameters: parameters) else {
                 completion(.failure(JaymeError.badRequest))
@@ -68,17 +89,7 @@ open class URLSessionBackend: Backend {
         }
     }
     
-    // MARK: - Private
-    
-    fileprivate var baseURL: URL? {
-        return URL(string: self.configuration.basePath)
-    }
-    
-    fileprivate func url(for path: Path) -> URL? {
-        return self.baseURL?.appendingPathComponent(path)
-    }
-    
-    fileprivate func request(path: Path, method: HTTPMethodName, parameters: [AnyHashable: Any]?) throws -> URLRequest {
+    fileprivate func request(path: Path, method: HTTPMethodName, parameters: Any?) throws -> URLRequest {
         guard let url = self.url(for: path) else {
             throw JaymeError.badRequest
         }
