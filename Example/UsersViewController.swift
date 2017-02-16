@@ -26,6 +26,7 @@ class UsersViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        guard NSClassFromString("XCTestCase") == nil else { return }
         self.loadUsers()
     }
     
