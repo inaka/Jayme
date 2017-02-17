@@ -244,6 +244,88 @@ extension ReadableTests {
     }
 }
 
+// MARK: - Read By Page
+
+extension ReadableTests {
+    
+    // MARK: - Call To Backend
+
+    func testReadByPageCallToBackend() {
+        let _ = self.repository.read(pageNumber: 1, pageSize: 10)
+        XCTAssertEqual(self.backend.path, "documents?page=1&per_page=10")
+    }
+    
+    // MARK: - Success Response
+
+    func testReadByPageSuccessCallback() {
+        
+        // Simulated completion
+        self.backend.completion = { completion in
+            let json = [["id": "1", "name": "a"],
+                        ["id": "2", "name": "b"]]
+            let data = try! JSONSerialization.data(withJSONObject: json, options: .prettyPrinted)
+            let pageInfo = PageInfo(number: 1, size: 2, total: 10)
+            completion(.success((data, pageInfo)))
+        }
+        
+        let expectation = self.expectation(description: "")
+    
+        let future = self.repository.read(pageNumber: 1, pageSize: 2)
+        future.start() { result in
+            guard case .success(let documents, let pageInfo) = result else {
+                XCTFail()
+                return
+            }
+            XCTAssertEqual(documents.count, 2)
+            XCTAssertEqual(documents[0].id, "1")
+            XCTAssertEqual(documents[0].name, "a")
+            XCTAssertEqual(documents[1].id, "2")
+            XCTAssertEqual(documents[1].name, "b")
+            XCTAssertEqual(pageInfo.number, 1)
+            XCTAssertEqual(pageInfo.size, 2)
+            XCTAssertEqual(pageInfo.total, 10)
+            expectation.fulfill()
+        }
+        
+        self.waitForExpectations(timeout: 3) { error in
+            if let _ = error {
+                XCTFail()
+                return
+            }
+        }
+    }
+    
+    // MARK: - Failure Response
+    
+    func testReadByPageFailureCallback() {
+        
+        // Simulated completion
+        self.backend.completion = { completion in
+            let error = JaymeError.notFound
+            completion(.failure(error))
+        }
+        
+        let expectation = self.expectation(description: "")
+        
+        let future = self.repository.read(pageNumber: 1, pageSize: 2)
+        future.start() { result in
+            guard case .failure = result else {
+                XCTFail()
+                return
+            }
+            expectation.fulfill()
+        }
+        
+        self.waitForExpectations(timeout: 3) { error in
+            if let _ = error {
+                XCTFail()
+                return
+            }
+        }
+    }
+
+}
+
 // MARK: - Read By ID
 
 extension ReadableTests {

@@ -52,9 +52,8 @@ public protocol CRUDRepository: Creatable, Readable, Updatable, Deletable {
     
 }
 
-/// ServerPagedRepository -> PagedRepository
-@available(*, unavailable, renamed : "PagedRepository")
-public typealias ServerPagedRepository = PagedRepository
+@available(*, unavailable, renamed : "Readable", message: "findByPage from the PagedRepository protocol has been replaced by read(pageSize:pageNumber:) from the Readable protocol")
+public typealias PagedRespository = Readable
 
 /// Identifier -> IdentifierType: CustomStringConvertible
 @available(*, unavailable, message : "Replace `Identifier` with any type that conforms to `CustomStringConvertible`.")
