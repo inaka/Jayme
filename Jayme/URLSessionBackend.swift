@@ -59,7 +59,7 @@ open class URLSessionBackend: Backend {
     }
     
     fileprivate func url(for path: Path) -> URL? {
-        return self.baseURL?.appendingPathComponent(path)
+        return URL(string: path, relativeTo: self.baseURL)
     }
     
     fileprivate func createFuture(path: Path, method: HTTPMethodName, parameters: Any? = nil) -> Future<(Data?, PageInfo?), JaymeError> {
@@ -90,7 +90,7 @@ open class URLSessionBackend: Backend {
     }
     
     fileprivate func request(path: Path, method: HTTPMethodName, parameters: Any?) throws -> URLRequest {
-        guard let url = self.url(for: path) else {
+        guard let url = self.url(for: path), url.absoluteString != "_" else {
             throw JaymeError.badRequest
         }
         let request = NSMutableURLRequest(url: url)
