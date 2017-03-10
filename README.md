@@ -1,15 +1,15 @@
-![Logo](https://raw.githubusercontent.com/inaka/Jayme/master/Assets/logo.png)
-
-***An abstraction layer that eases RESTful interconnections in Swift***
+![Logo](https://raw.githubusercontent.com/inaka/Jayme/master/Assets/V4/logo.png)
 
 ------
 
 [![Build Status](https://api.travis-ci.org/inaka/Jayme.svg)](https://travis-ci.org/inaka/Jayme) [![Codecov](https://codecov.io/gh/inaka/jayme/branch/master/graph/badge.svg)](https://codecov.io/gh/inaka/jayme) [![Swift](https://img.shields.io/badge/Swift-3.0-orange.svg?style=flat)](https://swift.org/) [![Cocoapods](https://img.shields.io/cocoapods/v/Jayme.svg)](http://cocoadocs.org/docsets/Jayme) [![Twitter](https://img.shields.io/badge/twitter-@inaka-blue.svg?style=flat)](http://twitter.com/inaka)
 
+-----
+
 
 ## Overview
 
-Jayme provides you with a set of tools that reduce drastically the amount of code you have to write to perform [CRUD operations](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete) to a [RESTful API](https://en.wikipedia.org/wiki/Representational_state_transfer). It also encapsulates networking code, encouraging you to separate networking and business logic code out of your view controllers.
+Jayme is a Swift library that provides you with a set of tools which reduce drastically the amount of code you have to write to perform [CRUD operations](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete) to a [RESTful API](https://en.wikipedia.org/wiki/Representational_state_transfer). It also encapsulates networking code, encouraging you to separate networking and business logic code out of your view controllers.
 
 ![Jayme's Architecture In A Nutshell](https://raw.githubusercontent.com/inaka/Jayme/master/Assets/V4/architecture-diagram.png)
 
@@ -392,7 +392,7 @@ $ python -m SimpleHTTPServer 8080
 
 - Jayme is available via [cocoapods](http://cocoapods.org/).
   - To install it, add `pod 'Jayme'` to your `Podfile` and run `pod install`.
-  - Remember to add an `import Jayme` statement in any source file of your project that needs to make use of the library.
+  - Then, add an `import Jayme` statement in any source file of your project that needs to make use of the library.
 
 
 
