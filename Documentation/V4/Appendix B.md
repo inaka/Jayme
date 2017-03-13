@@ -1,1 +1,1 @@
-# Appendix A: Unit-test your repositories
+# Appendix B: Unit-test your repositories

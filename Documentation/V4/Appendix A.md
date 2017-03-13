@@ -202,7 +202,7 @@ open class EntityParser<EntityType: DictionaryInitializable> {
 
 Yes, `EntityType` has to be `DictionaryInitializable` so that it can be initialized from a dictionary.
 
-##### 4. Wrapping up
+##### 4. Wrap up
 
 In summary, keep on mind the following piece of code:
 
@@ -291,7 +291,7 @@ This is it! Once you understand how to take advantage of `Future`, `DataParser` 
 
 Not every API works the same. Not every API returns your objects of interest at the root level of the JSON response.
 
-This JSON response example is Jayme compliant:
+For instance, this JSON response is Jayme compliant:
 
 ```json
 [ {"id": "1", "name": "Paul"},
@@ -299,7 +299,7 @@ This JSON response example is Jayme compliant:
   {"id": "3", "name": "Grant"} ]
 ```
 
-But, what if my entities come within an *envelope* in the JSON response, like this:
+But, what if the entities come within an *envelope* in the JSON response, like this:
 
 ```json
 { "items": [ {"id": "1", "name": "Paul"},
@@ -313,3 +313,9 @@ Here, you need to parse your JSON objects differently. If all the endpoints of y
 Have in mind that all the default functions declared in `Creatable`, `Readable`, `Updatable` and `Deletable` use the default `DataParser` and `EntityParser` classes. So, if you want to keep on using these default functions, you have to re-write them to use *your* parsers instead.
 
 You may be wondering why aren't `DataParser` and `EntityParser` instances injected when creating a repository? This way, you would be able to still use the default `Creatable`, `Readable`, `Updatable` and `Deletable` functions with your custom parsers by just passing them in. This was a though architectural decision when developing Jayme. See, in most of scenarios where you get the entities within an envelope field, you also get extra information that's useful for parsing, like, for instance, pagination information. Extracting `DataParser` and `EntityParser` into variables at the repository level forces you to define interfaces to define what their functions are supposed to return. In Jayme's `DataParser` and `EntityParser` default classes, these return types only care about the entities. If you need different stuff, this dependency injection would be useless.
+
+---
+
+### This is it
+
+Now that you've learned how to write your custom functions, which is a very powerful tool in the Jayme's world, you're encouraged to move on to the next level and apply unit-tests to any custom function that you write. This is explained in the [Appendix B: Unit-test your repositories](https://github.com/inaka/Jayme/blob/master/Documentation/V4/Appendix%20B.md).
