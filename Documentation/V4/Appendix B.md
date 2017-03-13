@@ -1,1 +1,1 @@
-# Appendix B: Configure your own logging function
+# Appendix A: Unit-test your repositories

@@ -346,7 +346,7 @@ UsersRepository().delete(id: "1").start() { result in
 }
 ```
 
-#### 8. Add a function for a custom endpoint
+#### 8. Add functions for compound endpoints
 
 Let's suppose your server is capable of returning the *active* users when hitting the `/users/active` endpoint with a `GET` method.
 
@@ -365,14 +365,17 @@ extension UsersRepository {
 }
 ```
 
+> You will often find yourself writing these kind of custom functions for some of your repositories. So, it's recommendable that you understand how Futures work and how they are chained together in these examples by using the `andThen` function. You're encouraged to take a look at the [Appendix A: Write your own custom functions](https://github.com/inaka/Jayme/blob/master/Documentation/V4/Appendix%20A.md).
+
 #### 9. You're all set up!
 
 Now you know the basics of how to write code to work with Jayme. You will stumble upon more complex scenarios, which will require you to think how to face them. With this basic knowledge on creating entity types, repositories, and using them in your view controllers, you should be good to go.
 
 We encourage you to read these extra documents:
 
-- [**Appendix A: Unit-test your repositories**](https://github.com/inaka/Jayme/blob/master/Documentation/V4/Appendix%20A.md)
-- [**Appendix B: Configure your own logging function**](https://github.com/inaka/Jayme/blob/master/Documentation/V4/Appendix%20B.md)
+- [**Appendix A: Write your own custom functions**](https://github.com/inaka/Jayme/blob/master/Documentation/V4/Appendix%20A.md)
+- [**Appendix B: Unit-test your repositories**](https://github.com/inaka/Jayme/blob/master/Documentation/V4/Appendix%20B.md)
+- [**Appendix C: Configure your own logging function**](https://github.com/inaka/Jayme/blob/master/Documentation/V4/Appendix%20C.md)
 
 
 ## Sample Project
