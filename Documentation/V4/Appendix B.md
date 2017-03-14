@@ -1,6 +1,6 @@
 # Appendix B: Unit-test your repositories
 
-Once you have learned how to [write your own custom functions](https://github.com/inaka/Jayme/blob/master/Documentation/V4/Appendix%20A.md) for your repositories, your next step is to keep your code covered by unit-tests.
+Once you have learned how to [write your own custom functions](Appendix%20A.md) for your repositories, your next step is to keep your code covered by unit-tests.
 
 Any custom function that you write for your repositories can be tested using three kind of tests. Learning how to write these tests may be tough, but once again, once you've climbed the steep hill, this process becomes a piece of cake.
 
@@ -19,7 +19,7 @@ When you write a new function in your repository, you should implement these thr
 
 > Notice that the first item always involves **one test**, whereas the second one and the third one **may involve more than one test each**, depending on how many successful and failure scenarios your function expects.
 
-Taking the example from the [Appendix A: Write your own custom functions](https://github.com/inaka/Jayme/blob/master/Documentation/V4/Appendix%20A.md), let's add unit-tests to this custom function to cover all the paths.
+Taking the example from the [Appendix A: Write your own custom functions](Appendix%20A.md), let's add unit-tests to this custom function to cover all the paths.
 
 This is the custom function we want to test:
 
