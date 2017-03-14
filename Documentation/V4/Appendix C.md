@@ -2,7 +2,7 @@
 
 # Appendix C: Configure your own logging function
 
-By default, Jayme prints logs using the native `print` function from Swift.
+By default, Jayme prints logs using the native `print` function from Swift:
 
 ```swift
 ["Jayme: Request #0 | URL: http://localhost:8080/users | method: GET"]
@@ -17,7 +17,7 @@ This function can be replaced with any other function that you want, as long as 
 
 This is useful if you are using third party libraries for logging, like [CocoaLumberjack](https://github.com/CocoaLumberjack/CocoaLumberjack).
 
-There is an easy and convenient way to inject your own logging function, by setting the `loggingFunction` variable from the `Logger.sharedLogger` singleton, by passing in a closure, like this:
+There is an easy and convenient way to inject your own logging function, by setting the `loggingFunction` variable from the `Logger.sharedLogger` singleton, using a closure, like this:
 
 ```swift
 Jayme.Logger.sharedLogger.loggingFunction = { (items: Any..., separator: String, terminator: String) -> () in
