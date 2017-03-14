@@ -295,7 +295,9 @@ Another common scenario that you will find is the one in which you need to creat
 
 As you start trying to come up with a solution, you realize that making `id` variables [optional](https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/OptionalChaining.html) in your entities just makes things worse: You end up having a non-sense `guard let` nightmare everywhere in your code.
 
-You may think of another crazy approach where you have entity types *with id*, and entity types *without id*, but you soon realize this kind of approach just leads your code to hell.
+You may think of sending a garbage `id` value, like `""`, or `"_"`, or `"provisory_id"`, or a random `UUID` string, until you get a valid one from the server. But, this way, your entities would be *dirty* at some point. So, this is not the most elegant solution there could be.
+
+You may also think of another crazy approach where you have entity types *with id*, and entity types *without id*, but you soon realize this kind of strategy just leads your code to hell.
 
 So, a simple solution for this scneario is implementing your own `create` methods for your repositories, by passing in the necessary parameters that the entity needs to be constructed, except for the `id`.
 
