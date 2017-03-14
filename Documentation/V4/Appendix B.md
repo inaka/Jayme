@@ -49,7 +49,7 @@ In order to do so, you'll need a [mock object](https://en.wikipedia.org/wiki/Moc
 * This *fake* backend can be asserted to analyze what arguments have been passed to its `future(path:method:parameters:)` function, in case it's called.
 * This *fake* backend doesn't connect to an actual server, but instead returns local *fake* results that we can configure easily.
 
-We'll focus on the second item for this *call to backend* kind of test.
+We'll focus on the first item for this *call to backend* kind of test.
 
 Good news is that these tools were already written when creating the default `Creatable`, `Readable`, `Updatable` and `Deletable` functions' tests. So, you can actually grab the fake backend from [here](https://github.com/inaka/Jayme/blob/master/JaymeTests/TestingBackend.swift). 
 
