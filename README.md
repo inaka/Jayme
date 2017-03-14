@@ -13,6 +13,7 @@ Jayme is a Swift library that provides you with a set of tools which reduce dras
 
 ![Jayme's Architecture In A Nutshell](https://raw.githubusercontent.com/inaka/Jayme/master/Assets/V4/architecture-diagram.png)
 
+-----
 
 ##Features
 
