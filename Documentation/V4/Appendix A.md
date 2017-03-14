@@ -37,7 +37,7 @@ This function is mean to work for *single-entity repositories*, and it's expecte
 
 Now, let's analyze it line by line:
 
-##### 1. The function declaration
+#### 1. The function declaration
 
 ``` swift
 public func read() -> Future<EntityType, JaymeError> {
@@ -124,7 +124,7 @@ Which should make more sense to you now: You will get a result with either a suc
 
 Now you should kind of get the magic formula in your mind on how these function signatures are written depending on what's needed.
 
-##### 2. The call to the backend
+#### 2. The call to the backend
 
 Let's analyze this part now:
 
@@ -150,7 +150,7 @@ Notice the following facts:
 
 Up to here, you got the data from the response. However, you can't return that data as a `Data` object directly from the `read()` function, because it has to return an `EntityType`. Here is when the parsing comes into the scenario. The idea is that your view controllers should never worry about parsing objects from JSONs and all that sauce. Instead, the parsing is done at the repository level, in these functions that we are learning to write.
 
-##### 3. The parsing
+#### 3. The parsing
 
 Let's move on to the next line:
 
@@ -204,7 +204,7 @@ open class EntityParser<EntityType: DictionaryInitializable> {
 
 Yes, `EntityType` has to be `DictionaryInitializable` so that it can be initialized from a dictionary.
 
-##### 4. Wrap up
+#### 4. Wrap up
 
 In summary, keep on mind the following piece of code:
 
@@ -286,6 +286,76 @@ PostsRepository().read(userId: "123").start() { result in
 ```
 
 This is it! Once you understand how to take advantage of `Future`, `DataParser` and `EntityParser`, writing your own custom functions for hitting compound endpoints becomes a piece of cake.
+
+---
+
+### Write your own CREATE functions
+
+Another common scenario that you will find is the one in which you need to create entities, but you expect their id's to be generated server-side. You'll find yourself in trouble if you want to use the default `create(entity)` method that Jayme's `Creatable` provides you with, given that this method requires a *full* entity to be passed in, and normally a *full* entity includes an `id` field, and you don't have a value for it yet, since you expect it to come in the response from the server.
+
+As you start trying to come up with a solution, you realize that making `id` variables [optional](https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/OptionalChaining.html) in your entities just makes things worse: You end up having a non-sense `guard let` nightmare everywhere in your code.
+
+You may think of another crazy approach where you have entity types *with id*, and entity types *without id*, but you soon realize this kind of approach just leads your code to hell.
+
+So, a simple solution for this scneario is implementing your own `create` methods for your repositories, by passing in the necessary parameters that the entity needs to be constructed, except for the `id`.
+
+Let's say that you have a `User` entity that looks like this:
+
+```swift
+struct User: Identifiable {
+    let id: String
+    let name: String
+    let email: String
+}
+
+extension User: DictionaryInitializable {
+    init(dictionary: [AnyHashable: Any]) throws {
+        // Parse the entity here
+        guard 
+            let id = dictionary["id"] as? String,
+            let name = dictionary["name"] as? String,
+            let email = dictionary["email"] as? String
+            else { throw JaymeError.parsingError }
+        self.id = id
+        self.name = name
+        self.email = email
+    }
+}
+```
+
+Then, your `UsersRepository`, with your custom `create` method, should look like this:
+
+```swift
+class UsersRepository: Readable {
+    typealias EntityType = User
+    let backend = URLSessionBackend.myAppBackend()
+    let name = "users"
+
+    func create(name: String, email: String) -> Future<User, JaymeError> {
+        let path = self.name
+        let parameters = ["name": name, "email": email] // see? no id!
+        return self.backend.future(path: path, method: .POST, parameters: parameters)
+            .andThen { DataParser().dictionary(from: $0.0) }
+            .andThen { EntityParser().entity(from: $0) }
+    }
+}
+
+```
+
+Notice that you can't create a `User` instance until you don't have an `id`. That occurs right after a successful response, that includes the created entity in its body, is parsed properly. At that point, it's the `.andThen { EntityParser().entity(from: $0) }` code what will create a `User` instance, which you'll be able to play with in your view controller:
+
+```swift
+let future = UsersRepository().create(name: "Paul", email: "paul@me.com")
+future.start { result in
+    switch result {
+    case .success(let user):
+        // You've got your User instance here, including the id that came from the server
+    case .failure(let error):
+        // JaymeError indicating what happened
+}
+```
+
+Be prepared, it will become very normal that you have to write your own `create` implementation for any entity you need to be able to create. Unfortunately, there's no magic bullet for this.
 
 ---
 
