@@ -346,7 +346,7 @@ UsersRepository().delete(id: "1").start() { result in
 }
 ```
 
-#### 8. Add functions for compound endpoints
+#### 8. Add functions for custom endpoints
 
 Let's suppose your server is capable of returning the *active* users when hitting the `/users/active` endpoint with a `GET` method.
 
@@ -376,6 +376,8 @@ We encourage you to read these extra documents:
 - [**Appendix A: Write your own custom functions**](https://github.com/inaka/Jayme/blob/master/Documentation/V4/Appendix%20A.md)
 - [**Appendix B: Unit-test your repositories**](https://github.com/inaka/Jayme/blob/master/Documentation/V4/Appendix%20B.md)
 - [**Appendix C: Configure your own logging function**](https://github.com/inaka/Jayme/blob/master/Documentation/V4/Appendix%20C.md)
+- [**Appendix D: Add authentication to your requests**](https://github.com/inaka/Jayme/blob/master/Documentation/V4/Appendix%20D.md)
+
 
 
 ## Sample Project
