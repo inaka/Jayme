@@ -365,7 +365,7 @@ extension UsersRepository {
 }
 ```
 
-> You will often find yourself writing these kind of custom functions for some of your repositories. So, it's recommendable that you understand how Futures work and how they are chained together in these examples by using the `andThen` function. You're encouraged to take a look at the [Appendix A: Write your own custom functions](https://github.com/inaka/Jayme/blob/master/Documentation/V4/Appendix%20A.md).
+> You will often find yourself writing these kind of custom functions for some of your repositories. So, it's recommendable that you understand how Futures work and how they are chained together in these examples by using the `andThen` function. You're encouraged to take a look at the [Appendix A: Write your own custom functions](Documentation/V4/Appendix%20A.md).
 
 #### 9. You're all set up!
 
