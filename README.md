@@ -13,9 +13,8 @@ Jayme is a Swift library that provides you with a set of tools which reduce dras
 
 ![Jayme's Architecture In A Nutshell](https://raw.githubusercontent.com/inaka/Jayme/master/Assets/V4/architecture-diagram.png)
 
------
 
-##Features
+## Features
 
 <details><summary><b>Protocol-oriented</b></summary>
 Jayme is built following the concepts of [protocol-oriented programming](https://developer.apple.com/videos/play/wwdc2015/408/), encouraging composition over inheritance, whenever possible.
