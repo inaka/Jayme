@@ -376,7 +376,7 @@ We encourage you to read these extra documents:
 - [**Appendix A: Write your own custom functions**](Documentation/V4/Appendix%20A.md)
 - [**Appendix B: Unit-test your repositories**](Documentation/V4/Appendix%20B.md)
 - [**Appendix C: Configure your own logging function**](Documentation/V4/Appendix%20C.md)
-- [**Appendix D: Add authentication to your requests**](Documentation/V4/Appendix%20D.md)
+- [**Appendix D: Authenticate your requests**](Documentation/V4/Appendix%20D.md)
 
 
 
