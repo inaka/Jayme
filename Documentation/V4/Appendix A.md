@@ -261,7 +261,7 @@ With those key points in mind, we can create this function:
 extension PostsRepository {
 
     func read(userId: String) -> Future<[EntityType], JaymeError> {
-        let path = "\(users)/\(userId)/\(self.name)"
+        let path = "users/\(userId)/\(self.name)"
         return self.backend.future(path: path, method: .GET)
             .andThen { DataParser().dictionaries(from: $0.0) }
             .andThen { EntityParser().entities(from: $0) }
