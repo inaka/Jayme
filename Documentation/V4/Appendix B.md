@@ -103,7 +103,7 @@ Nice. This test uses a `TestingBackend` to ensure that all the arguments sent to
 
 ---
 
-###2. Success Response Scenarios
+### 2. Success Response Scenarios
 
 The next test to prepare is one that ensures that, upon a successful response, the method returns a proper `Future` including a `.success` result that contains the entities parsed properly.
 
