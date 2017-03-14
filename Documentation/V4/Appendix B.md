@@ -60,7 +60,7 @@ If you analyze the `TestingBackend` code, you can realize how it works. This cla
 
 Then, what you need to do is setup your repository (class under test) to use a `TestingBackend` instead of a `URLSessionBackend`.
 
-If you go to the `PostRepository` definition, you have to replace this:
+If you go to the `PostsRepository` definition, you have to replace this:
 
 ```swift
 class PostsRepository: Readable {
@@ -84,7 +84,7 @@ class PostsRepository: Readable {
 }
 ```
 
-This enables dependency injection for the `backend` variable. Now, you can setup a custom backend if you specify it in the `PostRepository` intializer. Notice that if you don't pass in a backend, by default it uses `.myAppBackend()`, so you don't need to modify your source code.
+This enables dependency injection for the `backend` variable. Now, you can setup a custom backend if you specify it in the `PostsRepository` intializer. Notice that if you don't pass in a backend, by default it uses `.myAppBackend()`, so you don't need to modify your source code.
 
 Now, let's write the first test for our `read(userId:)` function:
 
