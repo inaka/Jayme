@@ -1,3 +1,5 @@
+![Logo](https://raw.githubusercontent.com/inaka/Jayme/master/Assets/V4/logo.png)
+
 # Appendix C: Configure your own logging function
 
 By default, Jayme prints logs using the native `print` function from Swift.

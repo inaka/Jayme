@@ -1,3 +1,5 @@
+![Logo](https://raw.githubusercontent.com/inaka/Jayme/master/Assets/V4/logo.png)
+
 # Appendix B: Unit-test your repositories
 
 Once you have learned how to [write your own custom functions](Appendix%20A.md) for your repositories, your next step is to keep your code covered by unit-tests.

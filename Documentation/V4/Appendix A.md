@@ -1,3 +1,5 @@
+![Logo](https://raw.githubusercontent.com/inaka/Jayme/master/Assets/V4/logo.png)
+
 # Appendix A: Write your own custom functions
 
 Using the [default CRUD functions](https://github.com/inaka/Jayme/blob/master/README.md#default-behavior) that Jayme provides is useful and convenient. However, it's very likely that you will often need to create your own functions for custom scenarios that are not included in the standards that Jayme works with.

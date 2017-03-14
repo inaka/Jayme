@@ -1,3 +1,5 @@
+![Logo](https://raw.githubusercontent.com/inaka/Jayme/master/Assets/V4/logo.png)
+
 # Appendix D: Add authentication to your requests
 
 Most APIs implement authentication mechanisms to make sure certain information is given only to those that are supposed to have access to it.
