@@ -318,4 +318,4 @@ You may be wondering why aren't `DataParser` and `EntityParser` instances inject
 
 ### This is it
 
-Now that you've learned how to write your custom functions, which is a very powerful tool in the Jayme's world, you're encouraged to move on to the next level and apply unit-tests to any custom function that you write. This is explained in the [Appendix B: Unit-test your repositories](https://github.com/inaka/Jayme/blob/master/Documentation/V4/Appendix%20B.md).
+Now that you've learned how to write your custom functions, which is a very powerful tool in the Jayme's world, you're encouraged to move on to the next level and apply unit-tests to any custom function that you write. This is explained in the [Appendix B: Unit-test your repositories](Appendix%20B.md).

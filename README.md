@@ -373,10 +373,10 @@ Now you know the basics of how to write code to work with Jayme. You will stumbl
 
 We encourage you to read these extra documents:
 
-- [**Appendix A: Write your own custom functions**](https://github.com/inaka/Jayme/blob/master/Documentation/V4/Appendix%20A.md)
-- [**Appendix B: Unit-test your repositories**](https://github.com/inaka/Jayme/blob/master/Documentation/V4/Appendix%20B.md)
-- [**Appendix C: Configure your own logging function**](https://github.com/inaka/Jayme/blob/master/Documentation/V4/Appendix%20C.md)
-- [**Appendix D: Add authentication to your requests**](https://github.com/inaka/Jayme/blob/master/Documentation/V4/Appendix%20D.md)
+- [**Appendix A: Write your own custom functions**](Documentation/V4/Appendix%20A.md)
+- [**Appendix B: Unit-test your repositories**](Documentation/V4/Appendix%20B.md)
+- [**Appendix C: Configure your own logging function**](Documentation/V4/Appendix%20C.md)
+- [**Appendix D: Add authentication to your requests**](Documentation/V4/Appendix%20D.md)
 
 
 
@@ -403,9 +403,9 @@ $ python -m SimpleHTTPServer 8080
 
 ## Migration Guides
 
-- [Jayme 4.0 Migration Guide](https://github.com/inaka/Jayme/blob/master/Documentation/Jayme%204.0%20Migration%20Guide.md)
-- [Jayme 3.0 Migration Guide](https://github.com/inaka/Jayme/blob/master/Documentation/Jayme%203.0%20Migration%20Guide.md)
-- [Jayme 2.0 Migration Guide](https://github.com/inaka/Jayme/blob/master/Documentation/Jayme%202.0%20Migration%20Guide.md)
+- [Jayme 4.0 Migration Guide](Documentation/Jayme%204.0%20Migration%20Guide.md)
+- [Jayme 3.0 Migration Guide](Documentation/Jayme%203.0%20Migration%20Guide.md)
+- [Jayme 2.0 Migration Guide](Documentation/Jayme%202.0%20Migration%20Guide.md)
 
 
 
