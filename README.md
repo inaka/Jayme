@@ -45,18 +45,30 @@ This library works around the **Repository Pattern**. There are some key concept
 
 Here is a brief description of each relevant term, based on how Jayme, in particular, implements the pattern:
 
-- A **Repository** represents a collection that holds entities of a certain kind and that is capable of filtering and returning entities back, based on the needs of your application. 
-  - Your *business logic code* will usually live in **repositories**.
-  - Jayme comes with four protocols containing default implementations for common CRUD operations: `Creatable`, `Readable`, `Updatable`, and `Deletable`. Your repositories can conform to any of these, as it's required.
-- A **Backend** is a middleman that accepts concrete requests as input (e.g. a `DELETE` to `/users/123`) and performs networking operations to satisfy those requests, giving results back.
-  - Your *networking code* will usually live in **backends**.
-  - Jayme comes with a default backend, named`URLSessionBackend`, which performs requests against a server via `URLSession`.
-- An **Entity** represents a *thing* that is meaningful in your application; for example, a user. A repository relates to a certain kind of entity using an *associated type*, named `EntityType` (examples of entity types are: `User`, `Post`, `Comment`, and so on). 
-  - Depending on which protocols your repository conform to, its associated `EntityType` will be required to conform to some (or all) of these protocols:
-    - `Identifiable`: The entity can be identified through an `id` field.
-    - `DictionaryInitializable`: The entity can be initialized with a dictionary.
-    - `DictionaryRepresentable`: The entity can be represented through a dictionary.
+### 1. Repositories
+- A **repository** represents a collection that holds entities of a certain kind and that is capable of filtering and returning entities back, based on the needs of your application. 
+- Your *business logic code* will usually live in **repositories**.
+- Jayme comes with four protocols containing default implementations for common CRUD operations: `Creatable`, `Readable`, `Updatable`, and `Deletable`. Your repositories can conform to any of these, as it's required.
+
+### 2. Backends
+- A **backend** is a middleman that accepts concrete requests as input (e.g. a `DELETE` to `/users/123`) and performs networking operations to satisfy those requests, giving results back.
+- Your *networking code* will usually live in **backends**.
+- Jayme comes with a default backend, named`URLSessionBackend`, which performs requests against a server via `URLSession`.
+
+### 3. Entities
+- An **entity** represents a *thing* that is meaningful in your application; for example, a user.
+- Your *model objects* will usually be represented by **entities**.
  
+### Relationship between repositories and entities
+
+A repository relates to a certain kind of entity using an *associated type*, named `EntityType` (examples of entity types are: `User`, `Post`, `Comment`, and so on). 
+
+Depending on which protocols your repository conform to, its associated `EntityType` will be required to conform to some (or all) of these protocols:
+
+- `Identifiable`: The entity can be identified through an `id` field.
+- `DictionaryInitializable`: The entity can be initialized with a dictionary.
+- `DictionaryRepresentable`: The entity can be represented through a dictionary.
+
 Below is table showing which protocols your `EntityType` should conform to, depending on which protocols the repository conforms to.
 
 <table>
@@ -74,9 +86,7 @@ Below is table showing which protocols your `EntityType` should conform to, depe
 
 **The way `Creatable`, `Readable`, `Updatable`, and `Deletable` work is defined following [Inaka's REST Guidelines](https://github.com/inaka/rest_guidelines). The server is expected to follow such guidelines in order for these protocols to work properly.**
 
-Below is a table exposing the set of methods that these protocols provide you with.
-
-> Please, notice the difference between ***single-entity repositories*** vs. ***multiple-entity repositories***. Usually, you will have repositories that perform operations with only one *singleton* entity (for instance: `/profile`, `/me`, or `/session`), and, on the other hand, repositories that perform operations with multiple entities (such as `/users`, `/posts`, or `/comments`). Although method's interfaces are alike, they slightly differ in either scenario.
+Below is a table exposing the set of functions that these protocols provide you with:
 
 <table>
 <th width="20%"></th><th width="30%">Single-Entity Repository<br>(e.g. "profile")</th><th width="50%">Multiple-Entity Repository<br>(e.g. "users")</th>
@@ -86,6 +96,7 @@ Below is a table exposing the set of methods that these protocols provide you wi
 <tr><td><i><b>Deletable</b></i></td><td><details><summary><b>.delete()</b></summary><i>Requests the entity to be deleted from the server.</i></details><code>DELETE /profile</code></td><td><details><summary><b>.delete(id: x)</b></summary><i>Requests the entity matching the given id to be deleted from the server.</i></details><code>DELETE /users/x</code></td></tr>
 </table>
 
+> Please, notice the difference between ***single-entity repositories*** vs. ***multiple-entity repositories***. Usually, you will have repositories that perform operations with only one *singleton* entity (for instance: `/profile`, `/me`, or `/session`), and, on the other hand, repositories that perform operations with multiple entities (such as `/users`, `/posts`, or `/comments`). Although method's interfaces are alike, they slightly differ in either scenario.
 Thanks to Swift's protocol-oriented features, the default behaviors for these methods are defined in the methods' bodies within *extensions* of the aforementioned protocols. 
 
 You can always customize these methods as you see fit:
