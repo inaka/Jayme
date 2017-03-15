@@ -152,7 +152,7 @@ extension URLSessionBackend {
         let headers = [HTTPHeader(field: "Accept", value: "application/json"),
                        HTTPHeader(field: "Content-Type", value: "application/json")]
                        // and any header you need to use
-        let configuration = URLSessionBackendConfiguration(basePath: basePath, headers: headers)
+        let configuration = URLSessionBackendConfiguration(basePath: basePath, httpHeaders: headers)
         return URLSessionBackend(configuration: configuration)
     }
 } 
