@@ -23,7 +23,7 @@ Jayme is built following the concepts of [protocol-oriented programming](https:/
 Generics and associated types are present everywhere in the library to provide you with flexibility.
 </details>
 <details><summary><b>Error Handling</b></summary>
-Jayme comes with a default list of **discrete** errors (`enum JaymeError`). You can separate meaningful UI flows in your view controllers by switching over a `JaymeError`. If you need different error definitions, the library allows you to use your own error types, with the aid of associated types.
+Errors are identified using an enumeration named [JaymeError](Jayme/JaymeError.swift). You can separate meaningful UI flows in your view controllers by switching over a `JaymeError`. If you need different error definitions, the library allows you to use your own error types, with the aid of associated types.
 </details>
 <details><summary><b>Futures and Results</b></summary>
 Jayme leverages the [Future Pattern](https://realm.io/news/swift-summit-javier-soto-futures/) when it comes to writing asynchronous code. Both [Future](Jayme/Future.swift) and [Result](Jayme/Result.swift) structures are key in the library. Make sure you are familiar with them.
