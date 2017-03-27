@@ -17,25 +17,25 @@ Jayme is a Swift library that provides you with a set of tools which reduce dras
 ## Features
 
 <details><summary><b>Protocol-oriented</b></summary>
-Jayme is built following the concepts of [protocol-oriented programming](https://developer.apple.com/videos/play/wwdc2015/408/), encouraging composition over inheritance, whenever possible.
+Jayme is built following the concepts of <a href='https://developer.apple.com/videos/play/wwdc2015/408/'>protocol-oriented programming</a>, encouraging composition over inheritance, whenever possible.
 </details>
 <details><summary><b>Generics and Associated Types</b></summary>
 Generics and associated types are present everywhere in the library to provide you with flexibility.
 </details>
 <details><summary><b>Error Handling</b></summary>
-Errors are identified using an enumeration named [JaymeError](Jayme/JaymeError.swift). You can separate meaningful UI flows in your view controllers by switching over a `JaymeError`. If you need different error definitions, the library allows you to use your own error types, with the aid of associated types.
+Errors are identified using an enumeration named <a href='https://github.com/inaka/Jayme/blob/master/Jayme/JaymeError.swift'>JaymeError</a>. You can separate meaningful UI flows in your view controllers by switching over a <code>JaymeError</code>. If you need different error definitions, the library allows you to use your own error types, with the aid of associated types.
 </details>
 <details><summary><b>Futures and Results</b></summary>
-Jayme leverages the [Future Pattern](https://realm.io/news/swift-summit-javier-soto-futures/) when it comes to writing asynchronous code. Both [Future](Jayme/Future.swift) and [Result](Jayme/Result.swift) structures are key in the library. Make sure you are familiar with them.
+Jayme uses the <a href='https://realm.io/news/swift-summit-javier-soto-futures/)'>Future Pattern</a> for writing asynchronous code. Both <a href='https://github.com/inaka/Jayme/blob/master/Jayme/Future.swift'>Future</a> and <a href='https://github.com/inaka/Jayme/blob/master/Jayme/Result.swift'>Result</a> structures are key in the library. Make sure you are familiar with them.
 </details>
 <details><summary><b>Logs</b></summary>
-Jayme includes a practical logging mechanism that can be quickly enabled or disabled. It also allows you to set a custom logging function, which proves quite useful if your project uses third party logging libraries, like [CocoaLumberjack](https://github.com/CocoaLumberjack/CocoaLumberjack).
+Jayme includes a practical logging mechanism that can be quickly enabled or disabled. It also allows you to set a custom logging function, which proves quite useful if your project uses third party logging libraries, like <a href='https://github.com/CocoaLumberjack/CocoaLumberjack'>CocoaLumberjack</a>.
 </details>
 <details><summary><b>Unit Tests</b></summary>
 Jayme is 100% unit-tested. You can unit test custom methods defined in your repositories relatively easy by following the way it's done in the library.
 </details>
 <details><summary><b>No Dependencies</b></summary>
-Jayme does not require any external dependency in order to work. Nonetheless, integrating JSON parsing libraries (like [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON)) is quite straightforward.
+Jayme does not require any external dependency in order to work. Nonetheless, integrating JSON parsing libraries (like <a href='https://github.com/SwiftyJSON/SwiftyJSON'>SwiftyJSON</a> is quite straightforward.
 </details>
 
 
