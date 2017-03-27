@@ -393,9 +393,9 @@ We encourage you to read these extra documents:
 
 ## Sample Project
 
-There is an [Example](/Example) folder inside the repo containing a basic implementation of some repositories integrated with view controllers. This example may help you understand the library usage better.
+You can check out this [sample project that integrates Jayme with GitHub APIs](https://github.com/inaka/JaymeExample).
 
-This sample project needs a local server to work, which you can configure really quickly by doing:
+Also, there is an [Example](/Example) folder inside the repo containing a more basic implementation of some repositories integrated with view controllers. This sample project needs a local server to work, which you can configure really quickly by doing:
 
 ```shell
 $ cd Jayme/Example/Server
