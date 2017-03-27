@@ -28,9 +28,9 @@ struct Post: Identifiable {
     let date: Date
 }
 
-extension Post: DictionaryInitializable, DictionaryRepresentable {
+extension Post: DictionaryInitializable {
     
-    init(dictionary: [String: Any]) throws {
+    init(dictionary: [AnyHashable: Any]) throws {
         guard
             let id = dictionary["id"] as? String,
             let authorId = dictionary["author_id"] as? String,
@@ -44,16 +44,6 @@ extension Post: DictionaryInitializable, DictionaryRepresentable {
         self.title = title
         self.abstract = abstract
         self.date = date
-    }
-    
-    var dictionaryValue: [String: Any] {
-        return [
-            "id": "\(self.id)",
-            "author_id": self.authorId,
-            "title": self.title,
-            "abstract": self.abstract,
-            "date": self.date
-        ]
     }
     
 }

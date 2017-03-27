@@ -26,9 +26,9 @@ struct User: Identifiable {
     let email: String
 }
 
-extension User: DictionaryInitializable, DictionaryRepresentable {
+extension User: DictionaryInitializable {
     
-    init(dictionary: [String: Any]) throws {
+    init(dictionary: [AnyHashable: Any]) throws {
         guard let
             id = dictionary["id"] as? String,
             let name = dictionary["name"] as? String,
@@ -38,13 +38,5 @@ extension User: DictionaryInitializable, DictionaryRepresentable {
         self.name = name
         self.email = email
     }
-    
-    var dictionaryValue: [String: Any] {
-        return [
-            "id": self.id,
-            "name": self.name,
-            "email": self.email
-        ]
-    }
-    
+
 }

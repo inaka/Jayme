@@ -60,6 +60,18 @@ public extension Future {
         })
     }
     
+    /// Maps the failure scenario of a future by performing `f` onto the result.
+    public func mapError<U>(_ f: @escaping (E) -> U) -> Future<T, U> {
+        return Future<T, U>(operation: { completion in
+            self.start { result in
+                switch result {
+                case .success(let value): completion(.success(value))
+                case .failure(let error): completion(.failure(f(error)))
+                }
+            }
+        })
+    }
+    
     /// Maps the result of a future by performing `f` onto the result, returning a new `Future` object.
     /// Useful for chaining different asynchronous operations that are dependent on each other's results.
     public func andThen<U>(_ f: @escaping (T) -> Future<U, E>) -> Future<U, E> {

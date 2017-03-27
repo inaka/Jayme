@@ -28,7 +28,7 @@ struct TestDocument: Identifiable {
 
 extension TestDocument: DictionaryInitializable, DictionaryRepresentable {
     
-    init(dictionary: [String: Any]) throws {
+    init(dictionary: [AnyHashable: Any]) throws {
         guard let
             id = dictionary["id"] as? String,
             let name = dictionary["name"] as? String
@@ -37,7 +37,7 @@ extension TestDocument: DictionaryInitializable, DictionaryRepresentable {
         self.name = name
     }
     
-    var dictionaryValue: [String : Any] {
+    var dictionaryValue: [AnyHashable: Any] {
         return ["id": self.id, "name": self.name]
     }
     

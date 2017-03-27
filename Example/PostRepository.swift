@@ -20,14 +20,14 @@
 
 import Foundation
 
-class PostRepository: CRUDRepository {
+class PostRepository: Readable {
     
     typealias EntityType = Post
     let backend = URLSessionBackend()
     let name = "posts"
     
     func findPosts(for user: User) -> Future<[Post], JaymeError> {
-        return self.findAll().map {
+        return self.readAll().map {
             $0.filter { $0.authorId == user.id }
         }
     }

@@ -46,10 +46,38 @@ public typealias ServerBackendError = JaymeError
 @available(*, unavailable, renamed : "CRUDRepository")
 public typealias ServerRepository = CRUDRepository
 
-/// ServerPagedRepository -> PagedRepository
-@available(*, unavailable, renamed : "PagedRepository")
-public typealias ServerPagedRepository = PagedRepository
+/// CRUDRepository -> Creatable, Readable, Updatable, Deletable
+@available(*, deprecated: 2.0, message: "Use Creatable, Readable, Updatable and Deletable protocols instead")
+public protocol CRUDRepository: Creatable, Readable, Updatable, Deletable {
+    
+}
+
+@available(*, unavailable, renamed : "Readable", message: "findByPage from the PagedRepository protocol has been replaced by read(pageSize:pageNumber:) from the Readable protocol")
+public typealias PagedRespository = Readable
 
 /// Identifier -> IdentifierType: CustomStringConvertible
 @available(*, unavailable, message : "Replace `Identifier` with any type that conforms to `CustomStringConvertible`.")
 public typealias Identifier = String
+
+extension Readable {
+    
+    @available(*, unavailable, renamed : "readAll")
+    public func findAll() -> Future<[EntityType], JaymeError> {
+        return self.readAll()
+    }
+    
+    @available(*, unavailable, renamed : "read(id:)")
+    public func find(byId id: EntityType.IdentifierType) -> Future<EntityType, JaymeError> {
+        return self.read(id: id)
+    }
+    
+}
+
+extension Deletable {
+    
+    @available(*, unavailable, renamed : "delete(id:)")
+    public func delete(_ entity: EntityType) -> Future<Void, JaymeError> {
+        return self.delete(id: entity.id)
+    }
+    
+}

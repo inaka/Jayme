@@ -26,6 +26,10 @@ open class URLSessionBackend: Backend {
     public typealias BackendReturnType = (Data?, PageInfo?)
     public typealias BackendErrorType = JaymeError
     
+    public let configuration: URLSessionBackendConfiguration
+    public let session: URLSession
+    public let responseParser: HTTPResponseParser
+    
     public init(configuration: URLSessionBackendConfiguration = URLSessionBackendConfiguration.defaultConfiguration,
          session: URLSession = URLSession.shared,
          responseParser: HTTPResponseParser = HTTPResponseParser()) {
@@ -37,7 +41,28 @@ open class URLSessionBackend: Backend {
     /// Returns a `Future` containing either:
     /// - A tuple with possible `NSData` relevant to the HTTP response and a possible `PageInfo` object if there is pagination-related info associated to it.
     /// - A `JaymeError` holding the error that occurred.
-    open func future(path: Path, method: HTTPMethodName, parameters: [String: Any]? = nil) -> Future<(Data?, PageInfo?), JaymeError> {
+    open func future(path: Path, method: HTTPMethodName, parameters: [AnyHashable: Any]? = nil) -> Future<(Data?, PageInfo?), JaymeError> {
+        return self.createFuture(path: path, method: method, parameters: parameters)
+    }
+    
+    /// Returns a `Future` containing either:
+    /// - A tuple with possible `NSData` relevant to the HTTP response and a possible `PageInfo` object if there is pagination-related info associated to it.
+    /// - A `JaymeError` holding the error that occurred.
+    open func future(path: Path, method: HTTPMethodName, parameters: [[AnyHashable: Any]]) -> Future<(Data?, PageInfo?), JaymeError> {
+        return self.createFuture(path: path, method: method, parameters: parameters)
+    }
+    
+    // MARK: - Private
+    
+    fileprivate var baseURL: URL? {
+        return URL(string: self.configuration.basePath)
+    }
+    
+    fileprivate func url(for path: Path) -> URL? {
+        return URL(string: path, relativeTo: self.baseURL)
+    }
+    
+    fileprivate func createFuture(path: Path, method: HTTPMethodName, parameters: Any? = nil) -> Future<(Data?, PageInfo?), JaymeError> {
         return Future() { completion in
             guard let request = try? self.request(path: path, method: method, parameters: parameters) else {
                 completion(.failure(JaymeError.badRequest))
@@ -64,22 +89,8 @@ open class URLSessionBackend: Backend {
         }
     }
     
-    // MARK: - Private
-    
-    fileprivate let configuration: URLSessionBackendConfiguration
-    fileprivate let session: URLSession
-    fileprivate let responseParser: HTTPResponseParser
-    
-    fileprivate var baseURL: URL? {
-        return URL(string: self.configuration.basePath)
-    }
-    
-    fileprivate func url(for path: Path) -> URL? {
-        return self.baseURL?.appendingPathComponent(path)
-    }
-    
-    fileprivate func request(path: Path, method: HTTPMethodName, parameters: [String: Any]?) throws -> URLRequest {
-        guard let url = self.url(for: path) else {
+    fileprivate func request(path: Path, method: HTTPMethodName, parameters: Any?) throws -> URLRequest {
+        guard let url = self.url(for: path), url.absoluteString != "_" else {
             throw JaymeError.badRequest
         }
         let request = NSMutableURLRequest(url: url)

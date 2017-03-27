@@ -21,7 +21,8 @@
 import Foundation
 @testable import Jayme
 
-class TestDocumentRepository: CRUDRepository {
+class TestDocumentRepository: Creatable, Readable, Updatable, Deletable {
+    
     typealias EntityType = TestDocument
     let name = "documents"
     let backend: URLSessionBackend
@@ -29,4 +30,5 @@ class TestDocumentRepository: CRUDRepository {
     init(backend: URLSessionBackend) {
         self.backend = backend
     }
+    
 }

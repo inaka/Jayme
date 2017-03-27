@@ -22,5 +22,5 @@ import Foundation
 
 /// Protocol for allowing entities to be represented (parsed out) through a dictionary.
 public protocol DictionaryRepresentable {
-    var dictionaryValue: [String: Any] { get }
+    var dictionaryValue: [AnyHashable: Any] { get }
 }
