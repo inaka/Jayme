@@ -1,7 +1,7 @@
 
 Pod::Spec.new do |s|
   s.name         = "Jayme"
-  s.version      = "4.0.0"
+  s.version      = "4.0.1"
   s.summary      = "An abstraction layer that eases RESTful interconnections in Swift"
   s.description  = <<-DESC
                    Jayme is a Swift library that provides you with a set of tools which reduce drastically the amount of code you have to write to perform CRUD operations to a RESTful API. It also encapsulates networking code, encouraging you to separate networking and business logic code out of your view controllers.

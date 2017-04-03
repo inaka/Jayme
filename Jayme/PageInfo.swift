@@ -32,6 +32,13 @@ public struct PageInfo {
     /// The total amount of items.
     public let total: Int
     
+    /// Public initializer
+    public init(number: Int, size: Int, total: Int) {
+        self.number = number
+        self.size = size
+        self.total = total
+    }
+    
 }
 
 public extension PageInfo {
