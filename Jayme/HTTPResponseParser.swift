@@ -20,8 +20,8 @@
 
 import Foundation
 
-open typealias FullHTTPResponse = (data: Data?, urlResponse: URLResponse?, error: Error?)
-open typealias HTTPResponseParserResult = Result<(data: Data?, pageInfo: PageInfo?), JaymeError>
+public typealias FullHTTPResponse = (data: Data?, urlResponse: URLResponse?, error: Error?)
+public typealias HTTPResponseParserResult = Result<(data: Data?, pageInfo: PageInfo?), JaymeError>
 
 /// A parser that converts raw response data (as they come from `URLSession`) into other type of data that is more Jayme-architectured.
 open class HTTPResponseParser {
