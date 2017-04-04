@@ -26,6 +26,9 @@ public typealias HTTPResponseParserResult = Result<(data: Data?, pageInfo: PageI
 /// A parser that converts raw response data (as they come from `URLSession`) into other type of data that is more Jayme-architectured.
 open class HTTPResponseParser {
     
+    /// Public initializer
+    public init () {}
+    
     /// Turns response data as it comes from `URLSession` (a.k.a. `FullHTTPResponse`) into a different format, which is more useful from Jayme's perspective (a.k.a. `HTTPResponseParserResult`).
     open func parse(_ response: FullHTTPResponse) -> HTTPResponseParserResult {
         if let error = response.error {
