@@ -78,7 +78,7 @@ open class URLSessionBackend: Backend {
                     switch result {
                     case .success(let maybeData, let pageInfo):
                         Logger.sharedLogger.log("Jayme: Response #\(requestNumber) | Success")
-                        completion(.success(maybeData, pageInfo))
+                        completion(.success((maybeData, pageInfo)))
                     case .failure(let error):
                         Logger.sharedLogger.log("Jayme: Response #\(requestNumber) | Failure, error: \(error)")
                         completion(.failure(error))
