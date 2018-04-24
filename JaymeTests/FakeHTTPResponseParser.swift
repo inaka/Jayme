@@ -26,7 +26,7 @@ class FakeHTTPResponseParser: HTTPResponseParser {
     var response: FullHTTPResponse?
     var result: HTTPResponseParserResult
     
-    init(result: HTTPResponseParserResult = .success(data: nil, pageInfo: nil)) {
+    init(result: HTTPResponseParserResult = .success((data: nil, pageInfo: nil))) {
         self.result = result
     }
     

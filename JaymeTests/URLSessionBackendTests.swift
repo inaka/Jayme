@@ -110,7 +110,7 @@ extension URLSessionBackendTests {
             if let _ = error { XCTFail() }
             guard
                 let response = parser.response,
-                let error = response.error as? NSError
+                let error = response.error as NSError?
                 else { XCTFail(); return }
             XCTAssertEqual(response.data, exampleData)
             XCTAssertEqual(response.urlResponse, exampleURLResponse)
