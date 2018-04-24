@@ -420,11 +420,13 @@ $ python -m SimpleHTTPServer 8080
 
 
 
-## Older Swift Versions Support
+## Swift Versions Support
 
-- As of its [3.0.0 release](https://github.com/inaka/Jayme/tree/3.0.0), this library works with **Swift 3.0**
+- As of its [4.1 release](https://github.com/inaka/Jayme/tree/4.1.0), this library works with **Swift 4**
+
 - If you look for older languages version support, you can check out:
-  - [2.1.0 release](https://github.com/inaka/Jayme/tree/2.1.0) for Swift 2.3 support
+  - [3.0 release](https://github.com/inaka/Jayme/tree/3.0.0) for Swift 3 support
+  - [2.1 release](https://github.com/inaka/Jayme/tree/2.1.0) for Swift 2.3 support
   - [2.0.2 release](https://github.com/inaka/Jayme/tree/2.0.2) for Swift 2.2 support
 
 

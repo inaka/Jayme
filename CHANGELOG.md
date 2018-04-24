@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file. `Jayme` a
 
 ### 4.x Releases
 
+- `4.1.x` releases - [4.1.0](#410)
 - `4.0.x` releases - [4.0.0](#400)
 
 ### 3.x Releases
@@ -21,6 +22,10 @@ All notable changes to this project will be documented in this file. `Jayme` a
 - `1.0.x` Releases - [1.0.1](#101) | [1.0.2](#102) | [1.0.3](#103) | [1.0.4](#104) 
 
 ---
+
+## 4.1.0
+
+- Migrated to Swift 4 (Issue [#109](https://github.com/inaka/Jayme/issues/109))
 
 ## 4.0.0
 
