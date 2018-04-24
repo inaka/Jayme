@@ -41,7 +41,7 @@ open class HTTPResponseParser {
             return .failure(error)
         }
         let pageInfo = self.pageInfo(fromHeaders: urlResponse.allHeaderFields)
-        return .success(data: response.data, pageInfo: pageInfo)
+        return .success((data: response.data, pageInfo: pageInfo))
     }
     
     // MARK: - Private
